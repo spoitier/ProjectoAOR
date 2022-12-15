@@ -2,7 +2,7 @@ public class Administrador extends Utilizador {
 
     private String id;
     public static int contador=1;
-    public int xy;
+
 
 
 
