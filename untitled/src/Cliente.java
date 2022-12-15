@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Cliente extends Utilizador {
+public class Cliente extends Utilizador implements Serializable {
 
     public static int contador=1;
     private String id;
@@ -34,6 +35,10 @@ public class Cliente extends Utilizador {
     @Override
     public String toString() {
         return "Cliente{" +
+                "id='" + id + '\'' +
+                ", reservasAgendandas=" + reservasAgendandas +
+                ", reservasCanceladas=" + reservasCanceladas +
+                ", reservasEmEspera=" + reservasEmEspera +
                 ", tipoCliente=" + tipoCliente +
                 ", data=" + data +
                 ", email='" + email + '\'' +
@@ -42,7 +47,7 @@ public class Cliente extends Utilizador {
                 ", nif=" + nif +
                 ", morada='" + morada + '\'' +
                 ", telefone=" + telefone +
-                ", id=" + id +
+                ", id='" + id + '\'' +
                 '}';
     }
 

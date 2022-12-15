@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Multibanco extends Pagamento{
+public class Multibanco extends Pagamento implements Serializable {
 
 
     private int entidade;

@@ -1,4 +1,6 @@
-public class Autocarro {
+import java.io.Serializable;
+
+public class Autocarro implements Serializable {
 
     private int lotacao;
     private String matricula;

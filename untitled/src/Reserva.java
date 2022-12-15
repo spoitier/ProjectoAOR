@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Reserva {
+public class Reserva implements Serializable {
 
 
     private Cliente cliente;

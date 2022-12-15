@@ -1,4 +1,6 @@
-public abstract class Utilizador {
+import java.io.Serializable;
+
+public abstract class Utilizador implements Serializable {
 
     protected String email;
     protected String palavraChave;

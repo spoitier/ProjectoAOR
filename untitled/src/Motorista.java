@@ -1,4 +1,6 @@
-public class Motorista {
+import java.io.Serializable;
+
+public class Motorista implements Serializable {
 
     private String nome;
     private String email;

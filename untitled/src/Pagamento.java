@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Pagamento {
+public class Pagamento implements Serializable
+{
 
     protected Reserva reserva;
 

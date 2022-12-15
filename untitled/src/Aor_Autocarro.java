@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Aor_Autocarro {
+public class Aor_Autocarro implements Serializable {
 
     ArrayList<Utilizador> utilizadores = new ArrayList<>();
     ArrayList<Reserva> reservas = new ArrayList<>();
@@ -8,6 +9,7 @@ public class Aor_Autocarro {
     ArrayList<Autocarro> autocarros = new ArrayList<>();
 
     ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
+
 
     public void addUtilizador(Utilizador utilizador) {
         utilizadores.add(utilizador);

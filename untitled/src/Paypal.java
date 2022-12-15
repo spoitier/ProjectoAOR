@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Paypal extends Pagamento {
+public class Paypal extends Pagamento implements Serializable
+{
     private String email;
     private String palavraChave;
 

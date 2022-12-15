@@ -1,4 +1,6 @@
-public class Administrador extends Utilizador {
+import java.io.Serializable;
+
+public class Administrador extends Utilizador implements Serializable {
 
     private String id;
     public static int contador=1;

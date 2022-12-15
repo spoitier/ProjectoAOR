@@ -1,18 +1,19 @@
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        Administrador adm1 = new Administrador("rodrigo@gmail.com", "12345", "Rodrigo", 12345, "Rua 3", 91242342 );
-        System.out.println(adm1.getId());
+       Administrador adm1 = new Administrador("rodrigo@gmail.com", "12345", "Rodrigo", 12345, "Rua 3", 91242342 );
+        //System.out.println(adm1.getId());
 
         Administrador adm2 = new Administrador("sonia@gmail.com", "password", "Sonia", 12885, "Rua 4", 91282342);
-        System.out.println(adm2.getId());
+        //System.out.println(adm2.getId());
         Cliente cli1 = new Cliente("maria@gmail.com", "123456", "Maria", 1241234, "Coimbra", 913123123,'N', LocalDate.of(2022, 12, 13));
         Cliente cli2 = new Cliente("albertina@gmail.com", "123456", "Albertina", 1241234, "Coimbra", 913123123,  'P', LocalDate.of(2022, 12, 13));
-        System.out.println(cli1.getId());
-        System.out.println(cli2.getId());
+        //System.out.println(cli1.getId());
+        //System.out.println(cli2.getId());
         Motorista m1 = new Motorista("Jose", "Jose@gamil.com");
         Motorista m2 = new Motorista("Maria", "Maria@gamil.com");
 
@@ -34,17 +35,30 @@ public class Main {
         Paypal p1 = new Paypal(r1,"maria@gmail.com","12345");
         Multibanco mb1 = new Multibanco(r1,12345,3423423,r1.getCusto());
         CartaoCredito cc1 = new CartaoCredito(r1,2312312,"joao",LocalDate.of(2022,03,11),123);
-        /*
+
         guedes.listaPagamentos.add(p1);
         guedes.reservas.add(r1);
+        //System.out.println(guedes.listaPagamentos);
+
+
+
+      //
+        // guedes.validarRegisto(adm1.getEmail(), adm2.palavraChave);
+
+
+
+      FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+      fdo.abreEscrita("Aor_Autocarro");
+      fdo.escreveObjeto(guedes);
+      fdo.fechaEscrita();
+
+      //FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+      fdo.abreLeitura("Aor_Autocarro");
+      guedes = (Aor_Autocarro) fdo.leObjeto();
+      fdo.fechaLeitura();
+
+      System.out.println(guedes.utilizadores);
         System.out.println(guedes.listaPagamentos);
-
-         */
-
-      guedes.validarRegisto(adm1.getEmail(), adm2.palavraChave);
-
-
-
 
     }
 
