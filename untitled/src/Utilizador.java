@@ -28,9 +28,7 @@ public abstract class Utilizador implements Serializable {
         this.email = email;
     }
 
-    public String getPalavraChave() {
-        return palavraChave;
-    }
+    public abstract String getPalavraChave();
 
     public void setPalavraChave(String palavraChave) {
         this.palavraChave = palavraChave;

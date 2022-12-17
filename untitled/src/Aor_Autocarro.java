@@ -1,13 +1,15 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Aor_Autocarro implements Serializable {
 
     ArrayList<Utilizador> utilizadores = new ArrayList<>();
     ArrayList<Reserva> reservas = new ArrayList<>();
+    ArrayList<Reserva> reservasCanceladas = new ArrayList<>();
+    ArrayList<Reserva> reservasemEspera = new ArrayList<>();
     ArrayList<Motorista> motoristas = new ArrayList<>();
     ArrayList<Autocarro> autocarros = new ArrayList<>();
-
     ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
 
@@ -17,6 +19,14 @@ public class Aor_Autocarro implements Serializable {
 
     public void addReserva(Reserva reserva) {
         reservas.add(reserva);
+    }
+
+    public void addReservaCancelada(Reserva reserva) {
+        reservasCanceladas.add(reserva);
+    }
+
+    public void addReservaemEspera(Reserva reserva) {
+        reservasemEspera.add(reserva);
     }
 
     public void addMotorista(Motorista motorista) {
@@ -53,9 +63,20 @@ public class Aor_Autocarro implements Serializable {
         } else {
             System.out.println("Email ou palavra-chave invalidos");
         }
+    }
 
+    /*public String verificarAutocarroDisponivel(Cliente cliente, int nDias, LocalDate data, int nPessoas) {
 
+        boolean disponivel;
+        LocalDate datafim = data.plusDays(nDias);
+
+        for (Autocarro bus : autocarros) {
+            for (Reserva res : reservas) {
+                if (res.getDataPartida().isAfter(data) || res.getDataPartida().isEqual(data) ||
+                        res.getDataPartida().isBefore(datafim)) {
+                }
+            }
+        }*/
     }
 
 
-}

@@ -7,9 +7,7 @@ public class Cliente extends Utilizador implements Serializable {
     public static int contador=1;
     private String id;
 
-    private ArrayList<Reserva> reservasAgendandas=new ArrayList<>();
-    private ArrayList<Reserva> reservasCanceladas=new ArrayList<>();
-    private ArrayList<Reserva> reservasEmEspera=new ArrayList<>();
+    private ArrayList<Notificação> notificações=new ArrayList<>();
     private char tipoCliente; //Cliente Premium ou Cliente Normal
     private LocalDate data; // Data da subscrição, nova ou alterada
 
@@ -17,28 +15,19 @@ public class Cliente extends Utilizador implements Serializable {
         super(email, palavraChave, nome, nif, morada, telefone);
         this.tipoCliente = tipoCliente;
         this.data = data;
+        this.palavraChave = palavraChave;
         id = "cl".concat(String.valueOf(Cliente.contador));
         contador++;
     }
 
-    public void addReservaAgendada(Reserva reserva) {
-        reservasAgendandas.add(reserva);
-    }
-
-    public void addReservaCancelada(Reserva reserva) {
-        reservasCanceladas.add(reserva);
-    }
-    public void addReservaemEspera(Reserva reserva) {
-        reservasEmEspera.add(reserva);
+    public String getPalavraChave() {
+        return palavraChave;
     }
 
     @Override
     public String toString() {
         return "Cliente{" +
                 "id='" + id + '\'' +
-                ", reservasAgendandas=" + reservasAgendandas +
-                ", reservasCanceladas=" + reservasCanceladas +
-                ", reservasEmEspera=" + reservasEmEspera +
                 ", tipoCliente=" + tipoCliente +
                 ", data=" + data +
                 ", email='" + email + '\'' +

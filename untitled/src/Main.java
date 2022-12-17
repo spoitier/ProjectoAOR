@@ -58,7 +58,7 @@ public class Main {
       fdo.fechaLeitura();
 
       System.out.println(guedes.utilizadores);
-        System.out.println(guedes.listaPagamentos);
+      System.out.println(guedes.listaPagamentos);
 
     }
 

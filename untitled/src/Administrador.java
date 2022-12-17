@@ -11,13 +11,13 @@ public class Administrador extends Utilizador implements Serializable {
 
     public Administrador(String email, String palavraChave, String nome, int nif, String morada, int telefone) {
         super(email, palavraChave, nome, nif, morada, telefone);
-        this.palavraChave = getChaveAdmin();
+        this.palavraChave = getPalavraChave();
         id = "admin".concat(String.valueOf(Administrador.contador));
         contador++;
     }
 
     //Metodo para gerar chave inicial
-    private String getChaveAdmin() {
+    public String getPalavraChave() {
         String palavraChave = "ADMIN2022";
         return palavraChave;
     }
