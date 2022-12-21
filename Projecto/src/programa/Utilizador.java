@@ -84,26 +84,6 @@ public abstract class Utilizador implements Serializable {
                 '}';
     }
 
-    //Validar o email nos novos registos
-    public boolean validarEmail(String email) {
-        boolean validar = false;
-        String  [] email2= email.split("");
-        for ( int i =0;i<email2.length;i++) {
-            if(email2[i].equals("@")) {
-                for (int j = i;j<email2.length;j++) {
-                    if(email2[j].equals(".")) {
-                        validar = true;
-                    }
-                }
-            }
-        }
-        if(validar==true) {
-            System.out.println("Email valido");
-        } else {
-            System.out.println("Email invalido");
-        }
-        return validar;
-    }
 
     public void esqueceuPalavraPasse(String email) {
         System.out.println("Foi enviado para seu email" + email + " uma nova palavra-passe");

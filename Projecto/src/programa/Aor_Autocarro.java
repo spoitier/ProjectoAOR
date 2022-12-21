@@ -76,7 +76,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Validar Registo de Login
-    public void validarRegisto(String email, String palavraChave) {
+    public boolean validarRegisto(String email, String palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
@@ -87,7 +87,7 @@ public class Aor_Autocarro implements Serializable {
             System.out.println("Login valido");
         } else {
             System.out.println("Email ou palavra-chave invalidos");
-        }
+        } return validar;
     }
 
     //Verifica se existe disponível a empresa algum autocarro com capacidade para o nºpessoas solicitadas
