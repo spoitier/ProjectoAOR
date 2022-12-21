@@ -10,10 +10,11 @@ public class Cliente extends Utilizador implements Serializable {
     private String id;
 
     private ArrayList<Notificação> notificações=new ArrayList<>();
-    private char tipoCliente; //programa.Cliente Premium ou programa.Cliente Normal
+    private String tipoCliente; //Cliente Premium ou Cliente Normal
     private LocalDate data; // Data da subscrição, nova ou alterada
 
-    public Cliente(String email, String palavraChave, String nome, int nif, String morada, int telefone, char tipoCliente, LocalDate data) {
+
+    public Cliente(String email, String palavraChave, String nome, int nif, String morada, int telefone, String tipoCliente, LocalDate data) {
         super(email, palavraChave, nome, nif, morada, telefone);
         this.tipoCliente = tipoCliente;
         this.data = data;
@@ -26,9 +27,17 @@ public class Cliente extends Utilizador implements Serializable {
         return palavraChave;
     }
 
+    public String getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public ArrayList<Notificação> getNotificações() {
+        return notificações;
+    }
+
     @Override
     public String toString() {
-        return "programa.Cliente{" +
+        return "Cliente{" +
                 "id='" + id + '\'' +
                 ", tipoCliente=" + tipoCliente +
                 ", data=" + data +

@@ -7,6 +7,8 @@ public class Motorista implements Serializable {
     private String nome;
     private String email;
 
+    public Motorista(){
+    }
     public Motorista(String nome, String email) {
         this.nome = nome;
         this.email = email;
@@ -30,7 +32,7 @@ public class Motorista implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.Motorista{" +
+        return "Motorista{" +
                 "nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';

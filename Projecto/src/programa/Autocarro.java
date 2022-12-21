@@ -9,6 +9,9 @@ public class Autocarro implements Serializable {
     private String marca;
     private String modelo;
 
+    public Autocarro() {
+    }
+
     public Autocarro(int lotacao, String matricula, String marca, String modelo) {
         this.lotacao = lotacao;
         this.matricula = matricula;
@@ -51,7 +54,7 @@ public class Autocarro implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.Autocarro{" +
+        return "Autocarro{" +
                 "lotacao=" + lotacao +
                 ", matricula='" + matricula + '\'' +
                 ", marca='" + marca + '\'' +

@@ -53,7 +53,7 @@ public class CartaoCredito extends Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.CartaoCredito{" +
+        return "CartaoCredito{" +
                 "numeroCartao=" + numeroCartao +
                 ", nomeClienteCartao='" + nomeClienteCartao + '\'' +
                 ", dataExpiracao=" + dataExpiracao +

@@ -35,7 +35,7 @@ public class Administrador extends Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.Administrador{" +
+        return "Administrador{" +
                 "email='" + email + '\'' +
                 ", palavraChave='" + palavraChave + '\'' +
                 ", nome='" + nome + '\'' +

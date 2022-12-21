@@ -16,6 +16,8 @@ public class Reserva implements Serializable {
     private String localPartida;
     private String localDestino;
     private int distancia;
+
+    private LocalDate dataFim;
     private double custo; // não pode estar o construtor
 
 
@@ -30,6 +32,8 @@ public class Reserva implements Serializable {
         this.localPartida = localPartida;
         this.localDestino = localDestino;
         this.distancia = distancia;
+        dataFim=dataPartida.plusDays(numeroDias);//calcula data fim do periodo de reserva pretendido
+
     }
 
     public Cliente getCliente() {
@@ -59,6 +63,10 @@ public class Reserva implements Serializable {
 
     public LocalDate getDataReserva() {
         return dataReserva;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
     }
 
     public void setDataReserva(LocalDate dataReserva) {
@@ -121,7 +129,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.Reserva{" +
+        return "Reserva{" +
                 "cliente=" + cliente +
                 ", autocarro=" + autocarro +
                 ", motorista=" + motorista +

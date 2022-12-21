@@ -11,7 +11,7 @@ public abstract class Utilizador implements Serializable {
     protected String morada;
     protected int telefone;
     protected String id;
-//Fostes
+    //Fostes
     public Utilizador(String email, String palavraChave, String nome, int nif, String morada, int telefone) {
         this.email = email;
         this.palavraChave = palavraChave;
@@ -19,7 +19,7 @@ public abstract class Utilizador implements Serializable {
         this.nif = nif;
         this.morada = morada;
         this.telefone = telefone;
-       // this.id = id;
+        // this.id = id;
     }
 
     public String getEmail() {
@@ -73,7 +73,7 @@ public abstract class Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "programa.Utilizador{" +
+        return "Utilizador{" +
                 "email='" + email + '\'' +
                 ", palavraChave='" + palavraChave + '\'' +
                 ", nome='" + nome + '\'' +
@@ -92,7 +92,7 @@ public abstract class Utilizador implements Serializable {
             if(email2[i].equals("@")) {
                 for (int j = i;j<email2.length;j++) {
                     if(email2[j].equals(".")) {
-                       validar = true;
+                        validar = true;
                     }
                 }
             }
@@ -108,15 +108,4 @@ public abstract class Utilizador implements Serializable {
         System.out.println("Foi enviado para seu email" + email + " uma nova palavra-passe");
         System.out.println("Volte a fazer o login com a nova palavra-passe");
     }
-
-
-
-
-
-
-
-
-
-
-
 }

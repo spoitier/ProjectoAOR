@@ -1,6 +1,7 @@
 package programa;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Pagamento implements Serializable
 {
@@ -22,7 +23,7 @@ public class Pagamento implements Serializable
 
     @Override
     public String toString() {
-        return "programa.Pagamento{" +
+        return "Pagamento{" +
                 "reserva=" + reserva +
                 '}';
     }
