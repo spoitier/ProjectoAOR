@@ -1,5 +1,6 @@
 package programa;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -17,6 +18,17 @@ public class Aor_Autocarro implements Serializable {
     ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
 
+    public void gravarFicheiro(){
+        try {
+            FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+
+        fdo.abreEscrita("Aor_Autocarro");
+        fdo.escreveObjeto(this);
+        fdo.fechaEscrita();}
+        catch (IOException e){
+            System.out.println("Erro"+e);
+        }
+    }
     public void addUtilizador(Utilizador utilizador) {
         utilizadores.add(utilizador);
     }
@@ -89,7 +101,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Efetuar reserva de autocarro pelo cliente:
-    public String efetuarReserva(Cliente cliente, LocalDate dataReq, int nDias, int nPessoas, String partida, String destino, int distancia) {
+    public String efetuarReserva(Cliente cliente, LocalDate dataReq, int nDias, int nPessoas, String partida, String destino, int distancia) throws IOException {
         String resultadoReserva = null;
         ArrayList<Autocarro> autDisponiveis = new ArrayList<>();
         ArrayList<Reserva> reservasAlvo = new ArrayList<>();
@@ -182,6 +194,7 @@ public class Aor_Autocarro implements Serializable {
                 reservasemEspera.add(reserva3);
             }
         }
+        gravarFicheiro();
         return resultadoReserva;
     }
 
@@ -302,7 +315,7 @@ public class Aor_Autocarro implements Serializable {
         LocalDate hoje = LocalDate.now(); //data de hoje
 
         for (Reserva resEspera : reservasemEspera) {
-            if (resEspera.getNumeroPessoas() >= reserva.getAutocarro().getLotacao()) {
+            if (resEspera.getNumeroPessoas() <= reserva.getAutocarro().getLotacao()) {
                 if ((resEspera.getDataPartida().isEqual(reserva.getDataPartida())) &&
                         (resEspera.getDataPartida().isBefore(reserva.getDataFim())) &&
                         (resEspera.getDataFim().isBefore(reserva.getDataFim()))) {

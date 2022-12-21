@@ -6,6 +6,16 @@ import java.time.LocalDate;
 
 public class Main {
 
+    Aor_Autocarro guedes = new Aor_Autocarro();
+
+
+    public void Aor_Autocarroleficheiro() throws IOException,ClassNotFoundException{
+        FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+        fdo.abreLeitura("Aor_Autocarro");
+        guedes = (Aor_Autocarro) fdo.leObjeto();
+        fdo.fechaLeitura();
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         Administrador adm1 = new Administrador("rodrigo@gmail.com", "12345", "Rodrigo", 12345, "Rua 3", 91242342 );
@@ -52,19 +62,6 @@ public class Main {
         System.out.println(guedes.identificarTipoPagamento(r1));
 
 
-      /*public static void gravarFicheiro (Aor_Autocarro guedes) throws IOException{
-      FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-      fdo.abreEscrita("Aor_Autocarro");
-      fdo.escreveObjeto(guedes);
-      fdo.fechaEscrita();
-      }
-
-      public static void Aor_Autocarro leficheiro() throws IOException,ClassNotFoundException{
-      FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-      fdo.abreLeitura("Aor_Autocarro");
-      guedes = (Aor_Autocarro) fdo.leObjeto();
-      fdo.fechaLeitura();
-      }*/
 
     }
 }
