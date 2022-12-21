@@ -103,11 +103,6 @@ public class Login extends JPanel implements ActionListener {
                 }
             }
         }
-        if (validar == true) {
-            System.out.println("Email valido");
-        } else {
-            System.out.println("Email invalido");
-        }
         return validar;
     }
 

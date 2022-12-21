@@ -9,11 +9,19 @@ public class Main {
     Aor_Autocarro guedes = new Aor_Autocarro();
 
 
-    public void Aor_Autocarroleficheiro() throws IOException,ClassNotFoundException{
+
+    public static void gravarFicheiro(Aor_Autocarro guedes) throws IOException,ClassNotFoundException{
+        FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+        fdo.abreEscrita("Aor_Autocarro");
+        fdo.escreveObjeto(guedes);
+        fdo.fechaEscrita();
+    }
+    public static Aor_Autocarro leficheiro() throws IOException,ClassNotFoundException{
         FicheiroDeObjectos fdo = new FicheiroDeObjectos();
         fdo.abreLeitura("Aor_Autocarro");
-        guedes = (Aor_Autocarro) fdo.leObjeto();
+        Aor_Autocarro guedes = (Aor_Autocarro) fdo.leObjeto();
         fdo.fechaLeitura();
+        return guedes;
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -54,12 +62,16 @@ public class Main {
         guedes.reservas.add(r1);
         //System.out.println(guedes.listaPagamentos);
 
+        System.out.println(guedes.validarRegisto("maria@gmail.com","123456"));
 
 
 
         // guedes.validarRegisto(adm1.getEmail(), adm2.palavraChave);
 
         System.out.println(guedes.identificarTipoPagamento(r1));
+
+        gravarFicheiro(guedes);
+        leficheiro();
 
 
 
