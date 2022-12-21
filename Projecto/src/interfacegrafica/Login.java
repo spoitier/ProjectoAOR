@@ -127,7 +127,8 @@ public class Login extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Login Invalido!");
 
             }
-        } if(ae.getActionCommand().equals("Registar Novo Utilizador")) {
+        }
+        if(ae.getActionCommand().equals("Registar Novo Utilizador")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
     }

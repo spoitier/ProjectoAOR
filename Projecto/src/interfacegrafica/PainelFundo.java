@@ -77,7 +77,6 @@ public class PainelFundo {
         fdo.fechaLeitura();
     }
 
-    //Rodrigo , não mexer
     public void mudaEcra(String ecra) {
 
         layout.show(painelPrincipal,ecra);

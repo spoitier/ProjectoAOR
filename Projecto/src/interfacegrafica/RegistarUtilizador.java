@@ -1,9 +1,14 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.Cliente;
+import programa.Utilizador;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class RegistarUtilizador extends JPanel implements ActionListener {
 
@@ -11,7 +16,14 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     JButton prosseguirButton;
     JButton retrocessoButton;
 
+    Aor_Autocarro aor_autocarro;
 
+    JTextField nomeField;
+    JTextField nifField;
+    JTextField moradaField;
+    JTextField telefoneField;
+    JTextField emailField;
+    JTextField palavraChaveField;
 
 
     public RegistarUtilizador(PainelFundo painelfundo) {
@@ -60,17 +72,17 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         palavraChaveLabel.setBounds(50, 250, 200, 30);
 
         //Fields
-        JTextField nomeField = new JTextField();
+        nomeField = new JTextField();
         nomeField.setBounds(150, 50, 200, 30);
-        JTextField nifField = new JTextField();
+        nifField = new JTextField();
         nifField.setBounds(150, 90, 200, 30);
-        JTextField moradaField = new JTextField();
+        moradaField = new JTextField();
         moradaField.setBounds(150, 130, 200, 30);
-        JTextField telefoneField = new JTextField();
+        telefoneField = new JTextField();
         telefoneField.setBounds(150, 170, 200, 30);
-        JTextField emailField = new JTextField();
+        emailField = new JTextField();
         emailField.setBounds(150, 210, 200, 30);
-        JTextField palavraChaveField = new JTextField();
+        palavraChaveField = new JTextField();
         palavraChaveField.setBounds(150, 250, 200, 30);
 
         formulario.add(nomeLabel);
@@ -100,17 +112,21 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         this.add(prosseguirButton);
 
 
-    }
 
+
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Prosseguir")) {
+            aor_autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
+                    moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
 
 
-            painelFundo.mudaEcra("PlanoSubscrição");
-        } else if (e.getActionCommand().equals("Retrocesso")) {
-            painelFundo.mudaEcra("Login");
         }
+
+
+        painelFundo.mudaEcra("PlanoSubscrição");
+
     }
 
 

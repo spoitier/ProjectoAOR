@@ -351,10 +351,9 @@ public class Aor_Autocarro implements Serializable {
     //- verifica tipo de subscrição do cliente
     //- verifica se tem direito a reembolso
     //- adiciona notificação à lista de notificações do cliente
-    public void cancelarReservasporAdministrador(int nifCliente) {
-        LocalDate hoje = LocalDate.now(); //data de hoje
+    public void cancelarReservasporAdministrador(int nifCliente) {        LocalDate hoje = LocalDate.now(); //data de hoje
         for (Reserva res : reservas) {
-            if (res.getCliente().getNif() == nifCliente) {
+            if (res.getCliente().getNif().equals(nifCliente)) {
                 //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
                 reservas.remove(res);
                 reservasCanceladas.add(res);
