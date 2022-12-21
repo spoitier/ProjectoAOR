@@ -1,5 +1,8 @@
 package interfacegrafica;
 
+import programa.Utilizador;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +11,12 @@ import java.awt.event.ActionListener;
 
 public class Login extends JPanel implements ActionListener {
 
+    Utilizador utilizador;
     PainelFundo painelFundo;
+    TextField emailField;
+    JPasswordField palavraChaveField;
+    JButton botaoautenticar;
+    JButton botaoregistar;
 
 
     public Login(PainelFundo painelfundo) {
@@ -47,19 +55,19 @@ public class Login extends JPanel implements ActionListener {
         palavraChave.setBounds(30, 100, 100, 30);
 
         // Textofield do email
-        TextField emailField = new TextField("Escreve aqui o seu email");
+        emailField = new TextField();
         emailField.setBounds(150, 50, 170, 30);
 
         // Textofield da palavrachave
-        JPasswordField PalavraChaveField = new JPasswordField("Escreve aqui a sua Palavra-Chave");
-        PalavraChaveField.setBounds(150, 100, 170, 30);
+        palavraChaveField = new JPasswordField();
+        palavraChaveField.setBounds(150, 100, 170, 30);
 
         //Botão de auntenticar
-        JButton botaoautenticar = new JButton("Autenticar");
+        botaoautenticar = new JButton("Autenticar");
         botaoautenticar.setBounds(20, 160, 300, 30);
 
         //Botao de Registar programa.Utilizador
-        JButton botaoregistar = new JButton("Registar Novo programa.Utilizador");
+        botaoregistar = new JButton("Registar Novo Utilizador");
         botaoregistar.setBounds(275, 400, 350, 50);
 
         // Adicionar componentes ao painel
@@ -67,7 +75,7 @@ public class Login extends JPanel implements ActionListener {
         loginPanel.add(email);
         loginPanel.add(palavraChave);
         loginPanel.add(emailField);
-        loginPanel.add(PalavraChaveField);
+        loginPanel.add(palavraChaveField);
         loginPanel.add(botaoautenticar);
 
 
@@ -78,19 +86,47 @@ public class Login extends JPanel implements ActionListener {
 
         // Adicionar ao Listener
         botaoregistar.addActionListener(this);
+        botaoautenticar.addActionListener(this);
 
 
     }
 
+    public boolean validarEmail(String email) {
+        boolean validar = false;
+        String[] email2 = email.split("");
+        for (int i = 0; i < email2.length; i++) {
+            if (email2[i].equals("@")) {
+                for (int j = i; j < email2.length; j++) {
+                    if (email2[j].equals(".")) {
+                        validar = true;
+                    }
+                }
+            }
+        }
+        if (validar == true) {
+            System.out.println("Email valido");
+        } else {
+            System.out.println("Email invalido");
+        }
+        return validar;
+    }
+
     //*******************************************
     //Eventos
-
+    @Override
     public void actionPerformed(ActionEvent ae) {
+        String email = emailField.getText();
+        char[] password = palavraChaveField.getPassword();
+        if (ae.getActionCommand().equals("Autenticar")) {
+            if (validarEmail(email)){
+                JOptionPane.showMessageDialog(null, "Login com Sucesso! " + email);
 
-        painelFundo.mudaEcra("RegistarUtilizador");
+            } else{
+                JOptionPane.showMessageDialog(null, "Login Invalido!");
 
-        {
-
+            }
+        } if(ae.getActionCommand().equals("Registar Novo Utilizador")) {
+            painelFundo.mudaEcra("RegistarUtilizador");
         }
     }
 }

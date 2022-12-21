@@ -7,7 +7,6 @@ public class Main {
 
         PainelFundo painelFundo = new PainelFundo();
 
-        ReservaViagem clienteframe = new ReservaViagem(painelFundo);
 
 
 

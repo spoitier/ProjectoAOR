@@ -59,7 +59,7 @@ public class PainelFundo {
 
         f.getContentPane().add(painelPrincipal);
 
-        layout.show(painelPrincipal,"AlterarPalavraChaveAdmin");
+
 
 
 
