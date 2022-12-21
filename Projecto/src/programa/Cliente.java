@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class Cliente extends Utilizador implements Serializable {
     private String id;
 
     private ArrayList<Notificação> notificações=new ArrayList<>();
-    private char tipoCliente; //Cliente Premium ou Cliente Normal
+    private char tipoCliente; //programa.Cliente Premium ou programa.Cliente Normal
     private LocalDate data; // Data da subscrição, nova ou alterada
 
     public Cliente(String email, String palavraChave, String nome, int nif, String morada, int telefone, char tipoCliente, LocalDate data) {
@@ -26,7 +28,7 @@ public class Cliente extends Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "programa.Cliente{" +
                 "id='" + id + '\'' +
                 ", tipoCliente=" + tipoCliente +
                 ", data=" + data +

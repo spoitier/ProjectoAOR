@@ -58,8 +58,8 @@ public class Login extends JPanel implements ActionListener {
         JButton botaoautenticar = new JButton("Autenticar");
         botaoautenticar.setBounds(20, 160, 300, 30);
 
-        //Botao de Registar Utilizador
-        JButton botaoregistar = new JButton("Registar Novo Utilizador");
+        //Botao de Registar programa.Utilizador
+        JButton botaoregistar = new JButton("Registar Novo programa.Utilizador");
         botaoregistar.setBounds(275, 400, 350, 50);
 
         // Adicionar componentes ao painel

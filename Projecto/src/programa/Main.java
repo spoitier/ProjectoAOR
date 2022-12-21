@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -48,12 +50,12 @@ public class Main {
 
 
       FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-      fdo.abreEscrita("Aor_Autocarro");
+      fdo.abreEscrita("programa.Aor_Autocarro");
       fdo.escreveObjeto(guedes);
       fdo.fechaEscrita();
 
-      //FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-      fdo.abreLeitura("Aor_Autocarro");
+      //programa.FicheiroDeObjectos fdo = new programa.FicheiroDeObjectos();
+      fdo.abreLeitura("programa.Aor_Autocarro");
       guedes = (Aor_Autocarro) fdo.leObjeto();
       fdo.fechaLeitura();
 

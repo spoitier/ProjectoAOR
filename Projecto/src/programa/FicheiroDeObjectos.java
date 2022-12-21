@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.*;
 
 public class FicheiroDeObjectos {

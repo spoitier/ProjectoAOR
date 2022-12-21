@@ -24,7 +24,7 @@ public class CartaoCredito  extends JPanel {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -43,7 +43,7 @@ public class CartaoCredito  extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");
@@ -59,7 +59,7 @@ public class CartaoCredito  extends JPanel {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Realizar reserva de Autocarro:\n");
+        JLabel segundoTitulo =new JLabel("Realizar reserva de programa.Autocarro:\n");
         segundoTitulo.setBounds(50,100,900,30);
         this.add(segundoTitulo);
 
@@ -78,7 +78,7 @@ public class CartaoCredito  extends JPanel {
         this.add(custoViagem);
 
         //===========================================
-        //Paypal
+        //programa.Paypal
 
         JPanel pagamentoPanel= new JPanel(new GridLayout(2,1,0,15));
         pagamentoPanel.setBounds(200,150,350,100);
@@ -99,7 +99,7 @@ public class CartaoCredito  extends JPanel {
         numeroCartao.setBounds(0, 25, 80, 30);
 
         //Label do nome cliente
-        JLabel nomeCliente = new JLabel("Nome do Cliente do cartão:\n");
+        JLabel nomeCliente = new JLabel("Nome do programa.Cliente do cartão:\n");
         nomeCliente.setBounds(0, 75, 200, 30);
 
         //Label do nome cliente

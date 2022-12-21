@@ -27,7 +27,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -47,7 +47,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");
@@ -63,7 +63,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Realizar reserva de Autocarro:\n");
+        JLabel segundoTitulo =new JLabel("Realizar reserva de programa.Autocarro:\n");
         segundoTitulo.setBounds(50,100,900,30);
         this.add(segundoTitulo);
 

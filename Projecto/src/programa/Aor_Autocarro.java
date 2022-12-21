@@ -1,5 +1,6 @@
+package programa;
+
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Aor_Autocarro implements Serializable {
@@ -43,7 +44,7 @@ public class Aor_Autocarro implements Serializable {
 
     @Override
     public String toString() {
-        return "Aor_Autocarro{" +
+        return "programa.Aor_Autocarro{" +
                 "utilizadores=" + utilizadores +
                 ", reservas=" + reservas +
                 ", motoristas=" + motoristas +
@@ -65,13 +66,13 @@ public class Aor_Autocarro implements Serializable {
         }
     }
 
-    /*public String verificarAutocarroDisponivel(Cliente cliente, int nDias, LocalDate data, int nPessoas) {
+    /*public String verificarAutocarroDisponivel(programa.Cliente cliente, int nDias, LocalDate data, int nPessoas) {
 
         boolean disponivel;
         LocalDate datafim = data.plusDays(nDias);
 
-        for (Autocarro bus : autocarros) {
-            for (Reserva res : reservas) {
+        for (programa.Autocarro bus : autocarros) {
+            for (programa.Reserva res : reservas) {
                 if (res.getDataPartida().isAfter(data) || res.getDataPartida().isEqual(data) ||
                         res.getDataPartida().isBefore(datafim)) {
                 }

@@ -24,7 +24,7 @@ public class HistoricoReservas extends JPanel {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -43,7 +43,7 @@ public class HistoricoReservas extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");
@@ -79,7 +79,7 @@ public class HistoricoReservas extends JPanel {
         //========================================
         // Tabela
 
-        String [] colunas = {"Nº Reserva","Data Aluguer","NºDias","NºPessoas",
+        String [] colunas = {"Nº programa.Reserva","Data Aluguer","NºDias","NºPessoas",
         "Local Partida","Local Destino","Custo total Viagem","Estado"};
 
         String [][] data = {{"111","19/12/2022","15","30","Coimbra","Lisboa","50","Pendente"}

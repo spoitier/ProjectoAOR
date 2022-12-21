@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 
 public abstract class Utilizador implements Serializable {
@@ -71,7 +73,7 @@ public abstract class Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "Utilizador{" +
+        return "programa.Utilizador{" +
                 "email='" + email + '\'' +
                 ", palavraChave='" + palavraChave + '\'' +
                 ", nome='" + nome + '\'' +

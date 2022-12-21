@@ -1,5 +1,6 @@
+package programa;
+
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Multibanco extends Pagamento implements Serializable {
 
@@ -41,7 +42,7 @@ public class Multibanco extends Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Multibanco{" +
+        return "programa.Multibanco{" +
                 "entidade=" + entidade +
                 ", referencia=" + referencia +
                 ", montante=" + montante +

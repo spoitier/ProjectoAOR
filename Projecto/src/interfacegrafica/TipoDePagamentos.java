@@ -22,7 +22,7 @@ public class TipoDePagamentos extends JPanel {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -41,7 +41,7 @@ public class TipoDePagamentos extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");
@@ -57,7 +57,7 @@ public class TipoDePagamentos extends JPanel {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Realizar reserva de Autocarro:\n");
+        JLabel segundoTitulo =new JLabel("Realizar reserva de programa.Autocarro:\n");
         segundoTitulo.setBounds(50,100,900,30);
         this.add(segundoTitulo);
 
@@ -75,14 +75,14 @@ public class TipoDePagamentos extends JPanel {
         custoViagem.add(valorViagem);
         this.add(custoViagem);
 
-        //Botoes de Pagamento
+        //Botoes de programa.Pagamento
 
         JPanel pagamentoPanel= new JPanel(new GridLayout(4,1,0,30));
         pagamentoPanel.setBounds(200,200,400,350);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
         JButton paypalButton = new JButton("PayPAL");
         JButton cartaoCreditoButton = new JButton("Cartão de Crédito");
-        JButton MultibancoButton = new JButton("Multibanco");
+        JButton MultibancoButton = new JButton("programa.Multibanco");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(paypalButton);
         pagamentoPanel.add(cartaoCreditoButton);

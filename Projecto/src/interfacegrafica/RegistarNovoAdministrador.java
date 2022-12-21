@@ -60,7 +60,7 @@ public class RegistarNovoAdministrador  extends JPanel {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Registar Novo Administrador: ");
+        JLabel segundoTitulo =new JLabel("Registar Novo programa.Administrador: ");
         segundoTitulo.setBounds(50,100,900,30);
         this.add(segundoTitulo);
 

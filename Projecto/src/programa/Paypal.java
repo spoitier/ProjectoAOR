@@ -1,5 +1,6 @@
+package programa;
+
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Paypal extends Pagamento implements Serializable
 {
@@ -30,7 +31,7 @@ public class Paypal extends Pagamento implements Serializable
 
     @Override
     public String toString() {
-        return "Paypal{" +
+        return "programa.Paypal{" +
                 "email='" + email + '\'' +
                 ", palavraChave='" + palavraChave + '\'' +
                 ", reserva=" + reserva +

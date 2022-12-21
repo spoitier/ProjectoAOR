@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -51,7 +53,7 @@ public class CartaoCredito extends Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "CartaoCredito{" +
+        return "programa.CartaoCredito{" +
                 "numeroCartao=" + numeroCartao +
                 ", nomeClienteCartao='" + nomeClienteCartao + '\'' +
                 ", dataExpiracao=" + dataExpiracao +

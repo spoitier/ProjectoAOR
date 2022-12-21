@@ -153,7 +153,7 @@ public class Estatistica  extends JPanel {
         abasPanel.add("Total Autocarros",totalAutocarrosPanel);
 
         //===============================================================
-        //Aba total Autocarro mais Requisitado
+        //Aba total programa.Autocarro mais Requisitado
         JPanel autocarroMaisRequisitado = new JPanel();
         autocarroMaisRequisitado.setLayout(null);
 
@@ -170,7 +170,7 @@ public class Estatistica  extends JPanel {
         botoesFiltroRequisitado.add(mesFieldRequisitado);
         JPanel totalRequisitado = new JPanel(new GridLayout(1,2,0,0));
         totalRequisitado.setBounds(200,350,400,15);
-        JLabel totalRequisitadoLabel = new JLabel("Autocarro mais requisitado");
+        JLabel totalRequisitadoLabel = new JLabel("programa.Autocarro mais requisitado");
         JLabel totalRequisitadoPreenchidoLabel = new JLabel("Preenchido");
         totalRequisitado.add(totalRequisitadoLabel);
         totalRequisitado.add(totalRequisitadoPreenchidoLabel);
@@ -178,11 +178,11 @@ public class Estatistica  extends JPanel {
         autocarroMaisRequisitado.add(totalRequisitado);
         autocarroMaisRequisitado.add(botoesFiltroRequisitado);
 
-        abasPanel.add("Autocarro mais requisitado",autocarroMaisRequisitado);
+        abasPanel.add("programa.Autocarro mais requisitado",autocarroMaisRequisitado);
 
 
         //===================================================
-        //Cliente com mais viagens
+        //programa.Cliente com mais viagens
 
         JPanel totalViagensPanel = new JPanel();
         totalViagensPanel.setLayout(null);
@@ -200,14 +200,14 @@ public class Estatistica  extends JPanel {
         botoesFiltroViagens.add(mesFieldViagens);
         JPanel totalViagens = new JPanel(new GridLayout(1,2,0,0));
         totalViagens.setBounds(150,350,400,15);
-        JLabel totalViagensLabel = new JLabel("Cliente com mais viagens");
+        JLabel totalViagensLabel = new JLabel("programa.Cliente com mais viagens");
         JLabel totalViagensPreenchidoLabel = new JLabel("Preenchido");
         totalViagens.add(totalViagensLabel);
         totalViagens.add(totalViagensPreenchidoLabel);
 
         totalViagensPanel.add(totalViagens);
         totalViagensPanel.add(botoesFiltroViagens);
-        abasPanel.add("Cliente com mais viagens",totalViagensPanel);
+        abasPanel.add("programa.Cliente com mais viagens",totalViagensPanel);
 
         //==========================================================================
         //Autocarros Reservados
@@ -258,7 +258,7 @@ public class Estatistica  extends JPanel {
         botoesFiltroCanceladas.add(mesFieldCanceladas);
 
         //Tabela
-        String [] colunasCanceladas = {"Matricula","Data Partida","Data Chegada","Cliente","Motorista"};
+        String [] colunasCanceladas = {"Matricula","Data Partida","Data Chegada","programa.Cliente","programa.Motorista"};
 
         String [][] dataCanceladas = {{"","","","",""}
                 ,{"","","","",""}};
@@ -285,7 +285,7 @@ public class Estatistica  extends JPanel {
         botoesFiltroReservas.add(mesFieldReservas);
 
         //Tabela
-        String [] colunasReservas = {"Cliente","Data Partida","Data Chegada","Passageiros","Autocarro"};
+        String [] colunasReservas = {"programa.Cliente","Data Partida","Data Chegada","Passageiros","programa.Autocarro"};
 
         String [][] dataReservas = {{"","","","",""}
                 ,{"","","","",""}};

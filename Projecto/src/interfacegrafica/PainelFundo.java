@@ -34,8 +34,8 @@ public class PainelFundo {
         painelPrincipal.add(new ReservaViagem(this),"ClienteFrame");
         painelPrincipal.add(new TipoDePagamentos(this),"ClienteFrame2");
         painelPrincipal.add(new PayPal(this),"PayPal");
-        painelPrincipal.add(new CartaoCredito(this),"CartaoCredito");
-        painelPrincipal.add(new Multibanco(this),"Multibanco");
+        painelPrincipal.add(new CartaoCredito(this),"programa.CartaoCredito");
+        painelPrincipal.add(new Multibanco(this),"programa.Multibanco");
         painelPrincipal.add(new HistoricoReservas(this),"HistoricoReservas");
         painelPrincipal.add(new ConsultarReservas(this),"ConsultarReservas");
         painelPrincipal.add(new CancelarReserva(this),"CancelarReserva");

@@ -23,7 +23,7 @@ public class AlterarPalavraChaveCliente extends JPanel {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -42,7 +42,7 @@ public class AlterarPalavraChaveCliente extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");

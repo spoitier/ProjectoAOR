@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 
 public class Administrador extends Utilizador implements Serializable {
@@ -33,7 +35,7 @@ public class Administrador extends Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "Administrador{" +
+        return "programa.Administrador{" +
                 "email='" + email + '\'' +
                 ", palavraChave='" + palavraChave + '\'' +
                 ", nome='" + nome + '\'' +

@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -119,7 +121,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "Reserva{" +
+        return "programa.Reserva{" +
                 "cliente=" + cliente +
                 ", autocarro=" + autocarro +
                 ", motorista=" + motorista +

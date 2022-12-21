@@ -1,3 +1,5 @@
+package programa;
+
 import java.io.Serializable;
 
 public class Motorista implements Serializable {
@@ -28,7 +30,7 @@ public class Motorista implements Serializable {
 
     @Override
     public String toString() {
-        return "Motorista{" +
+        return "programa.Motorista{" +
                 "nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';
