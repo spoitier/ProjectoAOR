@@ -26,7 +26,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         JLabel tituloPrimario = new JLabel("AOR-AUTOCARROS");
         tituloPrimario.setBounds(0, 20, 300, 30);
 
-        JLabel tituloSecundario = new JLabel("Registar Novo programa.Utilizador:\n");
+        JLabel tituloSecundario = new JLabel("Registar Novo Utilizador:\n");
         tituloSecundario.setBounds(0, 70, 300, 30);
 
         retrocessoButton = new JButton("Retrocesso");

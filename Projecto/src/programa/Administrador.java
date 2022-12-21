@@ -11,7 +11,7 @@ public class Administrador extends Utilizador implements Serializable {
 
 
 
-    public Administrador(String email, String palavraChave, String nome, int nif, String morada, int telefone) {
+    public Administrador(String email, String palavraChave, String nome, String nif, String morada, String telefone) {
         super(email, palavraChave, nome, nif, morada, telefone);
         this.palavraChave = getPalavraChave();
         id = "admin".concat(String.valueOf(Administrador.contador));

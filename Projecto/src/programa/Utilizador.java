@@ -7,12 +7,12 @@ public abstract class Utilizador implements Serializable {
     protected String email;
     protected String palavraChave;
     protected String nome;
-    protected int nif;
+    protected String nif;
     protected String morada;
-    protected int telefone;
+    protected String telefone;
     protected String id;
     //Fostes
-    public Utilizador(String email, String palavraChave, String nome, int nif, String morada, int telefone) {
+    public Utilizador(String email, String palavraChave, String nome, String nif, String morada, String telefone) {
         this.email = email;
         this.palavraChave = palavraChave;
         this.nome = nome;
@@ -44,11 +44,11 @@ public abstract class Utilizador implements Serializable {
         this.nome = nome;
     }
 
-    public int getNif() {
+    public String getNif() {
         return nif;
     }
 
-    public void setNif(int nif) {
+    public void setNif(String nif) {
         this.nif = nif;
     }
 
@@ -60,30 +60,21 @@ public abstract class Utilizador implements Serializable {
         this.morada = morada;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-
-
-
-    @Override
-    public String toString() {
-        return "Utilizador{" +
-                "email='" + email + '\'' +
-                ", palavraChave='" + palavraChave + '\'' +
-                ", nome='" + nome + '\'' +
-                ", nif=" + nif +
-                ", morada='" + morada + '\'' +
-                ", telefone=" + telefone +
-                ", id=" + id +
-                '}';
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void esqueceuPalavraPasse(String email) {
         System.out.println("Foi enviado para seu email" + email + " uma nova palavra-passe");
