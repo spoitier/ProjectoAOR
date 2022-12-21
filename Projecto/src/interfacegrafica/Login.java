@@ -118,6 +118,7 @@ public class Login extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         String email = emailField.getText();
         String password = palavraChaveField.getText();
+        System.out.println(password);
         if (ae.getActionCommand().equals("Autenticar")) {
             if ((aor_autocarro.validarRegisto(email,password )) ){
                 JOptionPane.showMessageDialog(null, "Login com Sucesso! " + email);
