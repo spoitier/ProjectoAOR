@@ -85,7 +85,7 @@ public abstract class Utilizador implements Serializable {
     }
 
     //Validar o email nos novos registos
-    public void validarEmail(String email) {
+    public boolean validarEmail(String email) {
         boolean validar = false;
         String  [] email2= email.split("");
         for ( int i =0;i<email2.length;i++) {
@@ -102,10 +102,12 @@ public abstract class Utilizador implements Serializable {
         } else {
             System.out.println("Email invalido");
         }
+        return validar;
     }
 
     public void esqueceuPalavraPasse(String email) {
         System.out.println("Foi enviado para seu email" + email + " uma nova palavra-passe");
         System.out.println("Volte a fazer o login com a nova palavra-passe");
     }
+
 }
