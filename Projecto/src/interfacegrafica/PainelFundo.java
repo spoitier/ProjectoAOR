@@ -1,10 +1,16 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.FicheiroDeObjectos;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 
 public class PainelFundo {
+
+    Aor_Autocarro guedes = new Aor_Autocarro();
 
     JFrame f;
     JPanel painelPrincipal;
@@ -53,44 +59,27 @@ public class PainelFundo {
 
 
 
-
-
-
-
         f.getContentPane().add(painelPrincipal);
-
-
-
-
-
 
 
         //layout.show(painelPrincipal,"Login"); NAO APAGAR, ESTA LINHA ESTÁ CORRECTA
 
 
-
-
-
-
-
-
-
-
-
-
-
         //painelPrincipal.add(new Login(this));
-
-
-
 
         f.setVisible(true);
 
     }
+    public void Aor_Autocarroleficheiro() throws IOException,ClassNotFoundException{
+        FicheiroDeObjectos fdo = new FicheiroDeObjectos();
+        fdo.abreLeitura("Aor_Autocarro");
+        guedes = (Aor_Autocarro) fdo.leObjeto();
+        fdo.fechaLeitura();
+    }
 
     public void mudaEcra(String ecra) {
 
-        layout.show(painelPrincipal,ecra);
+        layout.show(painelPrincipal,"Estatistica");
 
 
     }

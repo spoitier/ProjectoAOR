@@ -12,6 +12,8 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     JButton retrocessoButton;
 
 
+
+
     public RegistarUtilizador(PainelFundo painelfundo) {
         this.painelFundo = painelfundo;
         this.setLayout(null);
@@ -103,6 +105,8 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Prosseguir")) {
+
+
             painelFundo.mudaEcra("PlanoSubscrição");
         } else if (e.getActionCommand().equals("Retrocesso")) {
             painelFundo.mudaEcra("Login");

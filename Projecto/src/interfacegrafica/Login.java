@@ -1,5 +1,6 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
 import programa.Utilizador;
 
 
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class Login extends JPanel implements ActionListener {
 
-    Utilizador utilizador;
+    Aor_Autocarro aor_autocarro = new Aor_Autocarro();
     PainelFundo painelFundo;
     TextField emailField;
     JPasswordField palavraChaveField;
@@ -103,6 +104,11 @@ public class Login extends JPanel implements ActionListener {
                 }
             }
         }
+        if (validar == true) {
+            System.out.println("Email valido");
+        } else {
+            System.out.println("Email invalido");
+        }
         return validar;
     }
 
@@ -111,9 +117,9 @@ public class Login extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         String email = emailField.getText();
-        char[] password = palavraChaveField.getPassword();
+        String password = palavraChaveField.getText();
         if (ae.getActionCommand().equals("Autenticar")) {
-            if (validarEmail(email)){
+            if ((aor_autocarro.validarRegisto(email,password )) ){
                 JOptionPane.showMessageDialog(null, "Login com Sucesso! " + email);
 
             } else{
