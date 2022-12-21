@@ -76,7 +76,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Validar Registo de Login
-    public boolean validarRegisto(String email, String palavraChave) {
+    public boolean validarRegisto(String email, char palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
