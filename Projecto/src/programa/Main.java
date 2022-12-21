@@ -15,6 +15,7 @@ public class Main {
         fdo.abreEscrita("Aor_Autocarro");
         fdo.escreveObjeto(guedes);
         fdo.fechaEscrita();
+
     }
     public static Aor_Autocarro leficheiro() throws IOException,ClassNotFoundException{
         FicheiroDeObjectos fdo = new FicheiroDeObjectos();
