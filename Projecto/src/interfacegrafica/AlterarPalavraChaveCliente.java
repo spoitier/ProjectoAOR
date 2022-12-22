@@ -2,10 +2,20 @@ package interfacegrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AlterarPalavraChaveCliente extends JPanel {
+public class AlterarPalavraChaveCliente extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    JButton opcao1 ;
+    JButton opcao2 ;
+    JButton opcao3 ;
+    JButton opcao4 ;
+    JButton opcao5;
+    JButton sairBotao;
+    JButton alterarPalavraChaveButton;
+
 
     public AlterarPalavraChaveCliente(PainelFundo painelFundo) {
         this.painelFundo = painelFundo;
@@ -28,7 +38,7 @@ public class AlterarPalavraChaveCliente extends JPanel {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        JButton sairBotao = new JButton("Sair");
+        sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -42,11 +52,11 @@ public class AlterarPalavraChaveCliente extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("programa.Reserva programa.Autocarro");
-        JButton opcao2 = new JButton("Histórico Reservas");
-        JButton opcao3 = new JButton("Consultar Reservas");
-        JButton opcao4 = new JButton("Cancelar Reservas");
-        JButton opcao5 = new JButton("Dados Pessoais");
+         opcao1 = new JButton("programa.Reserva programa.Autocarro");
+         opcao2 = new JButton("Histórico Reservas");
+         opcao3 = new JButton("Consultar Reservas");
+         opcao4 = new JButton("Cancelar Reservas");
+         opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -108,12 +118,49 @@ public class AlterarPalavraChaveCliente extends JPanel {
 
         this.add(formularioPanel);
 
-        JButton alterarPalavraChaveButton = new JButton("Alterar palavra chave");
+        alterarPalavraChaveButton = new JButton("Alterar palavra chave");
         alterarPalavraChaveButton.setBounds(650,225,200,30);
         this.add(alterarPalavraChaveButton);
+
+        opcao1.addActionListener(this);
+        opcao2.addActionListener(this);
+        opcao3.addActionListener(this);
+        opcao4.addActionListener(this);
+        opcao5.addActionListener(this);
+        sairBotao.addActionListener(this);
+        alterarPalavraChaveButton.addActionListener(this);
 
 
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("ReservaViagem")) {
+            painelFundo.mudaEcra("ReservaViagem");
+        }
+
+        if (e.getActionCommand().equals("Histórico Reservas")) {
+            painelFundo.mudaEcra("HistoricoReservas");
+        }
+
+        if (e.getActionCommand().equals("Consultar Reservas")) {
+            painelFundo.mudaEcra("ConsultarReservas");
+        }
+
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
+            painelFundo.mudaEcra("CancelarReserva");
+        }
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            painelFundo.mudaEcra("DadosPessoaisClientes");
+        }
+        if (e.getActionCommand().equals("Sair")) {
+            painelFundo.mudaEcra("Login");
+        }
+        if (e.getActionCommand().equals("Alterar palavra chave")) {
+        }
+
+
+
+    }
 }
