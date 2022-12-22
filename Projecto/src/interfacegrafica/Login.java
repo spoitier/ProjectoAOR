@@ -1,6 +1,7 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
 import programa.FicheiroDeObjectos;
 import programa.Utilizador;
 
@@ -15,8 +16,9 @@ import java.io.IOException;
 public class Login extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
+    Cliente cliente;
 
-    Utilizador utilizador;
+
     PainelFundo painelFundo;
     TextField emailField;
     JPasswordField palavraChaveField;
@@ -95,6 +97,21 @@ public class Login extends JPanel implements ActionListener {
 
 
     }
+    //====================================
+    //Codigo só funciona com metodo nesta classe
+    public boolean validarEmail(String email) {
+        boolean validar = false;
+        String[] email2 = email.split("");
+        for (int i = 0; i < email2.length; i++) {
+            if (email2[i].equals("@")) {
+                for (int j = i; j < email2.length; j++) {
+                    if (email2[j].equals(".")) {
+                        validar = true;
+                    }
+                }
+            }
+        }return validar;
+    }
 
 
 
@@ -102,11 +119,12 @@ public class Login extends JPanel implements ActionListener {
     //Eventos
     @Override
     public void actionPerformed(ActionEvent ae) {
+
         String email = emailField.getText();
         String password = new String(palavraChaveField.getPassword());//para transformar em string
 
         if (ae.getActionCommand().equals("Autenticar")) {
-            if ((utilizador.validarEmail(email))&&(aor_autocarro.validarRegisto(email,password ))){
+            if ((validarEmail(email))&&(aor_autocarro.validarRegisto(email,password ))){
                 JOptionPane.showMessageDialog(null, "Login efetuado com Sucesso! " + email);
                 if(aor_autocarro.verificarTipoUtilizador(email,password).equals("cliente")){
                     painelFundo.mudaEcra("ReservaViagem");

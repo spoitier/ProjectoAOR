@@ -6,6 +6,9 @@ import java.awt.*;
 public class AdicionarClientes extends JPanel {
     PainelFundo painelFundo;
 
+    JPanel jPanel;
+
+
 
     public  AdicionarClientes (PainelFundo painelFundo) {
         this.painelFundo =  painelFundo;

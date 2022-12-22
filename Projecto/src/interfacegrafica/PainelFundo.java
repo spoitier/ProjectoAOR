@@ -8,16 +8,18 @@ import java.awt.*;
 import java.io.IOException;
 
 
+
+
 public class PainelFundo {
 
-    Aor_Autocarro guedes = new Aor_Autocarro();
+    FicheiroDeObjectos ficheiroDeObjectos;
 
     JFrame f;
     JPanel painelPrincipal;
 
     CardLayout layout;
 
-    public PainelFundo() {
+    public PainelFundo(FicheiroDeObjectos ficheiroDeObjectos) throws IOException, ClassNotFoundException {
         f = new JFrame("AOR-Empresa");
         f.setSize(900, 700);
         f.setLayout(new CardLayout());
@@ -59,6 +61,9 @@ public class PainelFundo {
 
 
 
+
+
+
         f.getContentPane().add(painelPrincipal);
 
 
@@ -67,15 +72,12 @@ public class PainelFundo {
 
         //painelPrincipal.add(new Login(this));
 
+
         f.setVisible(true);
 
+
     }
-    public void Aor_Autocarroleficheiro() throws IOException,ClassNotFoundException{
-        FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-        fdo.abreLeitura("Aor_Autocarro");
-        guedes = (Aor_Autocarro) fdo.leObjeto();
-        fdo.fechaLeitura();
-    }
+
 
     public void mudaEcra(String ecra) {
 
