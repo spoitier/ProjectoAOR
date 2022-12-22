@@ -1,6 +1,7 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.FicheiroDeObjectos;
 import programa.Utilizador;
 
 
@@ -8,11 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 
 public class Login extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
+
+    Utilizador utilizador;
     PainelFundo painelFundo;
     TextField emailField;
     JPasswordField palavraChaveField;
@@ -92,37 +96,24 @@ public class Login extends JPanel implements ActionListener {
 
     }
 
-    public boolean validarEmail(String email) {
-        boolean validar = false;
-        String[] email2 = email.split("");
-        for (int i = 0; i < email2.length; i++) {
-            if (email2[i].equals("@")) {
-                for (int j = i; j < email2.length; j++) {
-                    if (email2[j].equals(".")) {
-                        validar = true;
-                    }
-                }
-            }
-        }
-        if (validar == true) {
-            System.out.println("Email valido");
-        } else {
-            System.out.println("Email invalido");
-        }
-        return validar;
-    }
+
 
     //*******************************************
     //Eventos
     @Override
     public void actionPerformed(ActionEvent ae) {
         String email = emailField.getText();
-        String password = palavraChaveField.getText();
-        System.out.println(password);
-        if (ae.getActionCommand().equals("Autenticar")) {
-            if ((aor_autocarro.validarRegisto(email,password )) ){
-                JOptionPane.showMessageDialog(null, "Login com Sucesso! " + email);
+        String password = new String(palavraChaveField.getPassword());//para transformar em string
 
+        if (ae.getActionCommand().equals("Autenticar")) {
+            if ((utilizador.validarEmail(email))&&(aor_autocarro.validarRegisto(email,password ))){
+                JOptionPane.showMessageDialog(null, "Login efetuado com Sucesso! " + email);
+                if(aor_autocarro.verificarTipoUtilizador(email,password).equals("cliente")){
+                    painelFundo.mudaEcra("ReservaViagem");
+                }
+                else if(aor_autocarro.verificarTipoUtilizador(email,password).equals("administrador")){
+                    painelFundo.mudaEcra("RegistarNovoAdministrador");
+                }
             } else{
                 JOptionPane.showMessageDialog(null, "Login Invalido!");
 

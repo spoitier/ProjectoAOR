@@ -15,9 +15,9 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     PainelFundo painelFundo;
     JButton prosseguirButton;
     JButton retrocessoButton;
-
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
 
+    Utilizador utilizador;
     JTextField nomeField;
     JTextField nifField;
     JTextField moradaField;
@@ -117,15 +117,34 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Verificar se há campos nulos
+        if(nomeField.getText().equals("")||nifField.getText().equals("")||
+                moradaField.getText().equals("")||telefoneField.getText().equals("")||
+                emailField.getText().equals("")||palavraChaveField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");}
+        //Verificar se email é válido
+        if(!utilizador.validarEmail(emailField.getText())){
+            JOptionPane.showMessageDialog(null, "Email inválido");}
+        //Verificar se o nome é constituído só por letras
+        if(!utilizador.validarNome(nomeField.getText())){
+            JOptionPane.showMessageDialog(null, "Nome inválido");}
+        //Verificar se o nif é constituído por 9 números
+        if(!utilizador.validarTlfeNif(nifField.getText())){
+        JOptionPane.showMessageDialog(null, "Nif inválido");}
+        //Verificar se o telefone é constituído por 9 números
+        if(!utilizador.validarTlfeNif(telefoneField.getText())){
+            JOptionPane.showMessageDialog(null, "NºTelefone inválido");}
+        //========================================================================================0
+        //Falta completar com verificação de duplicação de dados na nossa lista de utilizadores
+        //========================================================================================0
+
+
         if (e.getActionCommand().equals("Prosseguir")) {
             aor_autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
                     moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
             aor_autocarro.gravarFicheiro();
 
-
         }
-
-
         painelFundo.mudaEcra("PlanoSubscrição");
 
     }

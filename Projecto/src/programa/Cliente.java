@@ -14,6 +14,7 @@ public class Cliente extends Utilizador implements Serializable {
     private LocalDate data; // Data da subscrição, nova ou alterada
 
 
+
     public Cliente(String email, String palavraChave, String nome, String nif, String morada, String telefone, String tipoCliente, LocalDate data) {
         super(email, palavraChave, nome, nif, morada, telefone);
         this.tipoCliente = tipoCliente;

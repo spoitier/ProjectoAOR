@@ -90,6 +90,18 @@ public class Aor_Autocarro implements Serializable {
         } return validar;
     }
 
+    //Verificar tipo utilizador: Cliente ou Administrador
+    public String verificarTipoUtilizador(String email, String palavraChave){
+        String utilizador=null;
+        for(Utilizador user:utilizadores){
+            if(user instanceof Cliente){
+                utilizador="cliente";
+            }else{
+                utilizador="administrador";
+            }
+        }return utilizador;
+    }
+
     //Verifica se existe disponível a empresa algum autocarro com capacidade para o nºpessoas solicitadas
     public boolean verificarAutocarroLotaçao(int n_pessoas) {
         boolean existe = true;
