@@ -121,7 +121,11 @@ public class Login extends JPanel implements ActionListener {
     //Eventos
     @Override
     public void actionPerformed(ActionEvent ae) {
-
+        if (ae.getActionCommand().equals("Autenticar")){
+            painelFundo.mudaEcra("RegistarNovoAdministrador");
+    }
+        //Está comentado para facilitar a vida a colocar os botoes
+        /*
         String email = emailField.getText();
         String password = new String(palavraChaveField.getPassword());//para transformar em string
 
@@ -142,5 +146,9 @@ public class Login extends JPanel implements ActionListener {
         if(ae.getActionCommand().equals("Registar Novo Utilizador")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
+
+         */
     }
+
+
 }
