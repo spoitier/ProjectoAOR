@@ -16,7 +16,6 @@ import java.io.IOException;
 public class Login extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
-    Cliente cliente;
 
 
     PainelFundo painelFundo;
@@ -41,6 +40,7 @@ public class Login extends JPanel implements ActionListener {
         tituloPrincipal.setHorizontalAlignment(JLabel.CENTER);
         tituloPrincipal.setVerticalAlignment(JLabel.CENTER);
         mainPanel.add(tituloPrincipal);
+        this.add(mainPanel);
 
 
         //Painel do Login
@@ -76,6 +76,7 @@ public class Login extends JPanel implements ActionListener {
         //Botao de Registar programa.Utilizador
         botaoregistar = new JButton("Registar Novo Utilizador");
         botaoregistar.setBounds(275, 400, 350, 50);
+        this.add(botaoregistar);
 
         // Adicionar componentes ao painel
         loginPanel.add(login);
@@ -84,12 +85,13 @@ public class Login extends JPanel implements ActionListener {
         loginPanel.add(emailField);
         loginPanel.add(palavraChaveField);
         loginPanel.add(botaoautenticar);
+        this.add(loginPanel);
 
 
         //Adicionar paineis ao frame
-        this.add(mainPanel);
-        this.add(loginPanel);
-        this.add(botaoregistar);
+
+
+
 
         // Adicionar ao Listener
         botaoregistar.addActionListener(this);

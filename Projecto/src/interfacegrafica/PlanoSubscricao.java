@@ -2,10 +2,13 @@ package interfacegrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PlanoSubscricao extends JPanel{
+public class PlanoSubscricao extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    JButton retrocessoButton;
 
 
     public PlanoSubscricao(PainelFundo painelFundo) {
@@ -21,14 +24,16 @@ public class PlanoSubscricao extends JPanel{
         tituloPrincipal.setVerticalAlignment(JLabel.CENTER);
         mainPanel.add(tituloPrincipal);
 
-
-
-
         // Titulo Secundario
         JLabel tituloSecundario = new JLabel("Selecione o Plano de Subscrição:");
         tituloSecundario.setBounds(0,100,900,30);
         tituloSecundario.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.add(tituloSecundario);
+        this.add(mainPanel);
 
+        retrocessoButton = new JButton("Retrocesso");
+        retrocessoButton.setBounds(750, 100, 100, 30);
+        this.add(retrocessoButton);
 
         //Painel de subscrição Normal
         JPanel normalPanel = new JPanel();
@@ -60,6 +65,7 @@ public class PlanoSubscricao extends JPanel{
         normalPanel.add(normalLabel2);
         normalPanel.add(normalLabel3);
         normalPanel.add(normalCheck);
+        this.add(normalPanel);
 
 
 
@@ -93,41 +99,29 @@ public class PlanoSubscricao extends JPanel{
         premiumPanel.add(premiumLabel2);
         premiumPanel.add(premiumLabel3);
         premiumPanel.add(premiumCheck);
+        this.add(premiumPanel);
 
 
         //Botao registar
         JButton registarbutton = new JButton("Registar");
         registarbutton.setBounds(330,450,200,50);
-
-
-
-
-
-
-
-        //Adicionar os elementos á classe
-        this.add(mainPanel);
-        this.add(tituloSecundario);
-        this.add(premiumPanel);
-        this.add(normalPanel);
         this.add(registarbutton);
 
+        //Adicionar botoes ao ActionListener
+        retrocessoButton.addActionListener(this);
+        registarbutton.addActionListener(this);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Retrocesso")) {
+            painelFundo.mudaEcra("RegistarUtilizador");
+        }
+        if(e.getActionCommand().equals("Registar")) {
+            painelFundo.mudaEcra("ReservaViagem");
+        }
 
     }
 }

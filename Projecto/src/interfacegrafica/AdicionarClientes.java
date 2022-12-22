@@ -8,8 +8,6 @@ public class AdicionarClientes extends JPanel {
 
     JPanel jPanel;
 
-
-
     public  AdicionarClientes (PainelFundo painelFundo) {
         this.painelFundo =  painelFundo;
         this.setLayout(null);

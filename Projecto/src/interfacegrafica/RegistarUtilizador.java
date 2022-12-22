@@ -104,7 +104,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         prosseguirButton = new JButton("Prosseguir");
         prosseguirButton.setBounds(340, 575, 200, 70);
 
-
+        //Adicionar botoes ao actionListener
         prosseguirButton.addActionListener(this);
         retrocessoButton.addActionListener(this);
 
@@ -118,6 +118,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //Verificar se há campos nulos
+        /*
         if(nomeField.getText().equals("")||nifField.getText().equals("")||
                 moradaField.getText().equals("")||telefoneField.getText().equals("")||
                 emailField.getText().equals("")||palavraChaveField.getText().equals("")){
@@ -139,13 +140,20 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         //========================================================================================0
 
 
+         */
         if (e.getActionCommand().equals("Prosseguir")) {
+            /*
             aor_autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
                     moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
             aor_autocarro.gravarFicheiro();
 
+             */
+            painelFundo.mudaEcra("PlanoSubscrição");
         }
-        painelFundo.mudaEcra("PlanoSubscrição");
+        if(e.getActionCommand().equals("Retrocesso")) {
+            painelFundo.mudaEcra("Login");
+        }
+
 
     }
 
