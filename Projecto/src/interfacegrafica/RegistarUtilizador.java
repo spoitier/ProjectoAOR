@@ -15,7 +15,6 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     PainelFundo painelFundo;
     JButton prosseguirButton;
     JButton retrocessoButton;
-    Aor_Autocarro aor_autocarro = new Aor_Autocarro();
 
     Utilizador utilizador;
     JTextField nomeField;
@@ -142,12 +141,12 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
 
          */
         if (e.getActionCommand().equals("Prosseguir")) {
-            /*
-            aor_autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
-                    moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
-            aor_autocarro.gravarFicheiro();
 
-             */
+            Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
+                    moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
+            Aor_Autocarro.gravarFicheiro();
+
+
             painelFundo.mudaEcra("PlanoSubscrição");
         }
         if(e.getActionCommand().equals("Retrocesso")) {
