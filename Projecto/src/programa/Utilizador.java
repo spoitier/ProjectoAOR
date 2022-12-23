@@ -36,13 +36,14 @@ public abstract class Utilizador implements Serializable {
     }
     public boolean validarTlfeNif(String dadoNumerico) {
         boolean validar = false;
+        dadoNumerico=dadoNumerico.replaceAll("\\s","");
         int contaDigitos=0;
         for(int i=0;i<telefone.length();i++){
             if(Character.isDigit(telefone.charAt(i))){
                 contaDigitos++;
             }
         }
-        if(telefone.length()==9&&contaDigitos==9){
+        if(contaDigitos==9){
             validar=true;
 
         }return validar;

@@ -15,7 +15,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     PainelFundo painelFundo;
     JButton prosseguirButton;
     JButton retrocessoButton;
-
+    Aor_Autocarro aor_autocarro;
     Utilizador utilizador;
     JLabel nomeLabel;
     JLabel nifLabel;
@@ -151,9 +151,16 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 telefoneLabel.setForeground(Color.red);
                 validar = false;
             }
-            //========================================================================================0
-            //Falta completar com verificação de duplicação de dados na nossa lista de utilizadores
-            //========================================================================================0
+            //Verificar se existe já algum Cliente registado com o nif registado
+            if(!aor_autocarro.verificarDuplicaçãoNif(nifField.getText())){
+                nifLabel.setForeground(Color.red);
+                validar = false;
+            }
+            //Verificar se existe já algum Cliente registado com o email registado
+            if(!aor_autocarro.verificarDuplicaçãoNif(emailField.getText())){
+                emailLabel.setForeground(Color.red);
+                validar = false;
+            }
             if (validar = false) {
                 JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
             } else {
@@ -167,5 +174,4 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 painelFundo.mudaEcra("Login");
             }
         }
-
     }

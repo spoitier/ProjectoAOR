@@ -1,5 +1,6 @@
 package programa;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -46,8 +47,6 @@ public class Aor_Autocarro implements Serializable {
             utilizadores = (ArrayList<Utilizador>) fdo.leObjeto();
 
 
-
-
             fdo.abreLeitura("Motoristas");
             motoristas = (ArrayList<Motorista>) fdo.leObjeto();
 
@@ -58,7 +57,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
 
-    public static void   addUtilizador(Utilizador utilizador) {
+    public static void addUtilizador(Utilizador utilizador) {
         utilizadores.add(utilizador);
     }
 
@@ -112,11 +111,6 @@ public class Aor_Autocarro implements Serializable {
                 validar = true;
             }
         }
-        if (validar == true) {
-            System.out.println("Login valido");
-        } else {
-            System.out.println("Email ou palavra-chave invalidos");
-        }
         return validar;
     }
 
@@ -133,7 +127,41 @@ public class Aor_Autocarro implements Serializable {
         return utilizador;
     }
 
-    //Verifica se existe disponível a empresa algum autocarro com capacidade para o nºpessoas solicitadas
+    //Retornar utilizador logado
+    public Utilizador utilizadorLogado(String email) {
+        for (Utilizador user : utilizadores) {
+            if (user.getEmail().equals(email)) ;
+            return user;
+        }
+        return null;
+    }
+
+
+    //Verificar se existe duplicação de resgisto de Nif, durante o registo de um novo utilizador
+    public boolean verificarDuplicaçãoNif(String nif) {
+        boolean duplicado = false;
+
+        for (Utilizador user : utilizadores) {
+            if (user.getNif().equals(nif)) {
+                duplicado = true;
+            }
+        }
+        return duplicado;
+    }
+
+    //Verificar se existe duplicação de registo de Nif, durante o registo de um novo utilizador
+    public boolean verificarDuplicaçãoEmail(String email) {
+        boolean duplicado = false;
+
+        for (Utilizador user : utilizadores) {
+            if (user.getEmail().equals(email)) {
+                duplicado = true;
+            }
+        }
+        return duplicado;
+    }
+
+    //Verifica se existe disponível na empresa algum autocarro com capacidade para o nºpessoas solicitadas
     public boolean verificarAutocarroLotaçao(int n_pessoas) {
         boolean existe = true;
         for (Autocarro bus : autocarros) {
@@ -195,7 +223,7 @@ public class Aor_Autocarro implements Serializable {
         }
         //Verificar qual(caso exista) o autocarro disponível ,atendendo ao requisito de minimizar lugares vazios
         if (autDisponiveis.size() >= 1) {
-            //Ordenar autocarros disponíveis por ordem cerscente relativamente à sua capacidade
+            //Ordenar autocarros disponíveis por ordem crescente relativamente à sua capacidade
             autDisponiveis.sort(Comparator.comparing(Autocarro::getLotacao));
             autocarro = autDisponiveis.get(0);
             motorista = motoristasDisponíveis.get(0);
@@ -260,7 +288,7 @@ public class Aor_Autocarro implements Serializable {
         //Cliente "normal" tem direito a reembolso com penalização 50% se diferençaDias>7
         if (diferençaDias > 7 && reserva.getCliente().getTipoCliente().equals("Normal")) {
             reembolso = (reserva.getCusto() / 2.0);
-            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(),
+            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(), "Cancelamento",
                     "A sua reserva do dia " + reserva.getDataPartida() + " foi cancelada. " +
                             "Irá ser reembolsado pelo valor de " + reembolso + "€, através de" + identificarTipoPagamento(reserva),
                     hoje, false);
@@ -269,14 +297,14 @@ public class Aor_Autocarro implements Serializable {
             //Cliente "premium" tem direito a reembolso na sua totalidade se diferençaDias>2
         } else if (diferençaDias > 2 && reserva.getCliente().getTipoCliente().equals("Premium")) {
             reembolso = reserva.getCusto();
-            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(),
+            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(), "Cancelamento",
                     "A sua reserva do dia " + reserva.getDataPartida() + " foi cancelada. " +
                             "Irá ser reembolsado pelo valor de " + reembolso + "€, através de" + identificarTipoPagamento(reserva),
                     hoje, false);
             reserva.getCliente().getNotificações().add(cancelamento);
             //Caso não se verifiquem nenhuma das condições anteriores, o cliente não tem direito a reembolso
         } else {
-            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(),
+            Notificação cancelamento = new Notificação(reserva.getCliente().getEmail(), "Cancelamento",
                     "A sua reserva do dia " + reserva.getDataPartida() +
                             " foi cancelada. De acordo, com o seu pacote de subscrição, não irá ter direito a reembolso", hoje, false);
             reserva.getCliente().getNotificações().add(cancelamento);
@@ -307,7 +335,7 @@ public class Aor_Autocarro implements Serializable {
         reservasemEspera.remove(reserva);
     }
 
-    //Cancela reserva pelo cliente, e verifica se os clientes em lista espera
+    //Cancela reserva pelo cliente, e verifica clientes em lista espera
     public String cancelarReservaCliente(LocalDate data_aluguer) {
 
         double reembolso;
@@ -347,46 +375,56 @@ public class Aor_Autocarro implements Serializable {
         return descrição;
     }
 
-    //Verificar reservas em lista de espera, após ter sido cancelada uma reserva
+    //Verificar reservas em lista de espera, após ter sido cancelada uma reserva e notificação dos clientes
     // - Este método só é corrido se a dimensão da lista de espera for diferente de 0;
     // - Verificar se o autocarro da reserva cancelada cumpre os requisitos da reserva em lista de espera,
-    // nomeadamente lotação e período de aluguer.
+    // nomeadamente lotação.
     //criar uma lista, para guardar o nº de reservas em espera candidatas
     //Identificar email do cliente/clientes e adicionar notificação à lista do/s Cliente/s
-    //Remove reserva da lista de espera, cria nova reserva e adiciona à lista de reservas da empresa
+
     public void verificarListaEspera(Reserva reserva) {
 
         ArrayList<Reserva> candidatas = new ArrayList<>();
         Notificação notificaçãoReserva = null;
         LocalDate hoje = LocalDate.now(); //data de hoje
+        Autocarro autocarro=reserva.getAutocarro();//autocarro da reserva cancelada
+        Motorista motorista=reserva.getMotorista();//motorista da reserva cancelada
 
         for (Reserva resEspera : reservasemEspera) {
+            //verifica se o autocarro da reserva cancelada tem capacidade para o nº pessoas e período das reservas em espera
             if (resEspera.getNumeroPessoas() <= reserva.getAutocarro().getLotacao()) {
-                if ((resEspera.getDataPartida().isEqual(reserva.getDataPartida())) &&
-                        (resEspera.getDataPartida().isBefore(reserva.getDataFim())) &&
-                        (resEspera.getDataFim().isBefore(reserva.getDataFim()))) {
-                    candidatas.add(resEspera);
-                }
-                if (candidatas.size() >= 1) {
-                    for (int i = 0; i < candidatas.size(); i++) {
-                        notificaçãoReserva = new Notificação(candidatas.get(i).getCliente().getEmail(), "RE: A sua reserva em espera foi processada,proceda ao seu pagamento " +
-                                ".Data de partida em " + candidatas.get(i).getDataPartida() + ".Custo: " + candidatas.get(i).getCusto(), hoje, false);
-                        //Adiciona notificação à lista das notificaçóes do cliente
-                        candidatas.get(i).getCliente().getNotificações().add(notificaçãoReserva);
+                //Adiciona à lista de candidatas, as reservas que satisfazem os requisitos pretendidos
+                candidatas.add(resEspera);
+                //Verifica na lista de reservas, quais as reservas atribuidas ao autocarro da reserva cancelada
+                for (Reserva res : reservas) {
+                    if (res.getAutocarro().equals(reserva.getAutocarro())) {
+                        //Verificar se existe alguma reserva com data (início ou fim) fora do periodo pretendido
+                        LocalDate dataReq = resEspera.getDataPartida();// data partida da reserva em espera
+                        LocalDate datafim = resEspera.getDataFim();// data fim da reserva em espera
+                        if ((res.getDataPartida().isEqual(dataReq) || res.getDataPartida().isEqual(datafim)
+                                || res.getDataPartida().isAfter(dataReq) && res.getDataPartida().isBefore(datafim))
+                                || (res.getDataFim().isEqual(dataReq) || res.getDataFim().isEqual(datafim)
+                                || res.getDataFim().isAfter(dataReq) && res.getDataFim().isBefore(datafim))) {
+                            //Remove à lista de candidatas, as reservas que ocupam o período pretendido
+                            candidatas.remove(resEspera);
+                        }
                     }
                 }
             }
         }
-        if (candidatas.size() == 1)
-            //Remove reserva da lista de espera
-            reservasemEspera.remove(candidatas.get(0));
-        //Cria nova reserva
-        Reserva novaReserva = new Reserva(candidatas.get(0).getCliente(), reserva.getAutocarro(),
-                reserva.getMotorista(), hoje, candidatas.get(0).getDataPartida(),
-                candidatas.get(0).getNumeroDias(), candidatas.get(0).getNumeroPessoas(), candidatas.get(0).getLocalPartida(),
-                candidatas.get(0).getLocalDestino(), candidatas.get(0).getDistancia());
-        //Adiciona nova reserva à lista de reservas
-        reservas.add(novaReserva);
+        //Criar notificações para informar clientes com potencial para efetuarem reserva
+        if (candidatas.size() >= 1) {
+            for (int i = 0; i < candidatas.size(); i++) {
+                notificaçãoReserva = new Notificação(candidatas.get(i).getCliente().getEmail(), "ListaEspera", "A sua reserva em espera foi processada,proceda ao seu pagamento " +
+                        ".Data de partida em " + candidatas.get(i).getDataPartida() + ".Custo: " + candidatas.get(i).getCusto(), hoje, false);
+                //Adiciona notificação à lista das notificaçóes do cliente
+                candidatas.get(i).getCliente().getNotificações().add(notificaçãoReserva);
+                //Adicionar autocarro e motorista às reservas Candidatas em lista de espera;
+                candidatas.get(i).setAutocarro(autocarro);
+                candidatas.get(i).setMotorista(motorista);
+
+            }
+        }
     }
 
     //Cancelamento reservas, por cliente ter sido removido por um Administrador
@@ -412,7 +450,7 @@ public class Aor_Autocarro implements Serializable {
                 }
 
                 //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
-                Notificação clienteRemovido = new Notificação(res.getCliente().getEmail(),
+                Notificação clienteRemovido = new Notificação(res.getCliente().getEmail(), "ClienteRemovido",
                         "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente",
                         hoje, false);
                 res.getCliente().getNotificações().add(clienteRemovido);
@@ -445,7 +483,7 @@ public class Aor_Autocarro implements Serializable {
                 reservas.remove(res);
                 reservasCanceladas.add(res);
                 //Criar e adicionar notificação de que o autocarro foi removido
-                Notificação autocarroRemovido = new Notificação(res.getCliente().getEmail(),
+                Notificação autocarroRemovido = new Notificação(res.getCliente().getEmail(), "Cancelamento",
                         "Pedimos imensa desculpa pelo transtorno, mas o autocarro associado à sua reserva deixou de fazer parte da frota desta empresa.",
                         hoje, false);
                 res.getCliente().getNotificações().add(autocarroRemovido);
@@ -453,8 +491,53 @@ public class Aor_Autocarro implements Serializable {
                 adicionarNotificaçãoCancelamento(res);
             }
         }
+    }
 
+    //Atribuir reserva efetiva a cliente em lista de espera:
+    public String atribuirReservaListaEspera(String email) {
 
+        Cliente logado=(Cliente) utilizadorLogado(email);//identificar cliente através do email
+        Reserva novaReserva=null;
+        Autocarro reservado=null;
+        String descrição=null;
+        int contador=0;
+        //Verificar qual a reserva e o autocarro atribuidos à sua reserva em lista de espera
+        for(Reserva reservas:reservasemEspera){
+            if(reservas.getCliente().equals(logado)){
+                novaReserva=reservas;
+                reservado=reservas.getAutocarro();
+                }
+        }
+        // Caso o valor atribuido ao autocarro seja "null", o cliente volta para a lista de espera
+        if(reservado.equals(null)){
+           descrição="Lamentamos o incómodo,mas a sua reserva continua em lista de espera";
+        }
+        //Caso tenha sido atribuido um autocarro ao cliente, verificamos se é o único cliente que tem esse autocarro atribuido,
+        // ou se há mais clientes em lista de espera com o mesmo autocarro atribuido
+        for(Reserva reservas:reservasemEspera) {
+            if (reservas.getAutocarro().equals(reservado)) {
+                contador++;
+            }
+        }
+        //Caso o contador seja =1, quer dizer que só este cliente tem este autocarro atribuido, pelo que iremos
+        //remover a sua reserva à lista de espera e adicioná-la à lista de reservas da empresa.
+        if(contador==1){
+            //Remover reserva deste cliente da lista de espera e colocar na lista de reservas da empresa
+            reservasemEspera.remove(novaReserva);
+            reservas.add(novaReserva);
+        }else{
+            //Caso seja maior que 1, consideramos que este foi o primeiro cliente a ler a notificação, ficando a reserva
+            //deste autocarro para si. Nos restantes clientes iremos voltar a atribuir um valor "null" nos campos
+            //relativos ao autocarro e motorista.
+            reservasemEspera.remove(novaReserva);
+            reservas.add(novaReserva);
+            for(Reserva reservas:reservasemEspera){
+                if (reservas.getAutocarro().equals(reservado)) {
+                    reservas.setAutocarro(null);
+                    reservas.setMotorista(null);
+                }
+            }
+        }return descrição;
     }
 
     public static ArrayList<Utilizador> getUtilizadores() {
