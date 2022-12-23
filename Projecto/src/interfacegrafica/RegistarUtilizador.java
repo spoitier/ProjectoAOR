@@ -17,6 +17,14 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     JButton retrocessoButton;
 
     Utilizador utilizador;
+    JLabel nomeLabel;
+    JLabel nifLabel;
+
+    JLabel moradaLabel;
+
+    JLabel telefoneLabel;
+    JLabel emailLabel;
+    JLabel palavraChaveLabel;
     JTextField nomeField;
     JTextField nifField;
     JTextField moradaField;
@@ -57,17 +65,17 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
 
 
         //Labels
-        JLabel nomeLabel = new JLabel("Nome:");
+        nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        JLabel nifLabel = new JLabel("NIF:");
+        nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        JLabel moradaLabel = new JLabel("Morada:");
+        moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        JLabel telefoneLabel = new JLabel("Telefone:");
+        telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        JLabel emailLabel = new JLabel("Email:");
+        emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
-        JLabel palavraChaveLabel = new JLabel("Palavra Chave:");
+        palavraChaveLabel = new JLabel("Palavra Chave:");
         palavraChaveLabel.setBounds(50, 250, 200, 30);
 
         //Fields
@@ -111,50 +119,53 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         this.add(prosseguirButton);
 
 
-
-
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Verificar se há campos nulos
-        /*
-        if(nomeField.getText().equals("")||nifField.getText().equals("")||
-                moradaField.getText().equals("")||telefoneField.getText().equals("")||
-                emailField.getText().equals("")||palavraChaveField.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");}
-        //Verificar se email é válido
-        if(!utilizador.validarEmail(emailField.getText())){
-            JOptionPane.showMessageDialog(null, "Email inválido");}
-        //Verificar se o nome é constituído só por letras
-        if(!utilizador.validarNome(nomeField.getText())){
-            JOptionPane.showMessageDialog(null, "Nome inválido");}
-        //Verificar se o nif é constituído por 9 números
-        if(!utilizador.validarTlfeNif(nifField.getText())){
-        JOptionPane.showMessageDialog(null, "Nif inválido");}
-        //Verificar se o telefone é constituído por 9 números
-        if(!utilizador.validarTlfeNif(telefoneField.getText())){
-            JOptionPane.showMessageDialog(null, "NºTelefone inválido");}
-        //========================================================================================0
-        //Falta completar com verificação de duplicação de dados na nossa lista de utilizadores
-        //========================================================================================0
-
-
-         */
+        boolean validar = true;
         if (e.getActionCommand().equals("Prosseguir")) {
-
-            Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(),palavraChaveField.getText(),nomeField.getText(),nifField.getText(),
-                    moradaField.getText(),telefoneField.getText(),"Normal", LocalDate.now())) ;
-            Aor_Autocarro.gravarFicheiro();
-
-
-            painelFundo.mudaEcra("PlanoSubscrição");
+        //verificar se todos os campos estão preenchidos
+            if (nomeField.getText().equals("") || nifField.getText().equals("") ||
+                    moradaField.getText().equals("") || telefoneField.getText().equals("") ||
+                    emailField.getText().equals("") || palavraChaveField.getText().equals("")) {
+                validar = false;
+            }
+            //Verificar se email é válido
+            if (!utilizador.validarEmail(emailField.getText())) {
+                emailLabel.setForeground(Color.red);
+                validar = false;
+            }
+            //Verificar se o nome é constituído só por letras
+            if (!utilizador.validarNome(nomeField.getText())) {
+                nomeLabel.setForeground(Color.red);
+                validar = false;
+            }
+            //Verificar se o nif é constituído por 9 números
+            if (!utilizador.validarTlfeNif(nifField.getText())) {
+                nifLabel.setForeground(Color.red);
+                validar = false;
+            }
+            //Verificar se o telefone é constituído por 9 números
+            if (!utilizador.validarTlfeNif(telefoneField.getText())) {
+                telefoneLabel.setForeground(Color.red);
+                validar = false;
+            }
+            //========================================================================================0
+            //Falta completar com verificação de duplicação de dados na nossa lista de utilizadores
+            //========================================================================================0
+            if (validar = false) {
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+            } else {
+                Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
+                        moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
+                Aor_Autocarro.gravarFicheiro();
+                painelFundo.mudaEcra("PlanoSubscrição");
+            }
         }
-        if(e.getActionCommand().equals("Retrocesso")) {
-            painelFundo.mudaEcra("Login");
+            if (e.getActionCommand().equals("Retrocesso")) {
+                painelFundo.mudaEcra("Login");
+            }
         }
-
 
     }
-
-
-}
