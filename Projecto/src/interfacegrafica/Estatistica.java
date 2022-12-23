@@ -2,9 +2,18 @@ package interfacegrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Estatistica  extends JPanel {
+public class Estatistica  extends JPanel implements ActionListener {
     PainelFundo painelFundo;
+    JButton sairButton;
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
+    JButton opcao4;
+    JButton opcao5;
+    JButton opcao6;
 
     public Estatistica(PainelFundo painelFundo) {
         this.painelFundo =  painelFundo;
@@ -27,9 +36,9 @@ public class Estatistica  extends JPanel {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        JButton sairBotao = new JButton("Sair");
-        sairBotao.setBounds(810, 1, 70, 28);
-        cabecalho.add(sairBotao);
+        sairButton = new JButton("Sair");
+        sairButton.setBounds(810, 1, 70, 28);
+        cabecalho.add(sairButton);
         this.add(cabecalho);
 
         //===========================================================
@@ -41,17 +50,19 @@ public class Estatistica  extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Adminstradores");
-        JButton opcao2 = new JButton("Motoristas");
-        JButton opcao3 = new JButton("Autocarros");
-        JButton opcao4 = new JButton("Estatistica");
-        JButton opcao5 = new JButton("Dados Pessoais");
+         opcao1 = new JButton("Adminstradores");
+         opcao2 = new JButton("Motoristas");
+         opcao3 = new JButton("Autocarros");
+         opcao4 = new JButton("Clientes");
+         opcao5 = new JButton("Estatistica");
+         opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
         opcaoPainel.add(opcao3);
         opcaoPainel.add(opcao4);
         opcaoPainel.add(opcao5);
+        opcaoPainel.add(opcao6);
 
         this.add(opcaoPainel);
 
@@ -76,16 +87,16 @@ public class Estatistica  extends JPanel {
         totalClientesPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // Botoes de filtragem
-        JPanel botoesFiltro =  new JPanel(new GridLayout(1,4,10,5));
-        botoesFiltro.setBounds(200,300,200,30);
+        JPanel filtroPanel =  new JPanel(new GridLayout(1,4,10,5));
+        filtroPanel.setBounds(200,300,200,30);
         JLabel anoLabel = new JLabel("Ano:");
         JLabel mesLabel = new JLabel("Mes:");
         JTextField anoField = new JTextField();
         JTextField mesField = new JTextField();
-        botoesFiltro.add(anoLabel);
-        botoesFiltro.add(anoField);
-        botoesFiltro.add(mesLabel);
-        botoesFiltro.add(mesField);
+        filtroPanel.add(anoLabel);
+        filtroPanel.add(anoField);
+        filtroPanel.add(mesLabel);
+        filtroPanel.add(mesField);
         JPanel totalClientes = new JPanel(new GridLayout(1,2,0,0));
         totalClientes.setBounds(200,350,250,15);
         JLabel totalClientesLabel = new JLabel("Total Clientes:");
@@ -94,7 +105,7 @@ public class Estatistica  extends JPanel {
         totalClientes.add(totalClientesPreenchidoLabel);
 
         totalClientesPanel.add(totalClientes);
-        totalClientesPanel.add(botoesFiltro);
+        totalClientesPanel.add(filtroPanel);
         abasPanel.add("Total Clientes",totalClientesPanel);
         this.add(abasPanel);
 
@@ -334,66 +345,45 @@ public class Estatistica  extends JPanel {
         abasPanel.add("Volume de Reservas",volumeReservas);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         this.add(abasPanel);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        opcao1.addActionListener(this);
+        opcao2.addActionListener(this);
+        opcao3.addActionListener(this);
+        opcao4.addActionListener(this);
+        opcao5.addActionListener(this);
+        opcao6.addActionListener(this);
+        sairButton.addActionListener(this);
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Adminstradores")) {
+            painelFundo.mudaEcra("RegistarNovoAdministrador");
+        }
+
+        if (e.getActionCommand().equals("Motoristas")) {
+            painelFundo.mudaEcra("Motoristas");
+        }
+
+        if (e.getActionCommand().equals("Autocarros")) {
+            painelFundo.mudaEcra("Autocarros");
+        }
+
+        if (e.getActionCommand().equals("Clientes")) {
+            painelFundo.mudaEcra("AdicionarClientes");
+        }
+        if (e.getActionCommand().equals("Estatistica")) {
+            painelFundo.mudaEcra("Estatistica");
+        }
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            painelFundo.mudaEcra("DadosPessoaisAdmin");
+        }
+
+        if (e.getActionCommand().equals("Sair")) {
+            painelFundo.mudaEcra("Login");
+        }
+
+    }
 }

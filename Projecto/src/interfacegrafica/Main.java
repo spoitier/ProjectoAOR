@@ -19,7 +19,7 @@ public class Main {
 
         //Cliente x = new Cliente("", "", "maraia", "", "", "", "", a);
         //Aor_Autocarro.getUtilizadores().add(x);
-        Aor_Autocarro.leFicheiro();
+       // Aor_Autocarro.leFicheiro();
         //Motorista motorista = new Motorista("dad", "zzfzdc");
         //Aor_Autocarro.getMotoristas().add(motorista);
         //Aor_Autocarro.gravarFicheiro();
@@ -27,8 +27,8 @@ public class Main {
 
 
 
-      //  FicheiroDeObjectos ficheiroDeObjectos = new FicheiroDeObjectos();
-       // PainelFundo painelFundo = new PainelFundo(ficheiroDeObjectos);
+
+       PainelFundo painelFundo = new PainelFundo();
 
 
     }

@@ -12,14 +12,13 @@ import java.io.IOException;
 
 public class PainelFundo {
 
-    FicheiroDeObjectos ficheiroDeObjectos;
 
     JFrame f;
     JPanel painelPrincipal;
 
     CardLayout layout;
 
-    public PainelFundo(FicheiroDeObjectos ficheiroDeObjectos) throws IOException, ClassNotFoundException {
+    public PainelFundo() {
         f = new JFrame("AOR-Empresa");
         f.setSize(900, 700);
         f.setLayout(new CardLayout());

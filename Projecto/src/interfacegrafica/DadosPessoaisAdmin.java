@@ -2,10 +2,21 @@ package interfacegrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DadosPessoaisAdmin extends JPanel {
+public class DadosPessoaisAdmin extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
+    JButton opcao4;
+    JButton opcao5;
+    JButton opcao6;
+    JButton sairButton;
+    JButton alterarPalavraChave;
 
     public  DadosPessoaisAdmin(  PainelFundo painelFundo) {
         this.painelFundo = painelFundo;
@@ -28,9 +39,9 @@ public class DadosPessoaisAdmin extends JPanel {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        JButton sairBotao = new JButton("Sair");
-        sairBotao.setBounds(810, 1, 70, 28);
-        cabecalho.add(sairBotao);
+        sairButton = new JButton("Sair");
+        sairButton.setBounds(810, 1, 70, 28);
+        cabecalho.add(sairButton);
         this.add(cabecalho);
 
         //===========================================================
@@ -42,17 +53,19 @@ public class DadosPessoaisAdmin extends JPanel {
 
 
 
-        JButton opcao1 = new JButton("Adminstradores");
-        JButton opcao2 = new JButton("Motoristas");
-        JButton opcao3 = new JButton("Autocarros");
-        JButton opcao4 = new JButton("Estatistica");
-        JButton opcao5 = new JButton("Dados Pessoais");
+         opcao1 = new JButton("Adminstradores");
+         opcao2 = new JButton("Motoristas");
+         opcao3 = new JButton("Autocarros");
+         opcao4 = new JButton("Clientes");
+         opcao5 = new JButton("Estatistica");
+         opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
         opcaoPainel.add(opcao3);
         opcaoPainel.add(opcao4);
         opcaoPainel.add(opcao5);
+        opcaoPainel.add(opcao6);
 
         this.add(opcaoPainel);
 
@@ -120,16 +133,59 @@ public class DadosPessoaisAdmin extends JPanel {
         JPanel botoesPainel = new JPanel(new GridLayout(2,1,0,10));
         botoesPainel.setBounds(450,200,200,100);
 
-        JButton alterarPalavraChave = new JButton("Alterar palavra chave");
+        alterarPalavraChave = new JButton("Alterar palavra chave");
 
         botoesPainel.add(alterarPalavraChave);
 
         this.add(botoesPainel);
 
+        opcao1.addActionListener(this);
+        opcao2.addActionListener(this);
+        opcao3.addActionListener(this);
+        opcao4.addActionListener(this);
+        opcao5.addActionListener(this);
+        opcao6.addActionListener(this);
+        alterarPalavraChave.addActionListener(this);
+        sairButton.addActionListener(this);
 
 
 
 
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Adminstradores")) {
+            painelFundo.mudaEcra("RegistarNovoAdministrador");
+        }
+
+        if (e.getActionCommand().equals("Motoristas")) {
+            painelFundo.mudaEcra("Motoristas");
+        }
+
+        if (e.getActionCommand().equals("Autocarros")) {
+            painelFundo.mudaEcra("Autocarros");
+        }
+
+        if (e.getActionCommand().equals("Clientes")) {
+            painelFundo.mudaEcra("AdicionarClientes");
+        }
+        if (e.getActionCommand().equals("Estatistica")) {
+            painelFundo.mudaEcra("Estatistica");
+        }
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            painelFundo.mudaEcra("DadosPessoaisAdmin");
+        }
+
+        if (e.getActionCommand().equals("Sair")) {
+            painelFundo.mudaEcra("Login");
+        }
+
+        if (e.getActionCommand().equals("Alterar palavra chave")) {
+            painelFundo.mudaEcra("AlterarPalavraChaveAdmin");
+        }
 
     }
 }
