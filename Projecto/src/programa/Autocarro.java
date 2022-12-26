@@ -109,5 +109,19 @@ public class Autocarro implements Serializable {
 
     }
 
+    public void validarMarca(String marca) {
+        int contador = 0;
+        for (int i =0;i<marca.length();i++) {
+            if (Character.isDigit(marca.charAt(i))) {
+                contador++;
+            }
+        }
+        if(contador==marca.length()){
+            System.out.println("valor valido");
+        } else {
+            System.out.println("Dados Invalidos");
+        }
+    }
+
 
 }

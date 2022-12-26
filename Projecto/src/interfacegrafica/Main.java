@@ -9,12 +9,12 @@ import java.time.LocalDate;
 
 public class Main {
 
-    /*
+
     public static void alterarPalavraChave(String email, String palavraChaveAtual,
                                            String novaPalavraChave, String confirmePalavraChave) {
-        if (guedes.validarRegisto(email, palavraChaveAtual)) {
+        if (Aor_Autocarro.validarRegisto(email, palavraChaveAtual)) {
             if (novaPalavraChave.equals(confirmePalavraChave)) {
-                for (Utilizador cliente : guedes.getUtilizadores()) {
+                for (Utilizador cliente : Aor_Autocarro.getUtilizadores()) {
                     if (cliente.getEmail() == email) {
                         cliente.setPalavraChave(novaPalavraChave);
 
@@ -29,9 +29,6 @@ public class Main {
         }
     }
 
-
-
-     */
     public static void validarMatricula(String matricula) {
         int traco = 0;
         int numero = 0;
@@ -73,9 +70,9 @@ public class Main {
 
     }
 
-    /*
+
     public static void alterarSubscricao(String email) {
-        for (Utilizador utilizador : guedes.getUtilizadores()) {
+        for (Utilizador utilizador : Aor_Autocarro.getUtilizadores()) {
             if (((Cliente) utilizador).getTipoCliente().equals("N")) {
                 ((Cliente) utilizador).setTipoCliente("P");
             } else if (((Cliente) utilizador).getTipoCliente().equals("P")) {
@@ -86,34 +83,61 @@ public class Main {
         }
     }
 
-
-     */
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-        /*
-
-        Aor_Autocarro guedes = new Aor_Autocarro();
-
-        Cliente  cl1 = new Cliente("rodrigo@gmail.com","123456","rodrigo","123456789","rua","914234234","N",LocalDate.now());
-        Cliente  cl2 = new Cliente("maria@gmail.com","123456","rodrigo","123456789","rua","914234234","F",LocalDate.now());
-        Cliente  cl3 = new Cliente("manel@gmail.com","123456","rodrigo","123456789","rua","914234234","N",LocalDate.now());
-
-        guedes.getUtilizadores().add(cl1);
-        guedes.getUtilizadores().add(cl2);
-        guedes.getUtilizadores().add(cl3);
-
-
-        System.out.println(cl1.getEmail() + "  " + cl1.getTipoCliente());
-        for(Utilizador utilizador: guedes.getUtilizadores()) {
-            System.out.println( ((Cliente) utilizador).getTipoCliente());
+    public static void validarMarca(String marca) {
+        int contador = 0;
+        for (int i =0;i<marca.length();i++) {
+            if (Character.isLetter(marca.charAt(i))) {
+                contador++;
+            }
         }
+        if(contador==marca.length()){
+            System.out.println("valor valido");
+        } else {
+            System.out.println("Dados Invalidos");
+        }
+    }
 
-        System.out.println(cl1.getEmail() + "  " + cl1.getTipoCliente());
 
 
 
-         */
+    public static void main(String[] args)   {
+
+        Aor_Autocarro aor_autocarro = new Aor_Autocarro();
+
+        Cliente cl1 = new Cliente("rodrigo@gmail.com","123456","nome","123456789","rua","91234567","N",LocalDate.now());
+        Cliente cl2 = new Cliente("maria@gmail.com","123456","nome","123456789","rua","91234567","P",LocalDate.now());
+        Cliente cl3 = new Cliente("manel@gmail.com","123456","nome","123456789","rua","91234567","N",LocalDate.now());
+
+        Autocarro a1 = new Autocarro(40,"33-44-AA","mercedez","x");
+        Autocarro a2 = new Autocarro(30,"33-44-AB","ferrri","x");
+        Autocarro a3 = new Autocarro(40,"33-44-AC","ferrri","x");
+
+
+        aor_autocarro.addUtilizador(cl1);
+        aor_autocarro.addUtilizador(cl2);
+        aor_autocarro.addUtilizador(cl3);
+
+
+
+        aor_autocarro.addAutocarro(a1);
+        aor_autocarro.addAutocarro(a2);
+        aor_autocarro.addAutocarro(a3);
+
+        validarMarca(a1.getMarca());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }

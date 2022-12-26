@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class Aor_Autocarro implements Serializable {
 
-    private ArrayList<Utilizador> utilizadores;
+    private static ArrayList<Utilizador> utilizadores = new ArrayList<>();
     private ArrayList<Reserva> reservas = new ArrayList<>();
     private ArrayList<Reserva> reservasCanceladas = new ArrayList<>();
     private ArrayList<Reserva> reservasemEspera = new ArrayList<>();
@@ -95,6 +95,13 @@ public class Aor_Autocarro implements Serializable {
         return reservas;
     }
 
+    public  void addUtilizador(Utilizador utilizador) {
+        utilizadores.add(utilizador);
+    }
+
+
+
+
     @Override
     public String toString() {
         return "Aor_Autocarro{" +
@@ -106,7 +113,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Validar Registo de Login
-    public  boolean validarRegisto(String email, String palavraChave) {
+    public static boolean validarRegisto(String email, String palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
@@ -542,13 +549,7 @@ public class Aor_Autocarro implements Serializable {
         return descrição;
     }
 
-    public ArrayList<Utilizador> getUtilizadores() {
-        return utilizadores;
-    }
 
-    public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
-        this.utilizadores = utilizadores;
-    }
 
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
@@ -588,6 +589,14 @@ public class Aor_Autocarro implements Serializable {
 
     public void setListaPagamentos(ArrayList<Pagamento> listaPagamentos) {
         this.listaPagamentos = listaPagamentos;
+    }
+
+    public static ArrayList<Utilizador> getUtilizadores() {
+        return utilizadores;
+    }
+
+    public static void setUtilizadores(ArrayList<Utilizador> utilizadores) {
+        Aor_Autocarro.utilizadores = utilizadores;
     }
 }
 
