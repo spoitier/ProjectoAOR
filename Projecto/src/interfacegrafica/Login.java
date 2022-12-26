@@ -4,7 +4,7 @@ import programa.Aor_Autocarro;
 import programa.Cliente;
 import programa.FicheiroDeObjectos;
 import programa.Utilizador;
-import programa.Notificação;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class Login extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
 
-Cliente cliente;
+
     PainelFundo painelFundo;
     TextField emailField;
     JPasswordField palavraChaveField;
@@ -121,12 +121,10 @@ Cliente cliente;
     //Eventos
     @Override
     public void actionPerformed(ActionEvent ae) {
-        //Penso que é para apagar...
-        /*if (ae.getActionCommand().equals("Autenticar")){
-            painelFundo.mudaEcra("RegistarNovoAdministrador");
-    }*/
-
-
+        if (ae.getActionCommand().equals("Autenticar")){
+    }
+        //Está comentado para facilitar a vida a colocar os botoes
+        /*
         String email = emailField.getText();
         String password = new String(palavraChaveField.getPassword());//para transformar em string
 
@@ -134,30 +132,24 @@ Cliente cliente;
             if ((validarEmail(email))&&(aor_autocarro.validarRegisto(email,password ))){
                 JOptionPane.showMessageDialog(null, "Login efetuado com Sucesso! " + email);
                 if(aor_autocarro.verificarTipoUtilizador(email,password).equals("cliente")){
-                    Cliente logado= (Cliente) aor_autocarro.utilizadorLogado(email);
-                    //Verifica se o cliente "logado" tem notificações
-                    if(logado.getNotificações().size()!=0){
-                        for(Notificação notificação:logado.getNotificações()){
-                            //Verificar se alguma das notificações ser refere à remoção do cliente
-                            //Cliente deixa de ter acesso ao menu do Cliente, e é informado
-                            if(notificação.getTipoNotificação().equals("ClienteRemovido")){
-                                JOptionPane.showMessageDialog(null, notificação.getDescrição());
-                                notificação.setLido(true);}
-                        }
-                    }
-                    else {
-                        painelFundo.mudaEcra("ReservaViagem");
-                    }
+                    painelFundo.mudaEcra("ReservaViagem");
                 }
                 else if(aor_autocarro.verificarTipoUtilizador(email,password).equals("administrador")){
                     painelFundo.mudaEcra("RegistarNovoAdministrador");
                 }
             } else{
                 JOptionPane.showMessageDialog(null, "Login Invalido!");
+
             }
         }
+
+
+         */
+
         if(ae.getActionCommand().equals("Registar Novo Utilizador")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
     }
+
+
 }

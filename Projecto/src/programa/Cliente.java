@@ -32,6 +32,10 @@ public class Cliente extends Utilizador implements Serializable {
         return tipoCliente;
     }
 
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
     public ArrayList<Notificação> getNotificações() {
         return notificações;
     }
@@ -55,6 +59,10 @@ public class Cliente extends Utilizador implements Serializable {
     public String getId() {
         return id;
     }
+
+
+
+
 
 
 }

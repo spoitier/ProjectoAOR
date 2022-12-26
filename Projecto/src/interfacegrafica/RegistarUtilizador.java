@@ -125,7 +125,8 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
         if (e.getActionCommand().equals("Prosseguir")) {
-        //verificar se todos os campos estão preenchidos
+
+            //verificar se todos os campos estão preenchidos
             if (nomeField.getText().equals("") || nifField.getText().equals("") ||
                     moradaField.getText().equals("") || telefoneField.getText().equals("") ||
                     emailField.getText().equals("") || palavraChaveField.getText().equals("")) {
@@ -152,26 +153,27 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
-            if(!aor_autocarro.verificarDuplicaçãoNif(nifField.getText())){
+            if (!aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
                 nifLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
-            if(!aor_autocarro.verificarDuplicaçãoNif(emailField.getText())){
+            if (!aor_autocarro.verificarDuplicaçãoNif(emailField.getText())) {
                 emailLabel.setForeground(Color.red);
                 validar = false;
             }
             if (validar = false) {
                 JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
             } else {
-                Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
-                        moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
-                Aor_Autocarro.gravarFicheiro();
+                //Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
+                        //moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
+                //Aor_Autocarro.gravarFicheiro();
                 painelFundo.mudaEcra("PlanoSubscrição");
             }
         }
-            if (e.getActionCommand().equals("Retrocesso")) {
-                painelFundo.mudaEcra("Login");
-            }
+        if (e.getActionCommand().equals("Retrocesso")) {
+            painelFundo.mudaEcra("Login");
         }
     }
+
+}

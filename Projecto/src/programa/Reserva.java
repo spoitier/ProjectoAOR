@@ -36,6 +36,21 @@ public class Reserva implements Serializable {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Cliente getCliente() {
         return cliente;
     }

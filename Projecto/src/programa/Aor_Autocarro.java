@@ -1,6 +1,5 @@
 package programa;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,15 +9,19 @@ import java.util.Comparator;
 
 public class Aor_Autocarro implements Serializable {
 
-    private static ArrayList<Utilizador> utilizadores = new ArrayList<>();
-    private static ArrayList<Reserva> reservas = new ArrayList<>();
-    private static ArrayList<Reserva> reservasCanceladas = new ArrayList<>();
-    private static ArrayList<Reserva> reservasemEspera = new ArrayList<>();
-    private static ArrayList<Motorista> motoristas = new ArrayList<>();
-    private static ArrayList<Autocarro> autocarros = new ArrayList<>();
-    private static ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
+    private ArrayList<Utilizador> utilizadores;
+    private ArrayList<Reserva> reservas = new ArrayList<>();
+    private ArrayList<Reserva> reservasCanceladas = new ArrayList<>();
+    private ArrayList<Reserva> reservasemEspera = new ArrayList<>();
+    private ArrayList<Motorista> motoristas = new ArrayList<>();
+    private ArrayList<Autocarro> autocarros = new ArrayList<>();
+    private ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
 
+
+
+
+    /*
     public static void gravarFicheiro() {
         try {
             FicheiroDeObjectos fdo = new FicheiroDeObjectos();
@@ -57,9 +60,8 @@ public class Aor_Autocarro implements Serializable {
     }
 
 
-    public static void addUtilizador(Utilizador utilizador) {
-        utilizadores.add(utilizador);
-    }
+     */
+
 
     public void addReserva(Reserva reserva) {
         reservas.add(reserva);
@@ -104,7 +106,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Validar Registo de Login
-    public boolean validarRegisto(String email, String palavraChave) {
+    public  boolean validarRegisto(String email, String palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
@@ -265,7 +267,6 @@ public class Aor_Autocarro implements Serializable {
                 reservasemEspera.add(reserva3);
             }
         }
-        gravarFicheiro();
         return resultadoReserva;
     }
 
@@ -387,8 +388,8 @@ public class Aor_Autocarro implements Serializable {
         ArrayList<Reserva> candidatas = new ArrayList<>();
         Notificação notificaçãoReserva = null;
         LocalDate hoje = LocalDate.now(); //data de hoje
-        Autocarro autocarro=reserva.getAutocarro();//autocarro da reserva cancelada
-        Motorista motorista=reserva.getMotorista();//motorista da reserva cancelada
+        Autocarro autocarro = reserva.getAutocarro();//autocarro da reserva cancelada
+        Motorista motorista = reserva.getMotorista();//motorista da reserva cancelada
 
         for (Reserva resEspera : reservasemEspera) {
             //verifica se o autocarro da reserva cancelada tem capacidade para o nº pessoas e período das reservas em espera
@@ -496,95 +497,103 @@ public class Aor_Autocarro implements Serializable {
     //Atribuir reserva efetiva a cliente em lista de espera:
     public String atribuirReservaListaEspera(String email) {
 
-        Cliente logado=(Cliente) utilizadorLogado(email);//identificar cliente através do email
-        Reserva novaReserva=null;
-        Autocarro reservado=null;
-        String descrição=null;
-        int contador=0;
+        Cliente logado = (Cliente) utilizadorLogado(email);//identificar cliente através do email
+        Reserva novaReserva = null;
+        Autocarro reservado = null;
+        String descrição = null;
+        int contador = 0;
         //Verificar qual a reserva e o autocarro atribuidos à sua reserva em lista de espera
-        for(Reserva reservas:reservasemEspera){
-            if(reservas.getCliente().equals(logado)){
-                novaReserva=reservas;
-                reservado=reservas.getAutocarro();
-                }
+        for (Reserva reservas : reservasemEspera) {
+            if (reservas.getCliente().equals(logado)) {
+                novaReserva = reservas;
+                reservado = reservas.getAutocarro();
+            }
         }
         // Caso o valor atribuido ao autocarro seja "null", o cliente volta para a lista de espera
-        if(reservado.equals(null)){
-           descrição="Lamentamos o incómodo,mas a sua reserva continua em lista de espera";
+        if (reservado.equals(null)) {
+            descrição = "Lamentamos o incómodo,mas a sua reserva continua em lista de espera";
         }
         //Caso tenha sido atribuido um autocarro ao cliente, verificamos se é o único cliente que tem esse autocarro atribuido,
         // ou se há mais clientes em lista de espera com o mesmo autocarro atribuido
-        for(Reserva reservas:reservasemEspera) {
+        for (Reserva reservas : reservasemEspera) {
             if (reservas.getAutocarro().equals(reservado)) {
                 contador++;
             }
         }
         //Caso o contador seja =1, quer dizer que só este cliente tem este autocarro atribuido, pelo que iremos
         //remover a sua reserva à lista de espera e adicioná-la à lista de reservas da empresa.
-        if(contador==1){
+        if (contador == 1) {
             //Remover reserva deste cliente da lista de espera e colocar na lista de reservas da empresa
             reservasemEspera.remove(novaReserva);
             reservas.add(novaReserva);
-        }else{
+        } else {
             //Caso seja maior que 1, consideramos que este foi o primeiro cliente a ler a notificação, ficando a reserva
             //deste autocarro para si. Nos restantes clientes iremos voltar a atribuir um valor "null" nos campos
             //relativos ao autocarro e motorista.
             reservasemEspera.remove(novaReserva);
             reservas.add(novaReserva);
-            for(Reserva reservas:reservasemEspera){
+            for (Reserva reservas : reservasemEspera) {
                 if (reservas.getAutocarro().equals(reservado)) {
                     reservas.setAutocarro(null);
                     reservas.setMotorista(null);
                 }
             }
-        }return descrição;
+        }
+        return descrição;
     }
 
-    public static ArrayList<Utilizador> getUtilizadores() {
+    public ArrayList<Utilizador> getUtilizadores() {
         return utilizadores;
     }
 
-    public static void setUtilizadores(ArrayList<Utilizador> utilizadores) {
-        Aor_Autocarro.utilizadores = utilizadores;
+    public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
+        this.utilizadores = utilizadores;
     }
 
-    public static void setReservas(ArrayList<Reserva> reservas) {
-        Aor_Autocarro.reservas = reservas;
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
-    public static ArrayList<Reserva> getReservasCanceladas() {
+    public ArrayList<Reserva> getReservasCanceladas() {
         return reservasCanceladas;
     }
 
-    public static void setReservasCanceladas(ArrayList<Reserva> reservasCanceladas) {
-        Aor_Autocarro.reservasCanceladas = reservasCanceladas;
+    public void setReservasCanceladas(ArrayList<Reserva> reservasCanceladas) {
+        this.reservasCanceladas = reservasCanceladas;
     }
 
-    public static ArrayList<Reserva> getReservasemEspera() {
+    public ArrayList<Reserva> getReservasemEspera() {
         return reservasemEspera;
     }
 
-    public static void setReservasemEspera(ArrayList<Reserva> reservasemEspera) {
-        Aor_Autocarro.reservasemEspera = reservasemEspera;
+    public void setReservasemEspera(ArrayList<Reserva> reservasemEspera) {
+        this.reservasemEspera = reservasemEspera;
     }
 
-    public static ArrayList<Motorista> getMotoristas() {
+    public ArrayList<Motorista> getMotoristas() {
         return motoristas;
     }
 
-    public static void setMotoristas(ArrayList<Motorista> motoristas) {
-        Aor_Autocarro.motoristas = motoristas;
+    public void setMotoristas(ArrayList<Motorista> motoristas) {
+        this.motoristas = motoristas;
     }
 
-    public static ArrayList<Autocarro> getAutocarros() {
+    public ArrayList<Autocarro> getAutocarros() {
         return autocarros;
     }
 
-    public static void setAutocarros(ArrayList<Autocarro> autocarros) {
-        Aor_Autocarro.autocarros = autocarros;
+    public void setAutocarros(ArrayList<Autocarro> autocarros) {
+        this.autocarros = autocarros;
     }
 
-    public static void setListaPagamentos(ArrayList<Pagamento> listaPagamentos) {
-        Aor_Autocarro.listaPagamentos = listaPagamentos;
+    public void setListaPagamentos(ArrayList<Pagamento> listaPagamentos) {
+        this.listaPagamentos = listaPagamentos;
     }
 }
+
+
+
+
+
+
+

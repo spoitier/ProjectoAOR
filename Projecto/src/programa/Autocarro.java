@@ -61,4 +61,53 @@ public class Autocarro implements Serializable {
                 ", modelo='" + modelo + '\'' +
                 '}';
     }
+
+
+    //=================================================
+    //Validar a matricula
+    //========================================
+
+    public void validarMatricula(String matricula) {
+        int traco = 0;
+        int numero = 0;
+        int letra = 0;
+        if (matricula.length() == 8) {
+            for (int i = 0; i < matricula.length(); i++) {
+                if (matricula.charAt(i) == '-') {
+                    traco++;
+                }
+                if (Character.isDigit(matricula.charAt(i))) {
+                    numero++;
+                }
+                if (Character.isLetter(matricula.charAt(i))) {
+                    letra++;
+                }
+
+            }
+        }
+        if (traco == 2 && (numero == letra * 2 || letra == numero * 2)) {
+            System.out.println("Matricula Valida");
+        } else {
+            System.out.println("Matricula Invalida");
+        }
+
+    }
+
+
+    public  void validarLotacao(String lotacao) {
+        try {
+            int lotacaoInteiro = Integer.parseInt(lotacao);
+            if (lotacaoInteiro <= 50) {
+                System.out.println("Adicionar à lista");
+            } else {
+                System.out.println("Capacidade maxima é 50");
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println("Dados invalidos");
+        }
+
+
+    }
+
+
 }

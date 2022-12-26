@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public abstract class Utilizador implements Serializable {
 
+    Aor_Autocarro aor_autocarro = new Aor_Autocarro();
+
     protected String email;
     protected String palavraChave;
     protected String nome;
@@ -64,6 +66,32 @@ public abstract class Utilizador implements Serializable {
         }
         return validar;
     }
+
+    //====================================================
+    //Alterar palavra chave
+    public  void alterarPalavraChave(String email, String palavraChaveAtual,
+                                           String novaPalavraChave, String confirmePalavraChave) {
+        if (aor_autocarro.validarRegisto(email, palavraChaveAtual)) {
+            if (novaPalavraChave.equals(confirmePalavraChave)) {
+                for (Utilizador cliente : aor_autocarro.getUtilizadores()) {
+                    if (cliente.getEmail() == email) {
+                        cliente.setPalavraChave(novaPalavraChave);
+                    }
+                }
+            } else {
+                System.out.println("As palavras passes não coincidem");
+            }
+        } else {
+            System.out.println("Password Errada");
+        }
+    }
+
+
+
+
+
+
+
 
     public String getEmail() {
         return email;

@@ -19,6 +19,8 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     JButton removerButton;
     JButton editarButton;
 
+    Label palavraChaveFixa = new Label("AOR2022");
+
 
     public AdicionarClientes(PainelFundo painelFundo) {
         this.painelFundo = painelFundo;
