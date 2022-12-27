@@ -88,7 +88,7 @@ public class Aor_Autocarro implements Serializable {
         }
         return utilizador;
     }
-    //Contar nº Cliente ou Administrador
+    //Contar nº Cliente
     public int contarCliente() {
         int cliente= 1;
         for (Utilizador user : utilizadores) {
@@ -97,6 +97,16 @@ public class Aor_Autocarro implements Serializable {
             }
         }
         return cliente;
+    }
+    //Contar nº Administrador
+    public int contarAdministrador() {
+        int administrador= 1;
+        for (Utilizador user : utilizadores) {
+            if (user instanceof Administrador) {
+                administrador++;
+            }
+        }
+        return administrador;
     }
 
     //Retornar utilizador logado

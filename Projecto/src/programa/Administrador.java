@@ -33,7 +33,7 @@ public class Administrador extends Utilizador implements Serializable {
                 ",morada=" + morada  +
                 ",telefone=" + telefone +
                 ",email=" + email +
-                ",palavraChave=" + palavraChave;
+                ",palavraChave=" + palavraChave+"\n";
     }
 
     public String getId() {
