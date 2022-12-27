@@ -12,9 +12,8 @@ public class Administrador extends Utilizador implements Serializable {
 
 
     public Administrador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
-        super(email, palavraChave, nome, nif, morada, telefone);
+        super(id,email, palavraChave, nome, nif, morada, telefone);
         this.palavraChave = getPalavraChave();
-        this.id=id;
     }
 
     //Metodo para gerar chave inicial

@@ -179,7 +179,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 String id="cl".concat(String.valueOf(aor_autocarro.contarCliente()));
                 System.out.println("cl"+aor_autocarro.contarCliente());
                 aor_autocarro.getUtilizadores().add(new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
-                        moradaField.getText(), telefoneField.getText(),  LocalDate.now()));
+                        moradaField.getText(), telefoneField.getText(),"Normal",LocalDate.now()));
                 try {
                     FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                 } catch (IOException ex) {

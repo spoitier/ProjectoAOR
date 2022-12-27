@@ -14,14 +14,13 @@ public class Utilizador implements Serializable {
     protected String telefone;
     protected String id;
     //Fostes
-    public Utilizador(String email, String palavraChave, String nome, String nif, String morada, String telefone) {
+    public Utilizador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
         this.email = email;
         this.palavraChave = palavraChave;
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
         this.telefone = telefone;
-        // this.id = id;
     }
     public static boolean validarEmail(String email) {
         boolean validar = false;
