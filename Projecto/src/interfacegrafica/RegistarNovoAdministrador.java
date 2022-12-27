@@ -32,6 +32,8 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
     JTextField telefoneField;
     JTextField emailField;
 
+    Login login;
+
 
 
 
@@ -52,7 +54,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Admin");
+        JLabel clienteNome = new JLabel("nomeAdmin");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 

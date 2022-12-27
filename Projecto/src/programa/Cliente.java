@@ -13,7 +13,9 @@ public class Cliente extends Utilizador implements Serializable {
     private LocalDate data; // Data da subscrição, nova ou alterada
 
 
-
+public Cliente (){
+    super();
+}
     public Cliente(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone, String tipoCliente, LocalDate data) {
         super(id,email, palavraChave, nome, nif, morada, telefone);
         this.tipoCliente = tipoCliente;
@@ -33,6 +35,10 @@ public class Cliente extends Utilizador implements Serializable {
 
     public void setTipoCliente(String tipoCliente) {
         this.tipoCliente = tipoCliente;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public ArrayList<Notificação> getNotificações() {

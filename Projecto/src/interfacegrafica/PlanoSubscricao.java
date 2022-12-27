@@ -1,17 +1,25 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class PlanoSubscricao extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     JButton retrocessoButton;
 
+    JCheckBox premiumCheck;
+    JCheckBox normalCheck;
 
-    public PlanoSubscricao(PainelFundo painelFundo) {
+    Aor_Autocarro aor_autocarro;
+
+    public PlanoSubscricao(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
         // Titulo
@@ -56,7 +64,7 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         normalLabel3.setHorizontalAlignment(JLabel.CENTER);
 
         //Checkbox no painel normal
-        JCheckBox normalCheck = new JCheckBox();
+        normalCheck = new JCheckBox();
         normalCheck.setBounds(100,125,50,50);
 
         //Adicionar elementos ao painel normal
@@ -90,7 +98,7 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         premiumLabel3.setHorizontalAlignment(JLabel.CENTER);
 
         //Checkbox no painel premium
-        JCheckBox premiumCheck = new JCheckBox();
+        premiumCheck = new JCheckBox();
         premiumCheck.setBounds(100,125,50,50);
 
         //Adicionar elementos ao painel premium
@@ -110,16 +118,26 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         //Adicionar botoes ao ActionListener
         retrocessoButton.addActionListener(this);
         registarbutton.addActionListener(this);
-
+        premiumCheck.addActionListener(this);
+normalCheck.addActionListener(this);
 
 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if(e.getActionCommand().equals("Retrocesso")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
         if(e.getActionCommand().equals("Registar")) {
+            if(premiumCheck.isSelected()){
+                JOptionPane.showMessageDialog(null,"Subscreveu o plano premium.\n" +
+                        "Para manter as vantagens deste pacote, deverá proceder ao pagamento mensal de 10 euros.\n" +
+                        "O prazo da sua subscrição atual é de 30 dias.\n");
+
+            }
+            else if(normalCheck.isSelected())
+                JOptionPane.showMessageDialog(null,"Subscreveu o plano normal");
             painelFundo.mudaEcra("ReservaViagem");
         }
 

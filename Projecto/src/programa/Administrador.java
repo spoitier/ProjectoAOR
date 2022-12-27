@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Administrador extends Utilizador implements Serializable {
 
-
+    private String id;
 
 
 
@@ -13,6 +13,7 @@ public class Administrador extends Utilizador implements Serializable {
 
     public Administrador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
         super(id,email, palavraChave, nome, nif, morada, telefone);
+        this.id=id;
         this.palavraChave = getPalavraChave();
     }
 

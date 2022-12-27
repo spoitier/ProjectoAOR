@@ -22,6 +22,11 @@ public class Utilizador implements Serializable {
         this.morada = morada;
         this.telefone = telefone;
     }
+
+    public Utilizador() {
+
+    }
+
     public static boolean validarEmail(String email) {
         boolean validar = false;
         String[] email2 = email.split("");

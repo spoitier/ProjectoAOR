@@ -100,7 +100,7 @@ public class Aor_Autocarro implements Serializable {
     }
     //Contar nº Administrador
     public int contarAdministrador() {
-        int administrador= 1;
+        int administrador= 0;
         for (Utilizador user : utilizadores) {
             if (user instanceof Administrador) {
                 administrador++;
@@ -109,11 +109,15 @@ public class Aor_Autocarro implements Serializable {
         return administrador;
     }
 
-    //Retornar utilizador logado
-    public Utilizador utilizadorLogado(String email) {
+    //Retornar cliente logado
+    public Cliente clienteLogado(String email) {
+        Cliente cliente=null;
         for (Utilizador user : utilizadores) {
-            if (user.getEmail().equals(email)) ;
-            return user;
+            if (user instanceof Cliente) {
+            if (cliente.getEmail().equals(email)) {
+                return cliente;
+                }
+            }
         }
         return null;
     }
@@ -477,7 +481,7 @@ public class Aor_Autocarro implements Serializable {
     //Atribuir reserva efetiva a cliente em lista de espera:
     public String atribuirReservaListaEspera(String email) {
 
-        Cliente logado = (Cliente) utilizadorLogado(email);//identificar cliente através do email
+        Cliente logado = (Cliente) clienteLogado(email);//identificar cliente através do email
         Reserva novaReserva = null;
         Autocarro reservado = null;
         String descrição = null;

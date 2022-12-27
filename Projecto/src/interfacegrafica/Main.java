@@ -4,9 +4,6 @@ import programa.*;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.io.StringReader;
-import java.time.LocalDate;
-
 
 public class Main {
 
@@ -29,10 +26,11 @@ public class Main {
         aor_autocarro.getUtilizadores().add(gerente);
 
         try {
-            FicheiroDeObjectos.escreveObjeto(ficheiro);
+            ficheiroDeObjectos.escreveObjeto(aor_autocarro);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Erro");
         }
+
     }
 }
 
