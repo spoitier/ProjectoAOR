@@ -2,7 +2,7 @@ package programa;
 
 import java.io.Serializable;
 
-public abstract class Utilizador implements Serializable {
+public class Utilizador implements Serializable {
 
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
 
@@ -23,7 +23,7 @@ public abstract class Utilizador implements Serializable {
         this.telefone = telefone;
         // this.id = id;
     }
-    public boolean validarEmail(String email) {
+    public static boolean validarEmail(String email) {
         boolean validar = false;
         String[] email2 = email.split("");
         for (int i = 0; i < email2.length; i++) {
@@ -36,22 +36,16 @@ public abstract class Utilizador implements Serializable {
             }
         }return validar;
     }
-    public boolean validarTlfeNif(String dadoNumerico) {
-        boolean validar = false;
+    public static boolean validarTlfeNif(String dadoNumerico) {
         dadoNumerico=dadoNumerico.replaceAll("\\s","");
-        int contaDigitos=0;
-        for(int i=0;i<telefone.length();i++){
-            if(Character.isDigit(telefone.charAt(i))){
-                contaDigitos++;
+        for(int i=0;i<dadoNumerico.length();i++){
+            if(!Character.isDigit(dadoNumerico.charAt(i))){
+                return  true;
             }
         }
-        if(contaDigitos==9){
-            validar=true;
-
-        }return validar;
-
+        return false;
     }
-    public boolean validarNome(String nome) {
+    public static boolean validarNome(String nome) {
         boolean validar = false;
         nome=nome.replaceAll("\\s","");
         int contadorLetras=0;
@@ -101,7 +95,9 @@ public abstract class Utilizador implements Serializable {
         this.email = email;
     }
 
-    public abstract String getPalavraChave();
+    public String getPalavraChave(){
+        return this.palavraChave;
+    }
 
     public void setPalavraChave(String palavraChave) {
         this.palavraChave = palavraChave;

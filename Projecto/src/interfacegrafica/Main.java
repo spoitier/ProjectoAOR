@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class Main {
 
-
+    /*
     public static void alterarPalavraChave(String email, String palavraChaveAtual,
                                            String novaPalavraChave, String confirmePalavraChave) {
         if (Aor_Autocarro.validarRegisto(email, palavraChaveAtual)) {
@@ -100,30 +100,19 @@ public class Main {
 
 
 
-    public static void main(String[] args)   {
+     */
 
-        Aor_Autocarro aor_autocarro = new Aor_Autocarro();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        Cliente cl1 = new Cliente("rodrigo@gmail.com","123456","nome","123456789","rua","91234567","N",LocalDate.now());
-        Cliente cl2 = new Cliente("maria@gmail.com","123456","nome","123456789","rua","91234567","P",LocalDate.now());
-        Cliente cl3 = new Cliente("manel@gmail.com","123456","nome","123456789","rua","91234567","N",LocalDate.now());
+        FicheiroDeObjectos ficheiroDeObjectos = new FicheiroDeObjectos();
+        Aor_Autocarro ficheiro=ficheiroDeObjectos.leObjeto();
+        PainelFundo painelFundo = new PainelFundo(ficheiro);
 
-        Autocarro a1 = new Autocarro(40,"33-44-AA","mercedez","x");
-        Autocarro a2 = new Autocarro(30,"33-44-AB","ferrri","x");
-        Autocarro a3 = new Autocarro(40,"33-44-AC","ferrri","x");
-
-
-        aor_autocarro.addUtilizador(cl1);
-        aor_autocarro.addUtilizador(cl2);
-        aor_autocarro.addUtilizador(cl3);
+        System.out.println(painelFundo.aor_autocarro.getUtilizadores());
 
 
 
-        aor_autocarro.addAutocarro(a1);
-        aor_autocarro.addAutocarro(a2);
-        aor_autocarro.addAutocarro(a3);
 
-        validarMarca(a1.getMarca());
 
 
 

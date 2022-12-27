@@ -9,58 +9,13 @@ import java.util.Comparator;
 
 public class Aor_Autocarro implements Serializable {
 
-    private static ArrayList<Utilizador> utilizadores = new ArrayList<>();
+    private ArrayList<Utilizador> utilizadores = new ArrayList<>();
     private ArrayList<Reserva> reservas = new ArrayList<>();
     private ArrayList<Reserva> reservasCanceladas = new ArrayList<>();
     private ArrayList<Reserva> reservasemEspera = new ArrayList<>();
     private ArrayList<Motorista> motoristas = new ArrayList<>();
     private ArrayList<Autocarro> autocarros = new ArrayList<>();
     private ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
-
-
-
-
-
-    /*
-    public static void gravarFicheiro() {
-        try {
-            FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-
-            fdo.abreEscrita("Utilizadores");
-            fdo.escreveObjeto(Aor_Autocarro.utilizadores);
-            fdo.fechaEscrita();
-
-
-            fdo.abreEscrita("Motoristas");
-            fdo.escreveObjeto(Aor_Autocarro.motoristas);
-            fdo.fechaEscrita();
-
-
-        } catch (IOException e) {
-            System.out.println("Erro" + e);
-        }
-
-
-    }
-
-    public static void leFicheiro() {
-        try {
-            FicheiroDeObjectos fdo = new FicheiroDeObjectos();
-            fdo.abreLeitura("Utilizadores");
-            utilizadores = (ArrayList<Utilizador>) fdo.leObjeto();
-
-
-            fdo.abreLeitura("Motoristas");
-            motoristas = (ArrayList<Motorista>) fdo.leObjeto();
-
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro" + e.getMessage());
-        }
-    }
-
-
-     */
 
 
     public void addReserva(Reserva reserva) {
@@ -95,11 +50,9 @@ public class Aor_Autocarro implements Serializable {
         return reservas;
     }
 
-    public  void addUtilizador(Utilizador utilizador) {
+    public void addUtilizador(Utilizador utilizador) {
         utilizadores.add(utilizador);
     }
-
-
 
 
     @Override
@@ -113,7 +66,7 @@ public class Aor_Autocarro implements Serializable {
     }
 
     //Validar Registo de Login
-    public static boolean validarRegisto(String email, String palavraChave) {
+    public  boolean validarRegisto(String email, String palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
@@ -158,7 +111,7 @@ public class Aor_Autocarro implements Serializable {
         return duplicado;
     }
 
-    //Verificar se existe duplicação de registo de Nif, durante o registo de um novo utilizador
+    //Verificar se existe duplicação de registo de email, durante o registo de um novo utilizador
     public boolean verificarDuplicaçãoEmail(String email) {
         boolean duplicado = false;
 
@@ -550,7 +503,6 @@ public class Aor_Autocarro implements Serializable {
     }
 
 
-
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
     }
@@ -591,12 +543,12 @@ public class Aor_Autocarro implements Serializable {
         this.listaPagamentos = listaPagamentos;
     }
 
-    public static ArrayList<Utilizador> getUtilizadores() {
+    public ArrayList<Utilizador> getUtilizadores() {
         return utilizadores;
     }
 
-    public static void setUtilizadores(ArrayList<Utilizador> utilizadores) {
-        Aor_Autocarro.utilizadores = utilizadores;
+    public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
+        this.utilizadores = utilizadores;
     }
 }
 

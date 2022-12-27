@@ -1,13 +1,13 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
 import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-
-
+import java.time.LocalDate;
 
 
 public class PainelFundo {
@@ -17,8 +17,11 @@ public class PainelFundo {
     JPanel painelPrincipal;
 
     CardLayout layout;
+    Aor_Autocarro aor_autocarro = null;
 
-    public PainelFundo() {
+    public PainelFundo(Aor_Autocarro aor_autocarro) {
+       this.aor_autocarro = aor_autocarro;
+
         f = new JFrame("AOR-Empresa");
         f.setSize(900, 700);
         f.setLayout(new CardLayout());
@@ -35,8 +38,8 @@ public class PainelFundo {
 
 
 
-        painelPrincipal.add(new Login(this), "Login");
-        painelPrincipal.add(new RegistarUtilizador(this),"RegistarUtilizador");
+        painelPrincipal.add(new Login(this,aor_autocarro), "Login");
+        painelPrincipal.add(new RegistarUtilizador(this,aor_autocarro),"RegistarUtilizador");
         painelPrincipal.add(new PlanoSubscricao(this),"PlanoSubscrição");
         painelPrincipal.add(new ReservaViagem(this),"ReservaViagem");
         painelPrincipal.add(new TipoDePagamentos(this),"Pagamentos");

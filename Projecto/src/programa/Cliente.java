@@ -60,8 +60,8 @@ public class Cliente extends Utilizador implements Serializable {
         return id;
     }
 
-    public static void alterarSubscricao(String email) {
-        for (Utilizador utilizador : Aor_Autocarro.getUtilizadores()) {
+    public  void alterarSubscricao(String email) {
+        for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
             if (((Cliente) utilizador).getTipoCliente().equals("N")) {
                 ((Cliente) utilizador).setTipoCliente("P");
             } else if (((Cliente) utilizador).getTipoCliente().equals("P")) {

@@ -2,12 +2,14 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Cliente;
+import programa.FicheiroDeObjectos;
 import programa.Utilizador;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class RegistarUtilizador extends JPanel implements ActionListener {
@@ -16,7 +18,6 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     JButton prosseguirButton;
     JButton retrocessoButton;
     Aor_Autocarro aor_autocarro;
-    Utilizador utilizador;
     JLabel nomeLabel;
     JLabel nifLabel;
 
@@ -33,7 +34,8 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     JTextField palavraChaveField;
 
 
-    public RegistarUtilizador(PainelFundo painelfundo) {
+    public RegistarUtilizador(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelfundo;
         this.setLayout(null);
 
@@ -126,6 +128,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         boolean validar = true;
         if (e.getActionCommand().equals("Prosseguir")) {
 
+
             //verificar se todos os campos estão preenchidos
             if (nomeField.getText().equals("") || nifField.getText().equals("") ||
                     moradaField.getText().equals("") || telefoneField.getText().equals("") ||
@@ -133,41 +136,45 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 validar = false;
             }
             //Verificar se email é válido
-            if (!utilizador.validarEmail(emailField.getText())) {
+            if (!Utilizador.validarEmail(emailField.getText())) {
                 emailLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se o nome é constituído só por letras
-            if (!utilizador.validarNome(nomeField.getText())) {
+            if (!Utilizador.validarNome(nomeField.getText())) {
                 nomeLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se o nif é constituído por 9 números
-            if (!utilizador.validarTlfeNif(nifField.getText())) {
+            if (Utilizador.validarTlfeNif(nifField.getText())) {
                 nifLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se o telefone é constituído por 9 números
-            if (!utilizador.validarTlfeNif(telefoneField.getText())) {
+            if (Utilizador.validarTlfeNif(telefoneField.getText())) {
                 telefoneLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
-            if (!aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+            if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
                 nifLabel.setForeground(Color.red);
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
-            if (!aor_autocarro.verificarDuplicaçãoNif(emailField.getText())) {
+            if (aor_autocarro.verificarDuplicaçãoEmail(emailField.getText())) {
                 emailLabel.setForeground(Color.red);
                 validar = false;
             }
-            if (validar = false) {
+            if (validar == false) {
                 JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
             } else {
-                //Aor_Autocarro.addUtilizador(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
-                        //moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
-                //Aor_Autocarro.gravarFicheiro();
+                aor_autocarro.getUtilizadores().add(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
+                        moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
+                try {
+                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null,"Erro");
+                }
                 painelFundo.mudaEcra("PlanoSubscrição");
             }
         }
