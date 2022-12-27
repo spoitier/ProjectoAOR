@@ -8,13 +8,19 @@ import java.awt.event.ActionListener;
 public class AlterarPalavraChaveCliente extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
-    JButton opcao1 ;
-    JButton opcao2 ;
-    JButton opcao3 ;
-    JButton opcao4 ;
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
+    JButton opcao4;
     JButton opcao5;
     JButton sairBotao;
     JButton alterarPalavraChaveButton;
+
+    JLabel clienteNome;
+    JLabel emailPreenchido;
+    TextField palavraChaveAtualField;
+    TextField novaPalavraChaveField;
+    TextField confirmePalavraChaveField;
 
 
     public AlterarPalavraChaveCliente(PainelFundo painelFundo) {
@@ -33,7 +39,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -46,17 +52,16 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         //===========================================================
         //Painel de escolhas do cliente
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5,15,0));
+        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-         opcao1 = new JButton("programa.Reserva programa.Autocarro");
-         opcao2 = new JButton("Histórico Reservas");
-         opcao3 = new JButton("Consultar Reservas");
-         opcao4 = new JButton("Cancelar Reservas");
-         opcao5 = new JButton("Dados Pessoais");
+        opcao1 = new JButton("programa.Reserva programa.Autocarro");
+        opcao2 = new JButton("Histórico Reservas");
+        opcao3 = new JButton("Consultar Reservas");
+        opcao4 = new JButton("Cancelar Reservas");
+        opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -68,8 +73,8 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Dados Pessoais");
-        segundoTitulo.setBounds(50,100,900,30);
+        JLabel segundoTitulo = new JLabel("Dados Pessoais");
+        segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
 
@@ -94,16 +99,16 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         confirmePalavraChave.setBounds(0, 175, 200, 30);
 
 
-        JLabel emailPreenchido = new JLabel("Preenchido automaticamente");
+        emailPreenchido = new JLabel("Preenchido automaticamente");
         emailPreenchido.setBounds(200, 25, 170, 30);
 
-        TextField palavraChaveAtualField = new TextField();
+        palavraChaveAtualField = new TextField();
         palavraChaveAtualField.setBounds(200, 75, 170, 30);
 
-        TextField novaPalavraChaveField = new TextField();
+        novaPalavraChaveField = new TextField();
         novaPalavraChaveField.setBounds(200, 125, 170, 30);
 
-        TextField confirmePalavraChaveField = new TextField();
+        confirmePalavraChaveField = new TextField();
         confirmePalavraChaveField.setBounds(200, 175, 170, 30);
 
 
@@ -119,7 +124,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         this.add(formularioPanel);
 
         alterarPalavraChaveButton = new JButton("Alterar palavra chave");
-        alterarPalavraChaveButton.setBounds(650,225,200,30);
+        alterarPalavraChaveButton.setBounds(650, 225, 200, 30);
         this.add(alterarPalavraChaveButton);
 
         opcao1.addActionListener(this);
@@ -159,7 +164,6 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
         }
-
 
 
     }

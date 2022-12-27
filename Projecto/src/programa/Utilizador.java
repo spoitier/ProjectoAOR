@@ -7,21 +7,21 @@ public class Utilizador implements Serializable {
     Aor_Autocarro aor_autocarro = new Aor_Autocarro();
 
     protected String email;
-    protected String id;
     protected String palavraChave;
     protected String nome;
     protected String nif;
     protected String morada;
     protected String telefone;
+    protected String id;
     //Fostes
-    public Utilizador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
+    public Utilizador(String email, String palavraChave, String nome, String nif, String morada, String telefone) {
         this.email = email;
         this.palavraChave = palavraChave;
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
         this.telefone = telefone;
-
+        // this.id = id;
     }
     public static boolean validarEmail(String email) {
         boolean validar = false;

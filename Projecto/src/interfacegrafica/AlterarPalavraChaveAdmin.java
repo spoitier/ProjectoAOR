@@ -2,11 +2,28 @@ package interfacegrafica;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class AlterarPalavraChaveAdmin  extends JPanel {
+public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    JLabel clienteNome;
+    JButton sairBotao;
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
+    JButton opcao4;
+    JButton opcao5;
+    JButton alterarPalavraChaveButton;
 
+    TextField palavraChaveAtualField;
+
+
+    TextField novaPalavraChaveField;
+
+    JLabel emailPreenchido;
+    TextField confirmePalavraChaveField;
 
 
     public AlterarPalavraChaveAdmin(PainelFundo painelFundo) {
@@ -25,12 +42,12 @@ public class AlterarPalavraChaveAdmin  extends JPanel {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Admin");
+        clienteNome = new JLabel("Nome do Admin");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        JButton sairBotao = new JButton("Sair");
+        sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -38,17 +55,16 @@ public class AlterarPalavraChaveAdmin  extends JPanel {
         //===========================================================
         //Painel de escolhas do Admin
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5,15,0));
+        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-        JButton opcao1 = new JButton("Adminstradores");
-        JButton opcao2 = new JButton("Motoristas");
-        JButton opcao3 = new JButton("Autocarros");
-        JButton opcao4 = new JButton("Estatistica");
-        JButton opcao5 = new JButton("Dados Pessoais");
+        opcao1 = new JButton("Adminstradores");
+        opcao2 = new JButton("Motoristas");
+        opcao3 = new JButton("Autocarros");
+        opcao4 = new JButton("Estatistica");
+        opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -61,8 +77,8 @@ public class AlterarPalavraChaveAdmin  extends JPanel {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Dados Pessoais");
-        segundoTitulo.setBounds(50,100,900,30);
+        JLabel segundoTitulo = new JLabel("Dados Pessoais");
+        segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
         //=========================================================================
@@ -86,16 +102,16 @@ public class AlterarPalavraChaveAdmin  extends JPanel {
         confirmePalavraChave.setBounds(0, 175, 200, 30);
 
 
-        JLabel emailPreenchido = new JLabel("Preenchido automaticamente");
+        emailPreenchido = new JLabel("Preenchido automaticamente");
         emailPreenchido.setBounds(200, 25, 170, 30);
 
-        TextField palavraChaveAtualField = new TextField();
+        palavraChaveAtualField = new TextField();
         palavraChaveAtualField.setBounds(200, 75, 170, 30);
 
-        TextField novaPalavraChaveField = new TextField();
+        novaPalavraChaveField = new TextField();
         novaPalavraChaveField.setBounds(200, 125, 170, 30);
 
-        TextField confirmePalavraChaveField = new TextField();
+        confirmePalavraChaveField = new TextField();
         confirmePalavraChaveField.setBounds(200, 175, 170, 30);
 
 
@@ -110,15 +126,15 @@ public class AlterarPalavraChaveAdmin  extends JPanel {
 
         this.add(formularioPanel);
 
-        JButton alterarPalavraChaveButton = new JButton("Alterar palavra chave");
-        alterarPalavraChaveButton.setBounds(650,225,200,30);
+        alterarPalavraChaveButton = new JButton("Alterar palavra chave");
+        alterarPalavraChaveButton.setBounds(650, 225, 200, 30);
         this.add(alterarPalavraChaveButton);
 
 
+    }
 
-
-
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
     }
 }

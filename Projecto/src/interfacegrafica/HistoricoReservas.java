@@ -32,7 +32,7 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
+        JLabel clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -50,7 +50,7 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-         opcao1 = new JButton("programa.Reserva programa.Autocarro");
+         opcao1 = new JButton("programa.Reserva Autocarro");
          opcao2 = new JButton("Histórico Reservas");
          opcao3 = new JButton("Consultar Reservas");
          opcao4 = new JButton("Cancelar Reservas");

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 public class AdicionarClientes extends JPanel implements ActionListener {
     PainelFundo painelFundo;
-
     JButton sairButton;
     JButton opcao1;
     JButton opcao2;
@@ -20,6 +19,16 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     JButton editarButton;
 
     Label palavraChaveFixa = new Label("AOR2022");
+    JLabel clienteNome;
+
+    JTextField nameField;
+    JTextField nifField;
+    JTextField moradaField;
+    JTextField telefoneField;
+    JTextField emailField;
+    JTextField palavraChaveField;
+    JTextField nifRemoverField;
+    JTextField nifEditarField;
 
 
     public AdicionarClientes(PainelFundo painelFundo) {
@@ -38,7 +47,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Admin");
+        clienteNome = new JLabel("Nome do Admin");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -107,21 +116,21 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
 
         //Fields
-        JTextField nameField = new JTextField();
+        nameField = new JTextField();
         nameField.setBounds(150, 50, 200, 30);
-        JTextField nifField = new JTextField();
+        nifField = new JTextField();
         nifField.setBounds(150, 90, 200, 30);
-        JTextField moradaField = new JTextField();
+        moradaField = new JTextField();
         moradaField.setBounds(150, 130, 200, 30);
-        JTextField telefoneField = new JTextField();
+        telefoneField = new JTextField();
         telefoneField.setBounds(150, 170, 200, 30);
-        JTextField emailField = new JTextField();
+        emailField = new JTextField();
         emailField.setBounds(150, 210, 200, 30);
-        JTextField palavraChaveField = new JTextField();
+        palavraChaveField = new JTextField();
         palavraChaveField.setBounds(150, 250, 200, 30);
-        JTextField nifRemoverField = new JTextField();
+        nifRemoverField = new JTextField();
         nifRemoverField.setBounds(150, 425, 200, 30);
-        JTextField nifEditarField = new JTextField();
+        nifEditarField = new JTextField();
         nifEditarField.setBounds(150, 500, 200, 30);
 
         //Adicionar ao formulario
@@ -221,11 +230,10 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Remover")) {
 
         }
-        if(e.getActionCommand().equals("Editar")){
+        if (e.getActionCommand().equals("Editar")) {
             painelFundo.mudaEcra("ClientesEditar");
 
         }
-
 
 
     }

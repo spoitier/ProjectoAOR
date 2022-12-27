@@ -23,6 +23,20 @@ public class Autocarros extends JPanel implements ActionListener {
     JButton removerButton;
     JButton editarButton;
 
+    JLabel adminNome;
+
+    JTextField matriculaField;
+
+    JTextField marcaField;
+    JTextField modeloField;
+
+    JTextField lotacaoField;
+
+    JTextField matriculaFieldRemover;
+
+    JTextField matriculaFieldEditar;
+
+
     public Autocarros(PainelFundo painelFundo) {
         this.painelFundo = painelFundo;
         this.setLayout(null);
@@ -39,9 +53,9 @@ public class Autocarros extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Admin");
-        clienteNome.setBounds(700, 0, 100, 30);
-        cabecalho.add(clienteNome);
+        adminNome = new JLabel("Nome do Admin");
+        adminNome.setBounds(700, 0, 100, 30);
+        cabecalho.add(adminNome);
 
         // Botao para sair para o login
         sairBotao = new JButton("Sair");
@@ -103,17 +117,17 @@ public class Autocarros extends JPanel implements ActionListener {
         matriculaEditarLabel.setBounds(50, 400, 200, 30);
 
         //Fields
-        JTextField matriculaField = new JTextField();
+        matriculaField = new JTextField();
         matriculaField.setBounds(150, 50, 200, 30);
-        JTextField marcaField = new JTextField();
+        marcaField = new JTextField();
         marcaField.setBounds(150, 90, 200, 30);
-        JTextField modeloField = new JTextField();
+        modeloField = new JTextField();
         modeloField.setBounds(150, 130, 200, 30);
-        JTextField lotacaoField = new JTextField();
+        lotacaoField = new JTextField();
         lotacaoField.setBounds(150, 170, 200, 30);
-        JTextField matriculaFieldRemover = new JTextField();
+        matriculaFieldRemover = new JTextField();
         matriculaFieldRemover.setBounds(150, 300, 200, 30);
-        JTextField matriculaFieldEditar = new JTextField();
+        matriculaFieldEditar = new JTextField();
         matriculaFieldEditar.setBounds(150, 400, 200, 30);
 
         //Adicionar ao formulario
@@ -218,7 +232,7 @@ public class Autocarros extends JPanel implements ActionListener {
 
         }
 
-        if(e.getActionCommand().equals("Editar")){
+        if (e.getActionCommand().equals("Editar")) {
             painelFundo.mudaEcra("AutocarrosEditar");
 
         }

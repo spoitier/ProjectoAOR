@@ -41,7 +41,7 @@ public class PainelFundo {
         painelPrincipal.add(new Login(this,aor_autocarro), "Login");
         painelPrincipal.add(new RegistarUtilizador(this,aor_autocarro),"RegistarUtilizador");
         painelPrincipal.add(new PlanoSubscricao(this),"PlanoSubscrição");
-        painelPrincipal.add(new ReservaViagem(this),"ReservaViagem");
+        painelPrincipal.add(new ReservaViagem(this,aor_autocarro),"ReservaViagem");
         painelPrincipal.add(new TipoDePagamentos(this),"Pagamentos");
         painelPrincipal.add(new PayPal(this),"PayPal");
         painelPrincipal.add(new CartaoCredito(this),"CartaoCredito");

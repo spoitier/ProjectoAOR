@@ -6,23 +6,22 @@ import java.util.ArrayList;
 
 public class Cliente extends Utilizador implements Serializable {
 
+    public static int contador=1;
+    private String id;
 
     private ArrayList<Notificação> notificações=new ArrayList<>();
     private String tipoCliente; //Cliente Premium ou Cliente Normal
     private LocalDate data; // Data da subscrição, nova ou alterada
 
-    Aor_Autocarro empresa=new Aor_Autocarro();
 
 
-
-    public Cliente(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone, String tipoCliente, LocalDate data) {
-        super(id,email, palavraChave, nome, nif, morada, telefone);
+    public Cliente(String email, String palavraChave, String nome, String nif, String morada, String telefone, String tipoCliente, LocalDate data) {
+        super(email, palavraChave, nome, nif, morada, telefone);
         this.tipoCliente = tipoCliente;
         this.data = data;
         this.palavraChave = palavraChave;
-        this.id=id;
-
-
+        id = "cl".concat(String.valueOf(Cliente.contador));
+        contador++;
     }
 
     public String getPalavraChave() {
@@ -43,16 +42,18 @@ public class Cliente extends Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente." +
-                "id=" + id +
-                ",nome=" + nome  +
-                ",nif=" + nif  +
-                ",morada=" + morada  +
-                ",telefone=" + telefone +
-                ",email=" + email +
-                ",palavraChave=" + palavraChave +
-                ",data do registo=" + data+
-                ",tipoCliente=" + tipoCliente;
+        return "Cliente{" +
+                "id='" + id + '\'' +
+                ", tipoCliente=" + tipoCliente +
+                ", data=" + data +
+                ", email='" + email + '\'' +
+                ", palavraChave='" + palavraChave + '\'' +
+                ", nome='" + nome + '\'' +
+                ", nif=" + nif +
+                ", morada='" + morada + '\'' +
+                ", telefone=" + telefone +
+                ", id='" + id + '\'' +
+                '}';
     }
 
     public String getId() {

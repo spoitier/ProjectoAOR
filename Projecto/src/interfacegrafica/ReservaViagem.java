@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.awt.event.ActionListener;
 public class ReservaViagem extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
     JButton prosseguirButton;
     JButton opcao1;
     JButton opcao2;
@@ -17,8 +20,9 @@ public class ReservaViagem extends JPanel implements ActionListener {
     JButton sairBotao;
 
 
-    public ReservaViagem(PainelFundo painelFundo) {
+    public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
+        this.aor_autocarro = aor_autocarro;
         this.setLayout(null);
 
         //===================================================

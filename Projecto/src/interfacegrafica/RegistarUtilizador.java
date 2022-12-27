@@ -15,6 +15,8 @@ import java.time.LocalDate;
 public class RegistarUtilizador extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+
+    Cliente cliente;
     JButton prosseguirButton;
     JButton retrocessoButton;
     Aor_Autocarro aor_autocarro;
@@ -177,7 +179,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 String id="cl".concat(String.valueOf(aor_autocarro.contarCliente()));
                 System.out.println("cl"+aor_autocarro.contarCliente());
                 aor_autocarro.getUtilizadores().add(new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
-                        moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
+                        moradaField.getText(), telefoneField.getText(),  LocalDate.now()));
                 try {
                     FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                 } catch (IOException ex) {
