@@ -133,42 +133,50 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
             if (nomeField.getText().equals("") || nifField.getText().equals("") ||
                     moradaField.getText().equals("") || telefoneField.getText().equals("") ||
                     emailField.getText().equals("") || palavraChaveField.getText().equals("")) {
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+                validar=false;
             }
             //Verificar se email é válido
             if (!Utilizador.validarEmail(emailField.getText())) {
                 emailLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Email inválido");
+                validar=false;
             }
             //Verificar se o nome é constituído só por letras
             if (!Utilizador.validarNome(nomeField.getText())) {
                 nomeLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
+                validar=false;
             }
             //Verificar se o nif é constituído por 9 números
             if (Utilizador.validarTlfeNif(nifField.getText())) {
                 nifLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Nif inválido");
+                validar=false;
             }
             //Verificar se o telefone é constituído por 9 números
             if (Utilizador.validarTlfeNif(telefoneField.getText())) {
                 telefoneLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Número de telefone inválido");
+                validar=false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
             if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
                 nifLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
+                validar=false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
             if (aor_autocarro.verificarDuplicaçãoEmail(emailField.getText())) {
                 emailLabel.setForeground(Color.red);
-                validar = false;
+                JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse email");
+                validar=false;
             }
             if (validar == false) {
-                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
             } else {
-                aor_autocarro.getUtilizadores().add(new Cliente(emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
+                String id="cl".concat(String.valueOf(aor_autocarro.contarCliente()));
+                System.out.println("cl"+aor_autocarro.contarCliente());
+                aor_autocarro.getUtilizadores().add(new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
                         moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
                 try {
                     FicheiroDeObjectos.escreveObjeto(aor_autocarro);

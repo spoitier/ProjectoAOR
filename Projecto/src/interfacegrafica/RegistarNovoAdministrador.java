@@ -153,6 +153,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
+
         if(e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");
         }

@@ -4,18 +4,17 @@ import java.io.Serializable;
 
 public class Administrador extends Utilizador implements Serializable {
 
-    private String id;
-    public static int contador=1;
 
 
 
 
 
-    public Administrador(String email, String palavraChave, String nome, String nif, String morada, String telefone) {
-        super(email, palavraChave, nome, nif, morada, telefone);
+
+
+    public Administrador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
+        super(id,email, palavraChave, nome, nif, morada, telefone);
         this.palavraChave = getPalavraChave();
-        id = "admin".concat(String.valueOf(Administrador.contador));
-        contador++;
+        this.id=id;
     }
 
     //Metodo para gerar chave inicial
@@ -25,25 +24,16 @@ public class Administrador extends Utilizador implements Serializable {
     }
 
 
-    public int getContador() {
-        return contador;
-    }
-
-    public void setContador(int contador) {
-        this.contador = contador;
-    }
-
     @Override
     public String toString() {
-        return "Administrador{" +
-                "email='" + email + '\'' +
-                ", palavraChave='" + palavraChave + '\'' +
-                ", nome='" + nome + '\'' +
-                ", nif=" + nif +
-                ", morada='" + morada + '\'' +
-                ", telefone=" + telefone +
-                ", id=" + id +
-                '}';
+        return "Administrador:" +
+                "id=" + id +
+                ",nome=" + nome +
+                ",nif=" + nif +
+                ",morada=" + morada  +
+                ",telefone=" + telefone +
+                ",email=" + email +
+                ",palavraChave=" + palavraChave;
     }
 
     public String getId() {

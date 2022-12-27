@@ -106,6 +106,10 @@ public class Main {
 
         FicheiroDeObjectos ficheiroDeObjectos = new FicheiroDeObjectos();
         Aor_Autocarro ficheiro=ficheiroDeObjectos.leObjeto();
+
+        if(ficheiro==null){
+            ficheiro=new Aor_Autocarro();
+        }
         PainelFundo painelFundo = new PainelFundo(ficheiro);
 
         System.out.println(painelFundo.aor_autocarro.getUtilizadores());
