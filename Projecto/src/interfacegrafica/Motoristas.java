@@ -239,11 +239,8 @@ public class Motoristas extends JPanel implements ActionListener {
                     (!aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText()))) {
                 aor_autocarro.getMotoristas().add(new Motorista(nomeField.getText(), emailField.getText()));
                 JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
 
             } else if (aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText())) {
                 JOptionPane.showMessageDialog(null, "Email duplicado!");
@@ -267,12 +264,8 @@ public class Motoristas extends JPanel implements ActionListener {
                 } catch (NullPointerException n) {
                     JOptionPane.showMessageDialog(null, "Não existe nenhum motorista com esse email");
                 }
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
             }
 
 

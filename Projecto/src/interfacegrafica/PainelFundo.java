@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 public class PainelFundo {
@@ -17,7 +18,9 @@ public class PainelFundo {
     JPanel painelPrincipal;
 
     CardLayout layout;
-    Aor_Autocarro aor_autocarro = null;
+    Aor_Autocarro aor_autocarro;
+
+    HashMap<String,JPanel>mapaPaineis;
 
     public PainelFundo(Aor_Autocarro aor_autocarro) {
        this.aor_autocarro = aor_autocarro;
@@ -36,30 +39,51 @@ public class PainelFundo {
         painelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-
-        painelPrincipal.add(new Login(this,aor_autocarro), "Login");
-        painelPrincipal.add(new RegistarUtilizador(this,aor_autocarro),"RegistarUtilizador");
-        painelPrincipal.add(new PlanoSubscricao(this,aor_autocarro),"PlanoSubscrição");
-        painelPrincipal.add(new ReservaViagem(this,aor_autocarro),"ReservaViagem");
-        painelPrincipal.add(new TipoDePagamentos(this),"Pagamentos");
-        painelPrincipal.add(new PayPal(this),"PayPal");
-        painelPrincipal.add(new CartaoCredito(this),"CartaoCredito");
-        painelPrincipal.add(new Multibanco(this),"Multibanco");
-        painelPrincipal.add(new HistoricoReservas(this),"HistoricoReservas");
-        painelPrincipal.add(new ConsultarReservas(this),"ConsultarReservas");
-        painelPrincipal.add(new CancelarReserva(this),"CancelarReserva");
-        painelPrincipal.add(new DadosPessoaisCliente(this),"DadosPessoaisClientes");
+        mapaPaineis=new HashMap<>();
+        mapaPaineis.put("Login",new Login(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("Login"), "Login");
+        mapaPaineis.put("RegistarUtilizador",new RegistarUtilizador(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("RegistarUtilizador"),"RegistarUtilizador");
+        mapaPaineis.put("PlanoSubscrição",new PlanoSubscricao(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("PlanoSubscrição"),"PlanoSubscrição");
+        mapaPaineis.put("ReservaViagem",new ReservaViagem(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("ReservaViagem"),"ReservaViagem");
+        mapaPaineis.put("Pagamentos",new TipoDePagamentos(this));
+        painelPrincipal.add(mapaPaineis.get("Pagamentos"),"Pagamentos");
+        mapaPaineis.put("PayPal",new PayPal(this));
+        painelPrincipal.add(mapaPaineis.get("PayPal"),"PayPal");
+        mapaPaineis.put("CartaoCredito",new CartaoCredito(this));
+        painelPrincipal.add(mapaPaineis.get("CartaoCredito"),"CartaoCredito");
+        mapaPaineis.put("Multibanco",new Multibanco(this));
+        painelPrincipal.add(mapaPaineis.get("Multibanco"),"Multibanco");
+        mapaPaineis.put("HistoricoReservas",new HistoricoReservas(this));
+        painelPrincipal.add(mapaPaineis.get("HistoricoReservas"),"HistoricoReservas");
+        mapaPaineis.put("ConsultarReservas",new ConsultarReservas(this));
+        painelPrincipal.add(mapaPaineis.get("ConsultarReservas"),"ConsultarReservas");
+        mapaPaineis.put("CancelarReserva",new CancelarReserva(this));
+        painelPrincipal.add(mapaPaineis.get("CancelarReserva"),"CancelarReserva");
+        mapaPaineis.put("DadosPessoaisClientes",new DadosPessoaisCliente(this));
+        painelPrincipal.add(mapaPaineis.get("DadosPessoaisClientes"),"DadosPessoaisClientes");
+        mapaPaineis.put("AlterarPalavraChave",new AlterarPalavraChaveCliente(this));
         painelPrincipal.add(new AlterarPalavraChaveCliente(this),"AlterarPalavraChave");
-        painelPrincipal.add(new RegistarNovoAdministrador(this,aor_autocarro),"RegistarNovoAdministrador");
-        painelPrincipal.add(new Motoristas(this,aor_autocarro),"Motoristas");
-        painelPrincipal.add(new Autocarros(this),"Autocarros");
-        painelPrincipal.add(new AutocarrosEditar(this),"AutocarrosEditar");
-        painelPrincipal.add(new AdicionarClientes(this,aor_autocarro),"AdicionarClientes");
-        painelPrincipal.add(new ClientesEditar(this),"ClientesEditar");
-        painelPrincipal.add(new Estatistica(this),"Estatistica");
-        painelPrincipal.add(new DadosPessoaisAdmin(this),"DadosPessoaisAdmin");
-        painelPrincipal.add(new AlterarPalavraChaveAdmin(this),"AlterarPalavraChaveAdmin");
+        mapaPaineis.put("RegistarNovoAdministrador",new RegistarNovoAdministrador(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("RegistarNovoAdministrador"),"RegistarNovoAdministrador");
+        mapaPaineis.put("Motoristas",new Motoristas(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("Motoristas"),"Motoristas");
+        mapaPaineis.put("Autocarros",new Autocarros(this));
+        painelPrincipal.add(mapaPaineis.get("Autocarros"),"Autocarros");
+        mapaPaineis.put("AutocarrosEditar",new AutocarrosEditar(this));
+        painelPrincipal.add(mapaPaineis.get("AutocarrosEditar"),"AutocarrosEditar");
+        mapaPaineis.put("AdicionarClientes",new AdicionarClientes(this,aor_autocarro));
+        painelPrincipal.add(mapaPaineis.get("AdicionarClientes"),"AdicionarClientes");
+        mapaPaineis.put("ClientesEditar",new ClientesEditar(this));
+        painelPrincipal.add(mapaPaineis.get("ClientesEditar"),"ClientesEditar");
+        mapaPaineis.put("Estatistica",new Estatistica(this));
+        painelPrincipal.add(mapaPaineis.get("Estatistica"),"Estatistica");
+        mapaPaineis.put("DadosPessoaisAdmin",new DadosPessoaisAdmin(this));
+        painelPrincipal.add(mapaPaineis.get("DadosPessoaisAdmin"),"DadosPessoaisAdmin");
+        mapaPaineis.put("AlterarPalavraChaveAdmin",new AlterarPalavraChaveAdmin(this));
+        painelPrincipal.add(mapaPaineis.get("AlterarPalavraChaveAdmin"),"AlterarPalavraChaveAdmin");
 
 
 

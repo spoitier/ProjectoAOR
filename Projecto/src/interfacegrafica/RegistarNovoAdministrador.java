@@ -34,6 +34,8 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
     JTextField telefoneField;
     JTextField emailField;
 
+    JLabel clienteNome;
+
 
     public RegistarNovoAdministrador(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -52,7 +54,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("nomeAdmin");
+        clienteNome = new JLabel("");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -156,6 +158,17 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         sairBotao.addActionListener(this);
 
     }
+    public void nomeLogado(){
+
+
+        if(aor_autocarro.getUserLogado()==null){
+            clienteNome.setText("");
+        }else
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -214,11 +227,9 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
                 JOptionPane.showMessageDialog(null, "Administrador adicionado com sucesso.\n" +
                         "Será enviado para o email "+emailField.getText()+" uma password provisória, a qual deverá" +
                         "ser alterada." );
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
+
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
 
             }
         }

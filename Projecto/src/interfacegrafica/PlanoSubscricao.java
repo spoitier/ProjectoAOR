@@ -1,6 +1,8 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
+import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -126,19 +128,24 @@ normalCheck.addActionListener(this);
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        Cliente logado;
         if(e.getActionCommand().equals("Retrocesso")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
         if(e.getActionCommand().equals("Registar")) {
             if(premiumCheck.isSelected()){
+                logado=(Cliente)aor_autocarro.getUserLogado();
+                System.out.println(logado);
+                logado.setTipoCliente("Premium");
                 JOptionPane.showMessageDialog(null,"Subscreveu o plano premium.\n" +
                         "Para manter as vantagens deste pacote, deverá proceder ao pagamento mensal de 10 euros.\n" +
                         "O prazo da sua subscrição atual é de 30 dias.\n");
 
             }
-            else if(normalCheck.isSelected())
-                JOptionPane.showMessageDialog(null,"Subscreveu o plano normal");
+            else if(normalCheck.isSelected()){
+                JOptionPane.showMessageDialog(null,"Subscreveu o plano normal");}
             painelFundo.mudaEcra("ReservaViagem");
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
 
     }

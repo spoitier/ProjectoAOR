@@ -138,23 +138,27 @@ public class Login extends JPanel implements ActionListener {
                                 JOptionPane.showMessageDialog(null, rc.getDescrição());
                                 rc.setLido(true);
                                 aor_autocarro.removerCliente(logado.getNif());
-                            break;
+
+                                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
                             } else {
                                 painelFundo.mudaEcra("ReservaViagem");
                             }
                         }
                     }
                 } else if (aor_autocarro.verificarTipoUtilizador(email, password).equals("administrador")) {
+                    ((RegistarNovoAdministrador)(painelFundo.mapaPaineis.get("RegistarNovoAdministrador"))).nomeLogado();
                     painelFundo.mudaEcra("RegistarNovoAdministrador");
 
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Login Invalido!");
             }
+        }
 
-            if (ae.getActionCommand().equals("Registar Novo Utilizador")) {
-                painelFundo.mudaEcra("RegistarUtilizador");
-            }
+        if (ae.getActionCommand().equals("Registar Novo Utilizador")) {
+            painelFundo.mudaEcra("RegistarUtilizador");
         }
     }
 }
+

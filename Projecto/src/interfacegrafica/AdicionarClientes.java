@@ -263,11 +263,9 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso.\n" +
                         "Será enviado para o email "+emailField.getText()+" uma password provisória, a qual deverá" +
                         "ser alterada." );
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
+
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
             }
         }
         if (e.getActionCommand().equals("Remover")) {
@@ -279,11 +277,9 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                         "após ter sido informado sobre encerramento da sua conta, ao efetuar login");
                 if(aor_autocarro.getReservas().size()!=0){
                 aor_autocarro.cancelarReservasporAdministrador(nifRemoverField.getText());}
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
+
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
             }
         }
         if (e.getActionCommand().equals("Editar")) {

@@ -22,9 +22,9 @@ public class Main {
 
         //System.out.println(aor_autocarro.getUtilizadores());
 
-        Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
-                "123456789", "Coimbra", "967895432");
-        aor_autocarro.getUtilizadores().add(gerente);
+        //Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
+          //      "123456789", "Coimbra", "967895432");
+        //aor_autocarro.getUtilizadores().add(gerente);
 
         /*Utilizador cli1 = new Cliente("cl1","maria@gmail.com", "123456", "Maria", "124123443", "Coimbra", "913123123","Normal", LocalDate.of(2022, 12, 13));
         Utilizador cli2 = new Cliente("cl2","albertina@gmail.com", "123456", "Albertina", "124123454", "Coimbra", "913123123",  "Premium", LocalDate.of(2022, 12, 13));
@@ -33,17 +33,12 @@ public class Main {
 
 
 
-        try {
-            ficheiroDeObjectos.escreveObjeto(aor_autocarro);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro");
-        }
+        ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
-        try {
-            ficheiroDeObjectos.leObjeto();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro");
-        }
+
+        aor_autocarro=ficheiroDeObjectos.leObjeto();
+        System.out.println(aor_autocarro);
+
 
     }
 }

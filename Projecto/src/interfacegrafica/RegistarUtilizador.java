@@ -178,13 +178,13 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
             } else {
                 String id="cl".concat(String.valueOf(aor_autocarro.contarCliente()));
                 System.out.println("cl"+aor_autocarro.contarCliente());
-                aor_autocarro.getUtilizadores().add(new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
-                        moradaField.getText(), telefoneField.getText(),"Normal",LocalDate.now()));
-                try {
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,"Erro");
-                }
+                Cliente novo=new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
+                        moradaField.getText(), telefoneField.getText(),"Normal",LocalDate.now());
+                aor_autocarro.getUtilizadores().add(novo);
+                aor_autocarro.setUserLogado(novo);
+
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
                 painelFundo.mudaEcra("PlanoSubscrição");
             }
         }
