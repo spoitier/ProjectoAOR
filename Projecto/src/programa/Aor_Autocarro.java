@@ -17,6 +17,7 @@ public class Aor_Autocarro implements Serializable {
     private ArrayList<Autocarro> autocarros = new ArrayList<>();
     private ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
+    private Utilizador userLogado;
 
     public void addReserva(Reserva reserva) {
         reservas.add(reserva);
@@ -64,9 +65,10 @@ public class Aor_Autocarro implements Serializable {
                 ", autocarros=" + autocarros +
                 '}';
     }
-
+//==============================================================================================
+    //Métodos LOGIN
     //Validar Registo de Login
-    public  boolean validarRegisto(String email, String palavraChave) {
+    public boolean validarRegisto(String email, String palavraChave) {
         boolean validar = false;
         for (Utilizador u : utilizadores) {
             if (u.getEmail().equals(email) && u.getPalavraChave().equals(palavraChave)) {
@@ -80,17 +82,20 @@ public class Aor_Autocarro implements Serializable {
     public String verificarTipoUtilizador(String email, String palavraChave) {
         String utilizador = null;
         for (Utilizador user : utilizadores) {
-            if (user instanceof Cliente) {
-                utilizador = "cliente";
-            } else {
-                utilizador = "administrador";
+            if (user.getEmail().equals(email) && user.getPalavraChave().equals(palavraChave)) {
+                if (user instanceof Cliente) {
+                    utilizador = "cliente";
+                } else {
+                    utilizador = "administrador";
+                }
             }
         }
         return utilizador;
     }
+
     //Contar nº Cliente
     public int contarCliente() {
-        int cliente= 1;
+        int cliente = 1;
         for (Utilizador user : utilizadores) {
             if (user instanceof Cliente) {
                 cliente++;
@@ -98,9 +103,10 @@ public class Aor_Autocarro implements Serializable {
         }
         return cliente;
     }
+
     //Contar nº Administrador
     public int contarAdministrador() {
-        int administrador= 0;
+        int administrador = 0;
         for (Utilizador user : utilizadores) {
             if (user instanceof Administrador) {
                 administrador++;
@@ -109,17 +115,22 @@ public class Aor_Autocarro implements Serializable {
         return administrador;
     }
 
-    //Retornar cliente logado
-    public Cliente clienteLogado(String email) {
-        Cliente cliente=null;
+    public Utilizador getUserLogado() {
+        return userLogado;
+    }
+
+    public void setUserLogado(Utilizador userLogado) {
+        this.userLogado = userLogado;
+    }
+
+    //Retornar Utilizador logado
+    public Utilizador utilizadorLogado(String email) {
         for (Utilizador user : utilizadores) {
-            if (user instanceof Cliente) {
-            if (cliente.getEmail().equals(email)) {
-                return cliente;
+                if (user.getEmail().equals(email)) {
+                    userLogado=user;
                 }
             }
-        }
-        return null;
+        return userLogado;
     }
 
 
@@ -147,6 +158,31 @@ public class Aor_Autocarro implements Serializable {
         return duplicado;
     }
 
+    //===========================================================================================
+    //Métodos ADMINISTRADORES
+    //Remoção de Cliente pelo administrador
+    public boolean removerCliente(String nif) {
+        LocalDate hoje= LocalDate.now();
+        Cliente removido = null;
+        //pesquisa cliente com base no nif solicitado
+        for (Utilizador utilizador : utilizadores) {
+            if ((utilizador instanceof Cliente) && (utilizador.getNif().equals(nif))) {
+                removido = (Cliente) utilizador;
+                //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
+                Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
+                        "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente",
+                        hoje, false);
+                removido.getNotificações().add(clienteRemovido);
+                return true;
+            }
+        }return false;
+    }
+
+
+
+
+    //===========================================================================================
+    //Métodos CLIENTES
     //Verifica se existe disponível na empresa algum autocarro com capacidade para o nºpessoas solicitadas
     public boolean verificarAutocarroLotaçao(int n_pessoas) {
         boolean existe = true;
@@ -421,8 +457,9 @@ public class Aor_Autocarro implements Serializable {
     //- verifica tipo de subscrição do cliente
     //- verifica se tem direito a reembolso
     //- adiciona notificação à lista de notificações do cliente
-    public void cancelarReservasporAdministrador(int nifCliente) {
+    public void cancelarReservasporAdministrador(String nifCliente) {
         LocalDate hoje = LocalDate.now(); //data de hoje
+
         for (Reserva res : reservas) {
             if (res.getCliente().getNif().equals(nifCliente)) {
                 //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
@@ -434,11 +471,7 @@ public class Aor_Autocarro implements Serializable {
                     verificarListaEspera(res);
                 }
 
-                //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
-                Notificação clienteRemovido = new Notificação(res.getCliente().getEmail(), "ClienteRemovido",
-                        "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente",
-                        hoje, false);
-                res.getCliente().getNotificações().add(clienteRemovido);
+
                 //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
                 adicionarNotificaçãoCancelamento(res);
             }
@@ -481,7 +514,7 @@ public class Aor_Autocarro implements Serializable {
     //Atribuir reserva efetiva a cliente em lista de espera:
     public String atribuirReservaListaEspera(String email) {
 
-        Cliente logado = (Cliente) clienteLogado(email);//identificar cliente através do email
+        Cliente logado = (Cliente) utilizadorLogado(email);//identificar cliente através do email
         Reserva novaReserva = null;
         Autocarro reservado = null;
         String descrição = null;

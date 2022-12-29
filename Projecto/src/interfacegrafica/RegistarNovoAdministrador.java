@@ -1,5 +1,6 @@
 package interfacegrafica;
 
+import org.w3c.dom.ls.LSOutput;
 import programa.*;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public class RegistarNovoAdministrador  extends JPanel implements ActionListener {
     Aor_Autocarro aor_autocarro;
+    Login login;
     PainelFundo painelFundo;
     JButton sairBotao;
     JButton opcao1;
@@ -32,10 +34,6 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
     JTextField telefoneField;
     JTextField emailField;
 
-    Login login;
-
-
-
 
     public RegistarNovoAdministrador(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -54,7 +52,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("nomeAdmin");
+        JLabel clienteNome = new JLabel("login.getLoginEmail()");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 

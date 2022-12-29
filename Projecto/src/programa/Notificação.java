@@ -57,4 +57,14 @@ public class Notificação implements Serializable {
     public void setLido(Boolean lido) {
         this.lido = lido;
     }
+
+    @Override
+    public String toString() {
+        return "Notificação:" +
+                "email=" + email +
+                ",tipoNotificação=" + tipoNotificação +
+                ",descrição='" + descrição +
+                ",data=" + data +
+                ",lido=" + lido;
+    }
 }

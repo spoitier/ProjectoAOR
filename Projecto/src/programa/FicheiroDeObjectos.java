@@ -42,7 +42,6 @@ public class FicheiroDeObjectos {
             System.out.println("Erro" + e);
         }
 
-
     }
 
     //metodo para fechar um ficheiro aberto em modo leitura

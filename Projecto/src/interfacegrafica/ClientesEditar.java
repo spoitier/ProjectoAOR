@@ -16,9 +16,17 @@ public class ClientesEditar extends JPanel implements ActionListener {
     JButton opcao4;
     JButton opcao5;
     JButton opcao6;
-
-
     JButton editarButton;
+    JLabel nomeLabel;
+    JLabel nifLabel;
+    JLabel moradaLabel;
+    JLabel telefoneLabel;
+    JLabel emailLabel;
+    JLabel nameField;
+    JLabel nifField;
+    JTextField moradaField;
+    JTextField telefoneField;
+    JLabel emailField;
 
 
     ClientesEditar(PainelFundo painelFundo) {
@@ -87,33 +95,31 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
 
         //Labels
-        JLabel nomeLabel = new JLabel("Nome:");
+        nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        JLabel nifLabel = new JLabel("NIF:");
+        nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        JLabel moradaLabel = new JLabel("Morada:");
+        moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        JLabel telefoneLabel = new JLabel("Telefone:");
+        telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        JLabel emailLabel = new JLabel("Email:");
+        emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
-        JLabel palavraChaveLabel = new JLabel("Palavra-Chave");
-        palavraChaveLabel.setBounds(50, 250, 200, 30);
+
 
 
         //Fields
-        JTextField nameField = new JTextField();
+        nameField = new JLabel("AOR2022");
         nameField.setBounds(150, 50, 200, 30);
-        JTextField nifField = new JTextField();
+        nifField = new JLabel("AOR2022");
         nifField.setBounds(150, 90, 200, 30);
-        JTextField moradaField = new JTextField();
+        moradaField = new JTextField();
         moradaField.setBounds(150, 130, 200, 30);
-        JTextField telefoneField = new JTextField();
+        telefoneField = new JTextField();
         telefoneField.setBounds(150, 170, 200, 30);
-        JTextField emailField = new JTextField();
+        emailField = new JLabel("AOR2022");
         emailField.setBounds(150, 210, 200, 30);
-        JTextField palavraChaveField = new JTextField();
-        palavraChaveField.setBounds(150, 250, 200, 30);
+
 
         //Adicionar ao formulario
         formulario.add(nomeLabel);
@@ -121,13 +127,11 @@ public class ClientesEditar extends JPanel implements ActionListener {
         formulario.add(moradaLabel);
         formulario.add(telefoneLabel);
         formulario.add(emailLabel);
-        formulario.add(palavraChaveLabel);
         formulario.add(nameField);
         formulario.add(nifField);
         formulario.add(moradaField);
         formulario.add(telefoneField);
         formulario.add(emailField);
-        formulario.add(palavraChaveField);
         this.add(formulario);
 
         editarButton = new JButton("Editar");
@@ -149,6 +153,9 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Editar")){
+
+        }
         if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");
         }

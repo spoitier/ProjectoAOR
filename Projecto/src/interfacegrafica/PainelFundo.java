@@ -55,7 +55,7 @@ public class PainelFundo {
         painelPrincipal.add(new Motoristas(this),"Motoristas");
         painelPrincipal.add(new Autocarros(this),"Autocarros");
         painelPrincipal.add(new AutocarrosEditar(this),"AutocarrosEditar");
-        painelPrincipal.add(new AdicionarClientes(this),"AdicionarClientes");
+        painelPrincipal.add(new AdicionarClientes(this,aor_autocarro),"AdicionarClientes");
         painelPrincipal.add(new ClientesEditar(this),"ClientesEditar");
         painelPrincipal.add(new Estatistica(this),"Estatistica");
         painelPrincipal.add(new DadosPessoaisAdmin(this),"DadosPessoaisAdmin");
