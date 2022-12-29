@@ -177,6 +177,33 @@ public class Aor_Autocarro implements Serializable {
             }
         }return false;
     }
+    //Cancelamento reservas, por cliente ter sido removido por um Administrador
+    //1ª- remover todas as reservas desse cliente da lista de reservas da empresa
+    //2º - adicionar as reservas canceladas à lista de reservas canceladas
+    //3º -Verificar se existem clientes em lista de espera que possam ficar com esta reserva
+    //4º - Notificar cliente, que foi removido da aplicação
+    //5º - Método Adicionar Notificação de Cancelamento de reservas
+    //- verifica tipo de subscrição do cliente
+    //- verifica se tem direito a reembolso
+    //- adiciona notificação à lista de notificações do cliente
+    public void cancelarReservasporAdministrador(String nifCliente) {
+        LocalDate hoje = LocalDate.now(); //data de hoje
+
+        for (Reserva res : reservas) {
+            if (res.getCliente().getNif().equals(nifCliente)) {
+                //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
+                reservas.remove(res);
+                reservasCanceladas.add(res);
+                //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
+                if (reservasemEspera.size() != 0) {
+                    verificarListaEspera(res);
+                }
+                //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
+                adicionarNotificaçãoCancelamento(res);
+            }
+        }
+    }
+
 
 
 
@@ -448,35 +475,6 @@ public class Aor_Autocarro implements Serializable {
         }
     }
 
-    //Cancelamento reservas, por cliente ter sido removido por um Administrador
-    //1ª- remover todas as reservas desse cliente da lista de reservas da empresa
-    //2º - adicionar as reservas canceladas à lista de reservas canceladas
-    //3º -Verificar se existem clientes em lista de espera que possam ficar com esta reserva
-    //4º - Notificar cliente, que foi removido da aplicação
-    //5º - Método Adicionar Notificação de Cancelamento de reservas
-    //- verifica tipo de subscrição do cliente
-    //- verifica se tem direito a reembolso
-    //- adiciona notificação à lista de notificações do cliente
-    public void cancelarReservasporAdministrador(String nifCliente) {
-        LocalDate hoje = LocalDate.now(); //data de hoje
-
-        for (Reserva res : reservas) {
-            if (res.getCliente().getNif().equals(nifCliente)) {
-                //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
-                reservas.remove(res);
-                reservasCanceladas.add(res);
-
-                //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
-                if (reservasemEspera.size() != 0) {
-                    verificarListaEspera(res);
-                }
-
-
-                //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
-                adicionarNotificaçãoCancelamento(res);
-            }
-        }
-    }
 
     //Cancelamento reservas de clientes, por autocarro ter sido removido por um Gerente
     //1º - remover autocarro da lista de autocarros;
@@ -607,6 +605,32 @@ public class Aor_Autocarro implements Serializable {
     public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
         this.utilizadores = utilizadores;
     }
+    //========================================================================================
+    //Metodos MOTORISTA
+    public Motorista removerMotorista(String email) {
+        Motorista motoristaRemovido = null;
+        for (Motorista motorista:motoristas) {
+            if((motorista.getEmail().equals(email))) {
+                motoristaRemovido=motorista;
+            }
+            else {
+                motoristaRemovido=null;
+            }
+        }
+        return motoristaRemovido;
+    }
+
+    public boolean verificarDuplicaçãoEmailMotorista(String email) {
+        boolean duplicado = false;
+
+        for (Motorista motorista : motoristas) {
+            if (motorista.getEmail().equals(email)) {
+                duplicado = true;
+            }
+        }
+        return duplicado;
+    }
+
 }
 
 

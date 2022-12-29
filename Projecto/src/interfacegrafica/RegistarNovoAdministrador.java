@@ -52,7 +52,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("login.getLoginEmail()");
+        JLabel clienteNome = new JLabel("nomeAdmin");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 

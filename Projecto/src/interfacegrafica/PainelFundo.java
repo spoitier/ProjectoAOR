@@ -52,7 +52,7 @@ public class PainelFundo {
         painelPrincipal.add(new DadosPessoaisCliente(this),"DadosPessoaisClientes");
         painelPrincipal.add(new AlterarPalavraChaveCliente(this),"AlterarPalavraChave");
         painelPrincipal.add(new RegistarNovoAdministrador(this,aor_autocarro),"RegistarNovoAdministrador");
-        painelPrincipal.add(new Motoristas(this),"Motoristas");
+        painelPrincipal.add(new Motoristas(this,aor_autocarro),"Motoristas");
         painelPrincipal.add(new Autocarros(this),"Autocarros");
         painelPrincipal.add(new AutocarrosEditar(this),"AutocarrosEditar");
         painelPrincipal.add(new AdicionarClientes(this,aor_autocarro),"AdicionarClientes");

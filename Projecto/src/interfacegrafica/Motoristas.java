@@ -1,13 +1,18 @@
 package interfacegrafica;
 
+import programa.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OptionalDataException;
 
 public class Motoristas extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
 
     JButton sairBotao;
     JButton opcao1;
@@ -19,9 +24,20 @@ public class Motoristas extends JPanel implements ActionListener {
     JButton adicionarButton;
     JButton removerButton;
     JButton editarButton;
+    JTable tabela;
+    JLabel nomeLabel;
+    JLabel emailLabel;
+    JLabel adminNome;
+    TextField nomeField;
+
+    TextField emailField;
+    JTextField removerField;
+    JTextField editarField;
 
 
-    public Motoristas(PainelFundo painelFundo) {
+
+    public Motoristas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -37,9 +53,9 @@ public class Motoristas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Admin");
-        clienteNome.setBounds(700, 0, 100, 30);
-        cabecalho.add(clienteNome);
+        adminNome = new JLabel("Nome do Admin");
+        adminNome.setBounds(700, 0, 100, 30);
+        cabecalho.add(adminNome);
 
         // Botao para sair para o login
         sairBotao = new JButton("Sair");
@@ -81,23 +97,22 @@ public class Motoristas extends JPanel implements ActionListener {
         //Painel do Login
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(null);
-        loginPanel.setBounds(50, 200, 350, 150);
+        loginPanel.setBounds(10, 150, 300, 100);
 
         //Label do nomeLabel
-        JLabel nomeLabel = new JLabel("Nome:");
-        nomeLabel.setBounds(30, 50, 80, 30);
+        nomeLabel = new JLabel("Nome:");
+        nomeLabel.setBounds(0, 0, 80, 30);
 
         //Label da palavra chave
-        JLabel emailLabel = new JLabel("Email");
-        emailLabel.setBounds(30, 100, 100, 30);
+        emailLabel = new JLabel("Email");
+        emailLabel.setBounds(0, 50, 80, 30);
 
         // Textofield do nomeLabel
-        TextField nomeField = new TextField();
-        nomeField.setBounds(150, 50, 170, 30);
+        nomeField = new TextField();
+        nomeField.setBounds(100, 0, 170, 30);
 
-        // Textofield da palavrachave
-        TextField emailField = new TextField();
-        emailField.setBounds(150, 100, 170, 30);
+        emailField = new TextField();
+        emailField.setBounds(100, 50, 170, 30);
         ;
         // Adicionar componentes ao painel
         loginPanel.add(nomeLabel);
@@ -106,20 +121,52 @@ public class Motoristas extends JPanel implements ActionListener {
         loginPanel.add(emailField);
         this.add(loginPanel);
 
+
+        JPanel removerPanel = new JPanel();
+        removerPanel.setLayout(null);
+        removerPanel.setBounds(10,300,300,100);
+        JLabel removerLabel = new JLabel("Email:");
+        removerLabel.setBounds(0, 0, 80, 30);
+        removerField = new JTextField();
+        removerField.setBounds(100,0,170,30);
+        removerPanel.add(removerLabel);
+        removerPanel.add(removerField);
+        this.add(removerPanel);
+
+        JPanel editarPanel = new JPanel();
+        editarPanel.setLayout(null);
+        editarPanel.setBounds(10,450,300,100);
+        JLabel editarLabel = new JLabel("Email:");
+        editarLabel.setBounds(0, 0, 80, 30);
+        editarField = new JTextField();
+        editarField.setBounds(100,0,170,30);
+        editarPanel.add(editarLabel);
+        editarPanel.add(editarField);
+        this.add(editarPanel);
+
+
+
+
+
+
+
+
+
         //==========================================
         // Painel botoes
 
-        JPanel botoesPainel = new JPanel(new GridLayout(1, 3, 10, 10));
-        botoesPainel.setBounds(50, 400, 400, 30);
 
         adicionarButton = new JButton("Adicionar");
+        adicionarButton.setBounds(350, 200, 100, 30);
         removerButton = new JButton("Remover");
+        removerButton.setBounds(350, 300, 100, 30);
         editarButton = new JButton("Editar");
-        botoesPainel.add(adicionarButton);
-        botoesPainel.add(removerButton);
-        botoesPainel.add(editarButton);
+        editarButton.setBounds(350, 450, 100, 30);
 
-        this.add(botoesPainel);
+
+        this.add(adicionarButton);
+        this.add(removerButton);
+        this.add(editarButton);
 
         //========================================
         // Tabela
@@ -130,12 +177,16 @@ public class Motoristas extends JPanel implements ActionListener {
         setLayout(null);
 
         String[] colunas = {"Nome", "Email"};
+        String[][] data = new String[aor_autocarro.getMotoristas().size()][2];
 
-        String[][] data = {{"Rodrigo", "qq@gmail.com"}
-                , {"Sonia", "qq@gmail.com"}};
+        for (int i =0;i<aor_autocarro.getMotoristas().size();i++) {
+            data[i][0]=aor_autocarro.getMotoristas().get(i).getNome();
+            data[i][1]=aor_autocarro.getMotoristas().get(i).getEmail();
+
+        }
 
 
-        JTable tabela = new JTable(data, colunas);
+        tabela = new JTable(data, colunas);
         JScrollPane sp = new JScrollPane(tabela);
         sp.setBounds(550, 150, 300, 400);
         this.add(sp);
@@ -152,46 +203,80 @@ public class Motoristas extends JPanel implements ActionListener {
         editarButton.addActionListener(this);
 
 
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Adminstradores")) {
+        if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");
         }
 
-        if(e.getActionCommand().equals("Motoristas")) {
+        if (e.getActionCommand().equals("Motoristas")) {
             painelFundo.mudaEcra("Motoristas");
         }
 
-        if(e.getActionCommand().equals("Autocarros")) {
+        if (e.getActionCommand().equals("Autocarros")) {
             painelFundo.mudaEcra("Autocarros");
         }
 
-        if(e.getActionCommand().equals("Clientes")) {
+        if (e.getActionCommand().equals("Clientes")) {
             painelFundo.mudaEcra("AdicionarClientes");
         }
-        if(e.getActionCommand().equals("Estatistica")) {
+        if (e.getActionCommand().equals("Estatistica")) {
             painelFundo.mudaEcra("Estatistica");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
-        if(e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
         }
 
-        if(e.getActionCommand().equals("Adicionar")) {
+        if (e.getActionCommand().equals("Adicionar")) {
+            if ((Utilizador.validarNome(nomeField.getText())) &&
+                    (Utilizador.validarEmail(emailField.getText())) &&
+                    (!aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText()))) {
+                aor_autocarro.getMotoristas().add(new Motorista(nomeField.getText(), emailField.getText()));
+                JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+                try {
+                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro");
+                }
+
+            } else if (aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText())) {
+                JOptionPane.showMessageDialog(null, "Email duplicado!");
+
+            } else if (!Utilizador.validarNome(nomeField.getText())) {
+                JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
+            } else if (!Utilizador.validarEmail(emailField.getText())) {
+                JOptionPane.showMessageDialog(null, "Email inválido");
+            }
+        }
+
+
+        if (e.getActionCommand().equals("Remover")) {
+            if (aor_autocarro.removerMotorista(removerField.getText())==null) {
+                JOptionPane.showMessageDialog(null, "Não existe nenhum motorista");
+            } else {
+                try {
+                    Motorista removido = aor_autocarro.removerMotorista(removerField.getText());
+                    JOptionPane.showMessageDialog(null,"Removido com sucesso!");
+                    aor_autocarro.getMotoristas().remove(removido);
+                } catch (NullPointerException n) {
+                    JOptionPane.showMessageDialog(null, "Não existe nenhum motorista com esse email");
+                }
+
+                try {
+                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro");
+                }
+            }
+
 
         }
-        if(e.getActionCommand().equals("Remover")) {
-
-        }
-
-
-
 
 
     }
