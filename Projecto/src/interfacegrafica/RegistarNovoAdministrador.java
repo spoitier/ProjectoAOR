@@ -234,28 +234,29 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
             }
         }
 
-            if(e.getActionCommand().equals("Motoristas")) {
-                painelFundo.mudaEcra("Motoristas");
-            }
-
-            if(e.getActionCommand().equals("Autocarros")) {
-                painelFundo.mudaEcra("Autocarros");
-            }
-
-            if(e.getActionCommand().equals("Clientes")) {
-                painelFundo.mudaEcra("AdicionarClientes");
-            }
-            if(e.getActionCommand().equals("Estatistica")) {
-                painelFundo.mudaEcra("Estatistica");
-            }
-            if(e.getActionCommand().equals("Dados Pessoais")) {
-                painelFundo.mudaEcra("DadosPessoaisAdmin");
-            }
-
-            if(e.getActionCommand().equals("Sair")){
-                painelFundo.mudaEcra("Login");
-            }
-
+        if(e.getActionCommand().equals("Motoristas")) {
+            painelFundo.mudaEcra("Motoristas");
         }
+
+        if(e.getActionCommand().equals("Autocarros")) {
+            painelFundo.mudaEcra("Autocarros");
+        }
+
+        if(e.getActionCommand().equals("Clientes")) {
+            painelFundo.mudaEcra("AdicionarClientes");
+        }
+        if(e.getActionCommand().equals("Estatistica")) {
+            painelFundo.mudaEcra("Estatistica");
+        }
+        if(e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisAdmin");
+        }
+
+        if(e.getActionCommand().equals("Sair")){
+            painelFundo.mudaEcra("Login");
+        }
+
     }
+}
 

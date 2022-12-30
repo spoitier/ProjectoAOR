@@ -1,5 +1,8 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +11,8 @@ import java.awt.event.ActionListener;
 public class AutocarrosEditar extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
+    Autocarros autocarros;
 
     JButton opcao1;
     JButton opcao2;
@@ -19,7 +24,17 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
 
     JButton sairBotao;
 
-    public AutocarrosEditar(PainelFundo painelFundo) {
+    JTextField matriculaField;
+
+    JTextField marcaField;
+
+    JTextField modeloField;
+
+    JTextField lotacaoField;
+
+
+    public AutocarrosEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -46,18 +61,12 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         this.add(cabecalho);
 
 
-
-
-
         //===========================================================
         //Painel de escolhas do Admin
         JPanel opcaoPainel = new JPanel();
         opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-
-
 
 
         opcao1 = new JButton("Adminstradores");
@@ -94,7 +103,7 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         //Labels
         JLabel matriculaEditarLabel = new JLabel("Matricula");
         matriculaEditarLabel.setBounds(50, 40, 200, 30);
-        JLabel matriculaPreenchida = new JLabel("Matricula preenchida");
+        JLabel matriculaPreenchida = new JLabel("PREENCHIDO");
         matriculaPreenchida.setBounds(150, 40, 200, 30);
 
         JLabel matriculaLabel = new JLabel("Matricula:");
@@ -107,13 +116,13 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         lotacaoLabel.setBounds(50, 210, 200, 30);
 
         //Fields
-        JTextField matriculaField = new JTextField();
+        matriculaField = new JTextField();
         matriculaField.setBounds(150, 90, 200, 30);
-        JTextField marcaField = new JTextField();
+        marcaField = new JTextField();
         marcaField.setBounds(150, 130, 200, 30);
-        JTextField modeloField = new JTextField();
+        modeloField = new JTextField();
         modeloField.setBounds(150, 170, 200, 30);
-        JTextField lotacaoField = new JTextField();
+        lotacaoField = new JTextField();
         lotacaoField.setBounds(150, 210, 200, 30);
 
         //Adicionar ao formulario
@@ -142,9 +151,6 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
         editarButton.addActionListener(this);
     }
-
-
-
 
 
     @Override
@@ -176,10 +182,8 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         }
 
 
-        if(e.getActionCommand().equals("Editar")){
-            painelFundo.mudaEcra("AutocarrosEditar");
 
-        }
 
     }
+
 }

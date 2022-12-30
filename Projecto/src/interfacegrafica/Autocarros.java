@@ -1,5 +1,9 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.Autocarro;
+import programa.FicheiroDeObjectos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,10 @@ import java.awt.event.ActionListener;
 public class Autocarros extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    JScrollPane sp;
+    Aor_Autocarro aor_autocarro;
+
+    JTable tabela;
 
     JButton sairBotao;
     JButton opcao1;
@@ -25,19 +33,21 @@ public class Autocarros extends JPanel implements ActionListener {
 
     JLabel adminNome;
 
-    JTextField matriculaField;
+    public JTextField matriculaField;
 
-    JTextField marcaField;
-    JTextField modeloField;
+    private JTextField marcaField;
+    private JTextField modeloField;
 
-    JTextField lotacaoField;
+    private JTextField lotacaoField;
+
 
     JTextField matriculaFieldRemover;
 
-    JTextField matriculaFieldEditar;
+    public JTextField matriculaFieldEditar;
 
 
-    public Autocarros(PainelFundo painelFundo) {
+    public Autocarros(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -163,13 +173,21 @@ public class Autocarros extends JPanel implements ActionListener {
 
         //========================================
         // Tabela
+
+
         String[] colunas = {"Matricula", "Marca", "Modelo", "Lotação"};
 
-        String[][] data = {{"", "", "", ""}
-                , {"", "", "", ""}};
+        String[][] data = new String[aor_autocarro.getAutocarros().size()][4];
 
-        JTable tabela = new JTable(data, colunas);
-        JScrollPane sp = new JScrollPane(tabela);
+        for (int i = 0; i < aor_autocarro.getAutocarros().size(); i++) {
+            data[i][0] = aor_autocarro.getAutocarros().get(i).getMatricula();
+            data[i][1] = aor_autocarro.getAutocarros().get(i).getMarca();
+            data[i][2] = aor_autocarro.getAutocarros().get(i).getModelo();
+            data[i][3] = String.valueOf(aor_autocarro.getAutocarros().get(i).getLotacao());
+        }
+        tabela = new JTable(data, colunas);
+        sp = new JScrollPane(tabela);
+        sp = new JScrollPane(tabela);
         sp.setBounds(550, 150, 300, 400);
         this.add(sp);
 
@@ -196,6 +214,29 @@ public class Autocarros extends JPanel implements ActionListener {
     }
 
 
+
+    public void atualizar() {
+        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+        String[] colunas = {"Matricula", "Marca", "Modelo", "Lotação"};
+
+        String[][] data = new String[aor_autocarro.getAutocarros().size()][4];
+        this.remove(sp);
+        for (int i = 0; i < aor_autocarro.getAutocarros().size(); i++) {
+            data[i][0] = aor_autocarro.getAutocarros().get(i).getMatricula();
+            data[i][1] = aor_autocarro.getAutocarros().get(i).getMarca();
+            data[i][2] = aor_autocarro.getAutocarros().get(i).getModelo();
+            data[i][3] = String.valueOf(aor_autocarro.getAutocarros().get(i).getLotacao());
+
+        }
+        tabela = new JTable(data, colunas);
+        JScrollPane sp = new JScrollPane(tabela);
+        sp.setBounds(550, 150, 300, 400);
+        this.add(sp);
+        revalidate();
+        repaint();
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -207,9 +248,6 @@ public class Autocarros extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Motoristas");
         }
 
-        if (e.getActionCommand().equals("Autocarros")) {
-            painelFundo.mudaEcra("Autocarros");
-        }
 
         if (e.getActionCommand().equals("Clientes")) {
             painelFundo.mudaEcra("AdicionarClientes");
@@ -226,16 +264,73 @@ public class Autocarros extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Adicionar")) {
+            boolean validar = true;
+            if (matriculaField.getText().isBlank() && marcaField.getText().isBlank() &&
+                    matriculaField.getText().isBlank() && lotacaoField.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+                validar = false;
+            }
+            if (!Autocarro.validarMatricula(matriculaField.getText())) {
+                JOptionPane.showMessageDialog(null, "Matricula invalida.");
+                validar = false;
+            }
+            if (aor_autocarro.verificarDuplicacaoMatricula(matriculaField.getText())) {
+                JOptionPane.showMessageDialog(null, "Matricula Duplicada.");
+                validar = false;
+            }
+            if (Autocarro.validarMarca(marcaField.getText())) {
+                JOptionPane.showMessageDialog(null, "Marca invalida");
+                validar = false;
+            }
+
+            if (Integer.parseInt(lotacaoField.getText()) > 50) {
+                JOptionPane.showMessageDialog(null, "Lotação maxima é 50 passageiros");
+                validar = false;
+            }
+            if (validar == false) {
+            } else {
+                aor_autocarro.getAutocarros().add(new Autocarro(matriculaField.getText(), marcaField.getText(), modeloField.getText(), Integer.parseInt(lotacaoField.getText())));
+                JOptionPane.showMessageDialog(null, "Autocarro Adicionado com Sucesso");
+                atualizar();
+                matriculaField.setText("");
+                marcaField.setText("");
+                modeloField.setText("");
+                lotacaoField.setText("");
+
+            }
 
         }
         if (e.getActionCommand().equals("Remover")) {
+            if (matriculaFieldRemover.getText() == null) {
+                JOptionPane.showMessageDialog(null, "Falta preencher");
+            } else if ((aor_autocarro.removerAutocarro(matriculaFieldRemover.getText())) == null) {
+                JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
+            } else {
+                try {
+                    JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+                    Autocarro removido = aor_autocarro.removerAutocarro(matriculaFieldRemover.getText());
+                    aor_autocarro.getAutocarros().remove(removido);
+                    atualizar();
+                    matriculaField.setText("");
+                } catch (NullPointerException n) {
+                    JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
+                }
+
+
+            }
 
         }
 
         if (e.getActionCommand().equals("Editar")) {
-            painelFundo.mudaEcra("AutocarrosEditar");
+            if (matriculaFieldEditar.getText() == null) {
+                JOptionPane.showMessageDialog(null, "Falta preencher");
+            } else if ((aor_autocarro.removerAutocarro(matriculaFieldEditar.getText())) == null) {
+                JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
+            } else {
+                painelFundo.mudaEcra("AutocarrosEditar");
+
+            }
 
         }
-
     }
 }

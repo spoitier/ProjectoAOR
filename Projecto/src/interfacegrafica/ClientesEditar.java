@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class ClientesEditar extends JPanel implements ActionListener {
 
+    Aor_Autocarro aor_autocarro;
+    AdicionarClientes adicionarClientes;
     PainelFundo painelFundo;
 
     JButton sairButton;
@@ -22,14 +26,15 @@ public class ClientesEditar extends JPanel implements ActionListener {
     JLabel moradaLabel;
     JLabel telefoneLabel;
     JLabel emailLabel;
-    JLabel nameField;
+    JTextField nameField;
     JLabel nifField;
     JTextField moradaField;
     JTextField telefoneField;
-    JLabel emailField;
+    JTextField emailField;
 
 
-    ClientesEditar(PainelFundo painelFundo) {
+    ClientesEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -107,17 +112,16 @@ public class ClientesEditar extends JPanel implements ActionListener {
         emailLabel.setBounds(50, 210, 200, 30);
 
 
-
         //Fields
-        nameField = new JLabel("AOR2022");
+        nameField = new JTextField();
         nameField.setBounds(150, 50, 200, 30);
-        nifField = new JLabel("AOR2022");
+        nifField = new JLabel("");
         nifField.setBounds(150, 90, 200, 30);
         moradaField = new JTextField();
         moradaField.setBounds(150, 130, 200, 30);
         telefoneField = new JTextField();
         telefoneField.setBounds(150, 170, 200, 30);
-        emailField = new JLabel("AOR2022");
+        emailField = new JTextField();
         emailField.setBounds(150, 210, 200, 30);
 
 
@@ -150,10 +154,21 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
     }
 
+    public void nifDescrito() {
+
+        if (adicionarClientes== null) {
+           nifField.setText("");
+        } else
+            nifField.setText(adicionarClientes.getNifEditavel());
+            System.out.println(adicionarClientes.getNifEditavel());
+        revalidate();
+        repaint();
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Editar")){
+        if (e.getActionCommand().equals("Editar")) {
 
         }
         if (e.getActionCommand().equals("Adminstradores")) {

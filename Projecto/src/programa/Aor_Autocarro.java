@@ -160,7 +160,7 @@ public class Aor_Autocarro implements Serializable {
 
     //===========================================================================================
     //Métodos ADMINISTRADORES
-    //Remoção de Cliente pelo administrador
+
     public boolean removerCliente(String nif) {
         LocalDate hoje= LocalDate.now();
         Cliente removido = null;
@@ -169,39 +169,42 @@ public class Aor_Autocarro implements Serializable {
             if ((utilizador instanceof Cliente) && (utilizador.getNif().equals(nif))) {
                 removido = (Cliente) utilizador;
                 //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
+                if(cancelarReservasdoClienteRemovido(nif)==0){
                 Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
                         "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente",
                         hoje, false);
                 removido.getNotificações().add(clienteRemovido);
-                return true;
+                return true;}
+                else if(cancelarReservasdoClienteRemovido(nif)>0){
+                    Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
+                            "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente.\n" +
+                                    "As suas reservas foram canceladas.",
+                            hoje, false);
+                    removido.getNotificações().add(clienteRemovido);
+                    return true;}
             }
         }return false;
     }
-    //Cancelamento reservas, por cliente ter sido removido por um Administrador
-    //1ª- remover todas as reservas desse cliente da lista de reservas da empresa
-    //2º - adicionar as reservas canceladas à lista de reservas canceladas
-    //3º -Verificar se existem clientes em lista de espera que possam ficar com esta reserva
-    //4º - Notificar cliente, que foi removido da aplicação
-    //5º - Método Adicionar Notificação de Cancelamento de reservas
-    //- verifica tipo de subscrição do cliente
-    //- verifica se tem direito a reembolso
-    //- adiciona notificação à lista de notificações do cliente
-    public void cancelarReservasporAdministrador(String nifCliente) {
-        LocalDate hoje = LocalDate.now(); //data de hoje
 
+
+    public int cancelarReservasdoClienteRemovido(String nifCliente) {//Cancelamento reservas, por cliente ter sido removido por um Administrador
+int contaRservas=0;
+        // Verificar se este cliente tinha reservas pendentes
         for (Reserva res : reservas) {
+            //Identificar a reserva deste cliente, remover da lista de reservas e adicionar à lista de reservas canceladas
             if (res.getCliente().getNif().equals(nifCliente)) {
-                //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
+                contaRservas++;
                 reservas.remove(res);
                 reservasCanceladas.add(res);
-                //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
-                if (reservasemEspera.size() != 0) {
-                    verificarListaEspera(res);
-                }
                 //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
                 adicionarNotificaçãoCancelamento(res);
+
+                //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
+                if (reservasemEspera.size() != 0) {
+                    verificarListaEspera(res);}
+
             }
-        }
+        }return contaRservas;
     }
 
 
@@ -322,14 +325,11 @@ public class Aor_Autocarro implements Serializable {
         return reserva.getAutocarro();
     }
 
-    //Adicionar notificação de cancelamento à lista de Notificações do Cliente
-    //- verifica tipo de subscrição do cliente
-    //- verifica se tem direito a reembolso
-    //- adiciona notificação à lista de notificações do cliente
-    public void adicionarNotificaçãoCancelamento(Reserva reserva) {
-        //Calcular diferença de dias entre hoje e a data partida
+
+    public void adicionarNotificaçãoCancelamento(Reserva reserva) {//Adicionar notificação de cancelamento à lista de Notificações do Cliente
+
         LocalDate hoje = LocalDate.now(); //data de hoje
-        long diferençaDias = ChronoUnit.DAYS.between(hoje, reserva.getDataPartida());
+        long diferençaDias = ChronoUnit.DAYS.between(hoje, reserva.getDataPartida());//Calcular diferença de dias entre hoje e a data partida
         double reembolso;
 
         //Adicionar notificação à lista de Notificações do Cliente cancelado
@@ -359,8 +359,7 @@ public class Aor_Autocarro implements Serializable {
         }
     }
 
-    //Identificar tipo de pagamento, para efetuar reembolso
-    public String identificarTipoPagamento(Reserva reserva) {
+    public String identificarTipoPagamento(Reserva reserva) {//Identificar tipo de pagamento, para efetuar reembolso
 
         String tipoPagamento = null;
 
@@ -629,6 +628,23 @@ public class Aor_Autocarro implements Serializable {
             }
         }
         return duplicado;
+    }
+    public boolean verificarDuplicacaoMatricula(String matricula) {
+        for (Autocarro autocarro : autocarros) {
+            if (autocarro.getMatricula().equals(matricula)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Autocarro removerAutocarro(String matricula) {
+        for (Autocarro autocarro : autocarros) {
+            if ((autocarro.getMatricula().equals(matricula))) {
+                return autocarro;
+            }
+        }
+        return null;
     }
 
 }

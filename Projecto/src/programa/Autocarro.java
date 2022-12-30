@@ -1,5 +1,6 @@
 package programa;
 
+import javax.swing.*;
 import java.io.Serializable;
 
 public class Autocarro implements Serializable {
@@ -12,7 +13,7 @@ public class Autocarro implements Serializable {
     public Autocarro() {
     }
 
-    public Autocarro(int lotacao, String matricula, String marca, String modelo) {
+    public Autocarro( String matricula, String marca, String modelo,int lotacao) {
         this.lotacao = lotacao;
         this.matricula = matricula;
         this.marca = marca;
@@ -67,7 +68,7 @@ public class Autocarro implements Serializable {
     //Validar a matricula
     //========================================
 
-    public void validarMatricula(String matricula) {
+    public static boolean validarMatricula(String matricula) {
         int traco = 0;
         int numero = 0;
         int letra = 0;
@@ -85,43 +86,23 @@ public class Autocarro implements Serializable {
 
             }
         }
-        if (traco == 2 && (numero == letra * 2 || letra == numero * 2)) {
-            System.out.println("Matricula Valida");
-        } else {
-            System.out.println("Matricula Invalida");
+        if ((traco == 2) && (numero == letra * 2 || letra == numero * 2)) {
+            return true;
         }
-
+        return false;
     }
 
-
-    public  void validarLotacao(String lotacao) {
-        try {
-            int lotacaoInteiro = Integer.parseInt(lotacao);
-            if (lotacaoInteiro <= 50) {
-                System.out.println("Adicionar à lista");
-            } else {
-                System.out.println("Capacidade maxima é 50");
-            }
-        } catch (NumberFormatException ex) {
-            System.out.println("Dados invalidos");
-        }
-
-
-    }
-
-    public void validarMarca(String marca) {
+    public static boolean validarMarca(String marca) {
         int contador = 0;
-        for (int i =0;i<marca.length();i++) {
+        for (int i = 0; i < marca.length(); i++) {
             if (Character.isDigit(marca.charAt(i))) {
                 contador++;
             }
         }
-        if(contador==marca.length()){
-            System.out.println("valor valido");
-        } else {
-            System.out.println("Dados Invalidos");
+        if (contador == marca.length()) {
+            return true;
         }
+        return false;
     }
-
 
 }

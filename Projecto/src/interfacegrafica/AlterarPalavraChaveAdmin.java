@@ -1,5 +1,8 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.Utilizador;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +11,16 @@ import java.awt.event.ActionListener;
 public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
     JLabel clienteNome;
     JButton sairBotao;
     JButton opcao1;
     JButton opcao2;
     JButton opcao3;
     JButton opcao4;
+
     JButton opcao5;
+    JButton opcao6;
     JButton alterarPalavraChaveButton;
 
     TextField palavraChaveAtualField;
@@ -26,8 +32,9 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
     TextField confirmePalavraChaveField;
 
 
-    public AlterarPalavraChaveAdmin(PainelFundo painelFundo) {
+    public AlterarPalavraChaveAdmin(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
+        this.aor_autocarro = aor_autocarro;
         this.setLayout(null);
 
         //===================================================
@@ -55,7 +62,7 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         //===========================================================
         //Painel de escolhas do Admin
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
+        opcaoPainel.setLayout(new GridLayout(1, 6, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -63,14 +70,16 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         opcao1 = new JButton("Adminstradores");
         opcao2 = new JButton("Motoristas");
         opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Estatistica");
-        opcao5 = new JButton("Dados Pessoais");
+        opcao4 = new JButton("Clientes");
+        opcao5 = new JButton("Estatistica");
+        opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
         opcaoPainel.add(opcao3);
         opcaoPainel.add(opcao4);
         opcaoPainel.add(opcao5);
+        opcaoPainel.add(opcao6);
 
         this.add(opcaoPainel);
 
@@ -131,10 +140,57 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         this.add(alterarPalavraChaveButton);
 
 
+        alterarPalavraChaveButton.addActionListener(this);
+        opcao1.addActionListener(this);
+        opcao2.addActionListener(this);
+        opcao3.addActionListener(this);
+        opcao5.addActionListener(this);
+        opcao6.addActionListener(this);
+        opcao6.addActionListener(this);
+        sairBotao.addActionListener(this);
+
+
+
+
+    }
+
+    public Utilizador nomeLogado() {
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else {
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+            emailPreenchido.setText(aor_autocarro.getUserLogado().getEmail());
+        }
+        return null;
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Adminstradores")) {
+            painelFundo.mudaEcra("RegistarNovoAdministrador");
+        }
+
+        if (e.getActionCommand().equals("Motoristas")) {
+            painelFundo.mudaEcra("Motoristas");
+        }
+
+        if (e.getActionCommand().equals("Autocarros")) {
+            painelFundo.mudaEcra("Autocarros");
+        }
+
+        if (e.getActionCommand().equals("Clientes")) {
+            painelFundo.mudaEcra("AdicionarClientes");
+        }
+        if (e.getActionCommand().equals("Estatistica")) {
+            painelFundo.mudaEcra("Estatistica");
+        }
+
+        if (e.getActionCommand().equals("Sair")) {
+            painelFundo.mudaEcra("Login");
+        }
+
 
     }
+
 }

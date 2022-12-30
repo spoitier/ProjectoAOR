@@ -70,19 +70,19 @@ public class PainelFundo {
         painelPrincipal.add(mapaPaineis.get("RegistarNovoAdministrador"),"RegistarNovoAdministrador");
         mapaPaineis.put("Motoristas",new Motoristas(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("Motoristas"),"Motoristas");
-        mapaPaineis.put("Autocarros",new Autocarros(this));
+        mapaPaineis.put("Autocarros",new Autocarros(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("Autocarros"),"Autocarros");
-        mapaPaineis.put("AutocarrosEditar",new AutocarrosEditar(this));
+        mapaPaineis.put("AutocarrosEditar",new AutocarrosEditar(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("AutocarrosEditar"),"AutocarrosEditar");
         mapaPaineis.put("AdicionarClientes",new AdicionarClientes(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("AdicionarClientes"),"AdicionarClientes");
-        mapaPaineis.put("ClientesEditar",new ClientesEditar(this));
+        mapaPaineis.put("ClientesEditar",new ClientesEditar(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("ClientesEditar"),"ClientesEditar");
         mapaPaineis.put("Estatistica",new Estatistica(this));
         painelPrincipal.add(mapaPaineis.get("Estatistica"),"Estatistica");
-        mapaPaineis.put("DadosPessoaisAdmin",new DadosPessoaisAdmin(this));
+        mapaPaineis.put("DadosPessoaisAdmin",new DadosPessoaisAdmin(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("DadosPessoaisAdmin"),"DadosPessoaisAdmin");
-        mapaPaineis.put("AlterarPalavraChaveAdmin",new AlterarPalavraChaveAdmin(this));
+        mapaPaineis.put("AlterarPalavraChaveAdmin",new AlterarPalavraChaveAdmin(this,aor_autocarro));
         painelPrincipal.add(mapaPaineis.get("AlterarPalavraChaveAdmin"),"AlterarPalavraChaveAdmin");
 
 

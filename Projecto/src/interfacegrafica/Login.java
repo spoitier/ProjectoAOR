@@ -126,10 +126,10 @@ public class Login extends JPanel implements ActionListener {
             if ((Utilizador.validarEmail(email)) && (aor_autocarro.validarRegisto(email, password))) {
                 JOptionPane.showMessageDialog(null, "Login efetuado com Sucesso! " + email);
                 utilizadorLogado = aor_autocarro.utilizadorLogado(email);
-                System.out.println(utilizadorLogado);
+
                 if (aor_autocarro.verificarTipoUtilizador(email, password).equals("cliente")) {
                     logado = (Cliente) aor_autocarro.getUserLogado();
-                    System.out.println(logado);
+
                     if (logado.getNotificações().size() == 0) {
                         painelFundo.mudaEcra("ReservaViagem");
                     } else {
@@ -138,7 +138,6 @@ public class Login extends JPanel implements ActionListener {
                                 JOptionPane.showMessageDialog(null, rc.getDescrição());
                                 rc.setLido(true);
                                 aor_autocarro.removerCliente(logado.getNif());
-
                                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
                             } else {

@@ -41,11 +41,13 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     JTextField nifRemoverField;
     JTextField nifEditarField;
 
+    String nifEditavel;
 
     public AdicionarClientes(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
+
 
         //===================================================
         //Painel do Cabeçalho
@@ -208,6 +210,14 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
     }
 
+    public String getNifEditavel() {
+        return nifEditavel;
+    }
+
+    public void setNifEditavel(String nifEditavel) {
+        this.nifEditavel = nifEditavel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
@@ -276,14 +286,17 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "O cliente só irá ser removido da lista de clientes, " +
                         "após ter sido informado sobre encerramento da sua conta, ao efetuar login");
                 if(aor_autocarro.getReservas().size()!=0){
-                aor_autocarro.cancelarReservasporAdministrador(nifRemoverField.getText());}
+                aor_autocarro.cancelarReservasdoClienteRemovido(nifRemoverField.getText());}
 
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
             }
         }
         if (e.getActionCommand().equals("Editar")) {
+            setNifEditavel(nifEditarField.getText());
+            ((ClientesEditar)(painelFundo.mapaPaineis.get("ClientesEditar"))).nifDescrito();
             painelFundo.mudaEcra("ClientesEditar");
+
         }
         if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");

@@ -13,6 +13,8 @@ public class Motoristas extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     Aor_Autocarro aor_autocarro;
+    JScrollPane sp;
+
 
     JButton sairBotao;
     JButton opcao1;
@@ -23,7 +25,7 @@ public class Motoristas extends JPanel implements ActionListener {
     JButton opcao6;
     JButton adicionarButton;
     JButton removerButton;
-    JButton editarButton;
+    //JButton editarButton;
     JTable tabela;
     JLabel nomeLabel;
     JLabel emailLabel;
@@ -33,7 +35,6 @@ public class Motoristas extends JPanel implements ActionListener {
     TextField emailField;
     JTextField removerField;
     JTextField editarField;
-
 
 
     public Motoristas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
@@ -124,33 +125,28 @@ public class Motoristas extends JPanel implements ActionListener {
 
         JPanel removerPanel = new JPanel();
         removerPanel.setLayout(null);
-        removerPanel.setBounds(10,300,300,100);
+        removerPanel.setBounds(10, 300, 300, 100);
         JLabel removerLabel = new JLabel("Email:");
         removerLabel.setBounds(0, 0, 80, 30);
         removerField = new JTextField();
-        removerField.setBounds(100,0,170,30);
+        removerField.setBounds(100, 0, 170, 30);
         removerPanel.add(removerLabel);
         removerPanel.add(removerField);
         this.add(removerPanel);
 
+        /*
         JPanel editarPanel = new JPanel();
         editarPanel.setLayout(null);
-        editarPanel.setBounds(10,450,300,100);
+        editarPanel.setBounds(10, 450, 300, 100);
         JLabel editarLabel = new JLabel("Email:");
         editarLabel.setBounds(0, 0, 80, 30);
         editarField = new JTextField();
-        editarField.setBounds(100,0,170,30);
+        editarField.setBounds(100, 0, 170, 30);
         editarPanel.add(editarLabel);
         editarPanel.add(editarField);
         this.add(editarPanel);
 
-
-
-
-
-
-
-
+         */
 
         //==========================================
         // Painel botoes
@@ -160,13 +156,13 @@ public class Motoristas extends JPanel implements ActionListener {
         adicionarButton.setBounds(350, 200, 100, 30);
         removerButton = new JButton("Remover");
         removerButton.setBounds(350, 300, 100, 30);
-        editarButton = new JButton("Editar");
-        editarButton.setBounds(350, 450, 100, 30);
+        // editarButton = new JButton("Editar");
+        //    editarButton.setBounds(350, 450, 100, 30);
 
 
         this.add(adicionarButton);
         this.add(removerButton);
-        this.add(editarButton);
+        // this.add(editarButton);
 
         //========================================
         // Tabela
@@ -179,17 +175,17 @@ public class Motoristas extends JPanel implements ActionListener {
         String[] colunas = {"Nome", "Email"};
         String[][] data = new String[aor_autocarro.getMotoristas().size()][2];
 
-        for (int i =0;i<aor_autocarro.getMotoristas().size();i++) {
-            data[i][0]=aor_autocarro.getMotoristas().get(i).getNome();
-            data[i][1]=aor_autocarro.getMotoristas().get(i).getEmail();
+        for (int i = 0; i < aor_autocarro.getMotoristas().size(); i++) {
+            data[i][0] = aor_autocarro.getMotoristas().get(i).getNome();
+            data[i][1] = aor_autocarro.getMotoristas().get(i).getEmail();
 
         }
 
-
         tabela = new JTable(data, colunas);
-        JScrollPane sp = new JScrollPane(tabela);
+        sp = new JScrollPane(tabela);
         sp.setBounds(550, 150, 300, 400);
         this.add(sp);
+
 
         opcao1.addActionListener(this);
         opcao2.addActionListener(this);
@@ -200,10 +196,33 @@ public class Motoristas extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
         adicionarButton.addActionListener(this);
         removerButton.addActionListener(this);
-        editarButton.addActionListener(this);
+        //editarButton.addActionListener(this);
 
 
     }
+
+    //========================================
+    //Metodo para atualizar tabela
+    public void atualizar() {
+        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+        String[] colunas = {"Nome", "Email"};
+        String data[][] =new String[aor_autocarro.getMotoristas().size()][2];
+        this.remove(sp);
+        for (int i = 0; i < aor_autocarro.getMotoristas().size(); i++) {
+            data[i][0] = aor_autocarro.getMotoristas().get(i).getNome();
+            data[i][1] = aor_autocarro.getMotoristas().get(i).getEmail();
+
+        }
+        tabela = new JTable(data, colunas);
+        sp = new JScrollPane(tabela);
+        sp.setBounds(550, 150, 300, 400);
+        this.add(sp);
+        revalidate();
+        repaint();
+    }
+    //=======================================================
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -239,8 +258,9 @@ public class Motoristas extends JPanel implements ActionListener {
                     (!aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText()))) {
                 aor_autocarro.getMotoristas().add(new Motorista(nomeField.getText(), emailField.getText()));
                 JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
-                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-
+                atualizar();
+                emailField.setText("");
+                nomeField.setText("");
 
             } else if (aor_autocarro.verificarDuplicaçãoEmailMotorista(emailField.getText())) {
                 JOptionPane.showMessageDialog(null, "Email duplicado!");
@@ -252,19 +272,20 @@ public class Motoristas extends JPanel implements ActionListener {
             }
         }
 
-
         if (e.getActionCommand().equals("Remover")) {
-            if (aor_autocarro.removerMotorista(removerField.getText())==null) {
+            if (aor_autocarro.removerMotorista(removerField.getText()) == null) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum motorista");
             } else {
                 try {
                     Motorista removido = aor_autocarro.removerMotorista(removerField.getText());
-                    JOptionPane.showMessageDialog(null,"Removido com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                     aor_autocarro.getMotoristas().remove(removido);
+                    atualizar();
+                    emailField.setText("");
                 } catch (NullPointerException n) {
                     JOptionPane.showMessageDialog(null, "Não existe nenhum motorista com esse email");
                 }
-                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                //FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
             }
 
@@ -274,3 +295,4 @@ public class Motoristas extends JPanel implements ActionListener {
 
     }
 }
+
