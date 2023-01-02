@@ -1,16 +1,20 @@
 package interfacegrafica;
 
-import programa.Aor_Autocarro;
+import programa.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ReservaViagem extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     Aor_Autocarro aor_autocarro;
+
     JButton prosseguirButton;
     JButton opcao1;
     JButton opcao2;
@@ -18,6 +22,23 @@ public class ReservaViagem extends JPanel implements ActionListener {
     JButton opcao4;
     JButton opcao5;
     JButton sairBotao;
+
+    JLabel dataAluguer;
+    JLabel numeroDias;
+    JLabel numeroPessoas;
+    JLabel partida;
+    JLabel destino;
+    JLabel numeroKmTotal;
+
+    JLabel valorViagem;
+    JTextField dataAluguerField;
+    JTextField numeroDiasField;
+    JTextField numeroPessoasField;
+    JTextField partidaField;
+    JTextField destinoField;
+    JTextField numeroKmTotalField;
+
+    double custo;
 
 
     public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
@@ -38,7 +59,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel("");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -57,7 +78,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        opcao1 = new JButton("Reserva Autocarro");
+        opcao1 = new JButton("ReservaViagem");
         opcao2 = new JButton("Histórico Reservas");
         opcao3 = new JButton("Consultar Reservas");
         opcao4 = new JButton("Cancelar Reservas");
@@ -86,31 +107,31 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
 
         //Labels
-        JLabel dataAluguer = new JLabel("Data do Aluguer:");
+        dataAluguer = new JLabel("Data do Aluguer:");
         dataAluguer.setBounds(40, 50, 200, 30);
-        JLabel numeroDias = new JLabel("Numero de dias:");
+        numeroDias = new JLabel("Numero de dias:");
         numeroDias.setBounds(40, 90, 200, 30);
-        JLabel numeroPessoas = new JLabel("Numero de Pessoas:");
+        numeroPessoas = new JLabel("Numero de Pessoas:");
         numeroPessoas.setBounds(40, 130, 200, 30);
-        JLabel partida = new JLabel("Partida:");
+        partida = new JLabel("Local de Partida:");
         partida.setBounds(40, 170, 200, 30);
-        JLabel destino = new JLabel("Destino:");
+        destino = new JLabel("Local de Destino:");
         destino.setBounds(40, 210, 200, 30);
-        JLabel numeroKmTotal = new JLabel("Numero Km total:");
+        numeroKmTotal = new JLabel("Numero Km total:");
         numeroKmTotal.setBounds(40, 250, 200, 30);
 
         //Fields
-        JTextField dataAluguerField = new JTextField();
+        dataAluguerField = new JTextField("dd/mm/AAAA");
         dataAluguerField.setBounds(160, 50, 200, 30);
-        JTextField numeroDiasField = new JTextField();
+        numeroDiasField = new JTextField();
         numeroDiasField.setBounds(160, 90, 200, 30);
-        JTextField numeroPessoasField = new JTextField();
+        numeroPessoasField = new JTextField();
         numeroPessoasField.setBounds(160, 130, 200, 30);
-        JTextField partidaField = new JTextField();
+        partidaField = new JTextField();
         partidaField.setBounds(160, 170, 200, 30);
-        JTextField destinoField = new JTextField();
+        destinoField = new JTextField();
         destinoField.setBounds(160, 210, 200, 30);
-        JTextField numeroKmTotalField = new JTextField();
+        numeroKmTotalField = new JTextField();
         numeroKmTotalField.setBounds(160, 250, 200, 30);
 
         formulario.add(dataAluguer);
@@ -142,7 +163,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
 
-        JLabel valorViagem = new JLabel("Valor");
+        valorViagem = new JLabel("custoViagem");
         valorViagem.setBounds(75, 100, 200, 10);
 
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -157,44 +178,126 @@ public class ReservaViagem extends JPanel implements ActionListener {
         opcao4.addActionListener(this);
         opcao5.addActionListener(this);
         prosseguirButton.addActionListener(this);
-
         sairBotao.addActionListener(this);
 
     }
-
+    /*private double getCusto() {
+        return custo = 0.55 * (Integer.parseInt(numeroKmTotalField.getText())) + 1.2 *(Integer.parseInt(numeroPessoasField.getText()));
+    }*/
 
     @Override
 
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("ReservaViagem")) {
-            painelFundo.mudaEcra("ReservaViagem");
+        boolean validar = true;
+        Reserva reservaNova;
+        Cliente logado = (Cliente) aor_autocarro.getUserLogado();
+        LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        if (e.getActionCommand().equals("Prosseguir")) {
+            //verificar se todos os campos estão preenchidos
+            if (dataAluguerField.getText().equals("") || numeroDiasField.getText().equals("") ||
+                    numeroPessoasField.getText().equals("") || partidaField.getText().equals("") ||
+                    destinoField.getText().equals("") || numeroKmTotalField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+                validar = false;
+            }
+            //Verificar se data Aluguer é válida
+            if (!Reserva.validarDataFormato(dataAluguerField.getText())) {
+                JOptionPane.showMessageDialog(null, "Por favor,preencha a data com o formato dd/mm/AAAA");
+                validar = false;
+            } else if (!Reserva.validarDataValida(dataAluguerField.getText())) {
+                JOptionPane.showMessageDialog(null, "Data com mês ou dia inválidos");
+                validar = false;
+            } else if (!Reserva.validarDataAluguer(dataAluguerField.getText())) {
+                JOptionPane.showMessageDialog(null, "Data de Aluguer não pode ser inferior à data atual");
+                validar = false;
+            }
+
+            //Verificar se é constituído só por números
+            if (!Reserva.validarNumeros(numeroDiasField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número de dias inválido");
+                validar = false;
+            }
+            //Verificar se é constituído só por números
+            if (!Reserva.validarNumeros(numeroPessoasField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número de Pessoas inválido");
+                validar = false;
+            }
+            //Verificar se é constituído só por letras
+            if (!Reserva.validarLocal(partidaField.getText())) {
+                JOptionPane.showMessageDialog(null, "Uso de carateres inválidos no local Partida");
+                validar = false;
+            }
+            //Verificar se é constituído só por letras
+            if (!Reserva.validarLocal(destinoField.getText())) {
+                JOptionPane.showMessageDialog(null, "Uso de carateres inválidos no local Destino");
+                validar = false;
+            }
+            //Verificar se é constituído só por números
+            if (!Reserva.validarNumeros(numeroKmTotalField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número de km inválido");
+                validar = false;
+            }
+            if (validar == false) {
+                painelFundo.mudaEcra("ReservaViagem");
+            } else {
+                if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoasField.getText())) {
+                    JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
+                            "Empresa autocarros com capacidade para " + numeroPessoasField.getText());
+                    painelFundo.mudaEcra("ReservaViagem");
+                }
+                try {
+                    reservaNova = aor_autocarro.verificarAutocarroSemReservas(logado, dataAluguer, numeroDiasField.getText(),
+                            numeroPessoasField.getText(), partidaField.getText(), destinoField.getText(), numeroKmTotalField.getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                if (reservaNova != null) {
+                    Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
+                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + Reserva.getId() + " foi efetuada com sucesso.\n" +
+                            "Autocarro: " + autocarro);
+                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                    painelFundo.mudaEcra("Pagamentos");
+                } else {
+                    try {
+                        reservaNova = aor_autocarro.verificarAutocarrocomReservas(logado, dataAluguer, numeroDiasField.getText(),
+                                numeroPessoasField.getText(), partidaField.getText(), destinoField.getText(), numeroKmTotalField.getText());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    if (reservaNova != null) {
+                        Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
+                        JOptionPane.showMessageDialog(null, "A sua reserva nº" + Reserva.getId() + " foi efetuada com sucesso.\n" +
+                                "Autocarro: " + autocarro);
+                        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                        painelFundo.mudaEcra("Pagamentos");
+                    } else {
+                        JOptionPane.showConfirmDialog(null, "A sua reserva ficou em lista de espera" +
+                                ".Pretende prosseguir?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+                    }
+                }
+
+            }
+
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
+        if (e.getActionCommand().equals("Consultar Reservas")) {
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
             painelFundo.mudaEcra("CancelarReserva");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
-        if(e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
         }
-
-        if(e.getActionCommand().equals("Prosseguir")){
-            painelFundo.mudaEcra("Pagamentos");
-        }
-
-
-
-
 
     }
 }

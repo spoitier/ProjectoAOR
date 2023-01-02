@@ -55,7 +55,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
 
 
-         opcao1 = new JButton("Reserva Autocarro");
+         opcao1 = new JButton("ReservaViagem");
          opcao2 = new JButton("Histórico Reservas");
          opcao3 = new JButton("Consultar Reservas");
          opcao4 = new JButton("Cancelar Reservas");

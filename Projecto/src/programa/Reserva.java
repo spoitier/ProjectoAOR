@@ -2,6 +2,7 @@ package programa;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Reserva implements Serializable {
 
@@ -11,17 +12,21 @@ public class Reserva implements Serializable {
     private Motorista motorista;
     private LocalDate dataReserva;
     private LocalDate dataPartida;
-    private int numeroDias;
-    private int numeroPessoas;
+    private String numeroDias;
+    private String numeroPessoas;
     private String localPartida;
     private String localDestino;
-    private int distancia;
+    private String distancia;
 
     private LocalDate dataFim;
-    private double custo; // não pode estar o construtor
+    private double custo; // não pode estar no construtor
 
+    private static int id = 1;
 
-    public Reserva(Cliente cliente, Autocarro autocarro, Motorista motorista, LocalDate dataReserva, LocalDate dataPartida, int numeroDias, int numeroPessoas, String localPartida, String localDestino, int distancia) {
+public Reserva(){
+}
+
+    public Reserva(Cliente cliente, Autocarro autocarro, Motorista motorista, LocalDate dataReserva, LocalDate dataPartida, String numeroDias, String numeroPessoas, String localPartida, String localDestino, String distancia) {
         this.cliente = cliente;
         this.autocarro = autocarro;
         this.motorista = motorista;
@@ -32,23 +37,13 @@ public class Reserva implements Serializable {
         this.localPartida = localPartida;
         this.localDestino = localDestino;
         this.distancia = distancia;
-        dataFim=dataPartida.plusDays(numeroDias);//calcula data fim do periodo de reserva pretendido
-
+        dataFim = dataPartida.plusDays(Integer.parseInt(numeroDias));//calcula data fim do periodo de reserva pretendido
+        criaID();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private void criaID() {
+        id = id++;
+    }
 
 
     public Cliente getCliente() {
@@ -84,6 +79,8 @@ public class Reserva implements Serializable {
         return dataFim;
     }
 
+
+
     public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
@@ -94,22 +91,6 @@ public class Reserva implements Serializable {
 
     public void setDataPartida(LocalDate dataPartida) {
         this.dataPartida = dataPartida;
-    }
-
-    public int getNumeroDias() {
-        return numeroDias;
-    }
-
-    public void setNumeroDias(int numeroDias) {
-        this.numeroDias = numeroDias;
-    }
-
-    public int getNumeroPessoas() {
-        return numeroPessoas;
-    }
-
-    public void setNumeroPessoas(int numeroPessoas) {
-        this.numeroPessoas = numeroPessoas;
     }
 
     public String getLocalPartida() {
@@ -128,34 +109,134 @@ public class Reserva implements Serializable {
         this.localDestino = localDestino;
     }
 
-    public int getDistancia() {
+    public String getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(int distancia) {
+    public void setDistancia(String distancia) {
         this.distancia = distancia;
     }
 
-    public double getCusto() {
-        return custo = 0.55 *getDistancia()+1.2*numeroPessoas;
+    public String getNumeroPessoas() {
+        return numeroPessoas;
     }
+
+    public void setNumeroPessoas(String numeroPessoas) {
+        this.numeroPessoas = numeroPessoas;
+    }
+
+    public String getNumeroDias() {
+        return numeroDias;
+    }
+
+    public void setNumeroDias(String numeroDias) {
+        this.numeroDias = numeroDias;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        Reserva.id = id;
+    }
+
+    public double getCusto() {
+        return custo = 0.55 * Integer.parseInt(distancia) + 1.2 * Integer.parseInt(numeroPessoas);
+    }
+
+    public static boolean validarLocal(String local) {
+        boolean validar = false;
+        local = local.replaceAll("\\s", "");
+        int contadorLetras = 0;
+
+        for (int i = 0; i < local.length(); i++) {
+            if (Character.isLetter(local.charAt(i))) {
+                contadorLetras++;
+            }
+        }
+        if (local.length() == contadorLetras) {
+            validar = true;
+        }
+        return validar;
+    }
+
+    public static boolean validarNumeros(String dadoNumerico) {
+        boolean validar = false;
+        int contadorNumeros = 0;
+
+        for (int i = 0; i < dadoNumerico.length(); i++) {
+            if (Character.isDigit(dadoNumerico.charAt(i))) {
+                contadorNumeros++;
+            }
+        }
+        if (dadoNumerico.length() == contadorNumeros) {
+            validar = true;
+        }
+        return validar;
+    }
+
+    public static boolean validarDataFormato(String data) {
+        boolean validar = false;
+        //Validar o formato da data
+        if ((data.length() == 10) && (data.charAt(2) == '/') && (data.charAt(5) == '/')) {
+            data.replaceAll("/", "");
+            for (int i = 0; i < data.length(); i++) {
+                if (Character.isDigit(data.charAt(i))) {
+                    validar = true;
+                }
+            }
+        }return validar;
+    }
+        //Validar o valor da data
+        public static boolean validarDataValida(String data) {
+            boolean validar = false;
+    String dataSemEspaços=data.replaceAll("/", "");
+
+        int dia = Integer.parseInt(dataSemEspaços.substring(0, 2));
+        int mes = Integer.parseInt(dataSemEspaços.substring(2, 4));
+        int ano = Integer.parseInt(dataSemEspaços.substring(4, 8));
+
+        if(dia<0&&dia>31&&mes<0&&mes>12){
+            validar=false;
+        }
+
+        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8) && (dia <= 31)) {
+            validar = true;
+        } else if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) {
+            validar = true;
+        } else if (mes == 2 && dia <= 28) {
+            validar = true;
+        }
+        return validar;
+    }
+
+    //Verificar se a data é igual ou superior à data atual
+        public static boolean validarDataAluguer(String data) {
+            boolean validar = false;
+            LocalDate dataAluguer = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            if (dataAluguer.isAfter(LocalDate.now())) {
+                validar = true;
+            }
+            System.out.println(dataAluguer+" "+LocalDate.now());
+            return validar;
+        }
 
 
 
     @Override
     public String toString() {
-        return "Reserva{" +
-                "cliente=" + cliente +
-                ", autocarro=" + autocarro +
-                ", motorista=" + motorista +
-                ", dataReserva=" + dataReserva +
-                ", dataPartida=" + dataPartida +
-                ", numeroDias=" + numeroDias +
-                ", numeroPessoas=" + numeroPessoas +
-                ", localPartida='" + localPartida + '\'' +
-                ", localDestino='" + localDestino + '\'' +
-                ", distancia=" + distancia +
-                ", custo=" + custo +
-                '}';
+        return "Reserva:cliente=" + cliente +
+                ",autocarro=" + autocarro +
+                ",motorista=" + motorista +
+                ",nºreserva= " + id +
+                ",data da reserva=" + dataReserva +
+                ",data da partida=" + dataPartida +
+                ",numero dias=" + numeroDias +
+                ",numero de pessoas=" + numeroPessoas +
+                ",local de partida='" + localPartida + '\'' +
+                ",local de destino='" + localDestino + '\'' +
+                ",distancia=" + distancia +
+                ",custo=" + custo;
     }
 }

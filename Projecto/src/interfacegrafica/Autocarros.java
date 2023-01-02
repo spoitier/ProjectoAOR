@@ -289,7 +289,7 @@ public class Autocarros extends JPanel implements ActionListener {
             }
             if (validar == false) {
             } else {
-                aor_autocarro.getAutocarros().add(new Autocarro(matriculaField.getText(), marcaField.getText(), modeloField.getText(), Integer.parseInt(lotacaoField.getText())));
+                aor_autocarro.getAutocarros().add(new Autocarro(matriculaField.getText(), marcaField.getText(), modeloField.getText(), lotacaoField.getText()));
                 JOptionPane.showMessageDialog(null, "Autocarro Adicionado com Sucesso");
                 atualizar();
                 matriculaField.setText("");

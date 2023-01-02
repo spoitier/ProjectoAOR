@@ -41,13 +41,19 @@ public class Utilizador implements Serializable {
         }return validar;
     }
     public static boolean validarTlfeNif(String dadoNumerico) {
+        boolean validar=false;
         dadoNumerico=dadoNumerico.replaceAll("\\s","");
+        int contadorNumeros=0;
+
         for(int i=0;i<dadoNumerico.length();i++){
-            if(!Character.isDigit(dadoNumerico.charAt(i))){
-                return  true;
+            if(Character.isDigit(dadoNumerico.charAt(i))){
+                contadorNumeros++;
             }
         }
-        return false;
+        if(contadorNumeros==9){
+            validar=true;
+        }
+        return validar;
     }
     public static boolean validarNome(String nome) {
         boolean validar = false;

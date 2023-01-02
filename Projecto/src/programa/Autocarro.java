@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Autocarro implements Serializable {
 
-    private int lotacao;
+    private String lotacao;
     private String matricula;
     private String marca;
     private String modelo;
@@ -13,18 +13,18 @@ public class Autocarro implements Serializable {
     public Autocarro() {
     }
 
-    public Autocarro( String matricula, String marca, String modelo,int lotacao) {
+    public Autocarro( String matricula, String marca, String modelo,String lotacao) {
         this.lotacao = lotacao;
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
     }
 
-    public int getLotacao() {
+    public String getLotacao() {
         return lotacao;
     }
 
-    public void setLotacao(int lotacao) {
+    public void setLotacao(String lotacao) {
         this.lotacao = lotacao;
     }
 

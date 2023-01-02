@@ -65,19 +65,11 @@ public Cliente (){
 
     public  void alterarSubscricao(String email) {
         for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
-            if (((Cliente) utilizador).getTipoCliente().equals("N")) {
-                ((Cliente) utilizador).setTipoCliente("P");
-            } else if (((Cliente) utilizador).getTipoCliente().equals("P")) {
-                ((Cliente) utilizador).setTipoCliente("N");
-
+            if (((Cliente) utilizador).getTipoCliente().equals("Normal")) {
+                ((Cliente) utilizador).setTipoCliente("Premium");
+            } else if (((Cliente) utilizador).getTipoCliente().equals("Premium")) {
+                ((Cliente) utilizador).setTipoCliente("Normal");
             }
-
         }
     }
-
-
-
-
-
-
 }

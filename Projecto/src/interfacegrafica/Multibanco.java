@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,9 @@ import java.awt.event.ActionListener;
 
 public class Multibanco extends JPanel implements ActionListener {
 
+    Aor_Autocarro aor_autocarro;
+
+    Multibanco multibanco1;
     PainelFundo painelFundo;
 
     JButton opcao1;
@@ -18,6 +23,13 @@ public class Multibanco extends JPanel implements ActionListener {
     JButton botaoConfirmar;
     JButton mudarPagamentoButton;
     JButton sairBotao;
+
+    JLabel entidade;
+    JLabel referencia;
+    JLabel valor;
+    JLabel entidadeInfo;
+    JLabel referenciaInfo;
+    JLabel valorInfo;
 
 
 
@@ -55,7 +67,7 @@ public class Multibanco extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-         opcao1 = new JButton("programa.Reserva Autocarro");
+         opcao1 = new JButton("ReservaViagem");
          opcao2 = new JButton("Histórico Reservas");
          opcao3 = new JButton("Consultar Reservas");
          opcao4 = new JButton("Cancelar Reservas");
@@ -95,7 +107,7 @@ public class Multibanco extends JPanel implements ActionListener {
         JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
         pagamentoPanel.setBounds(200, 200, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-         multibanco = new JButton("Multbanco");
+         multibanco = new JButton("Multibanco");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(multibanco);
         this.add(pagamentoPanel);
@@ -105,12 +117,12 @@ public class Multibanco extends JPanel implements ActionListener {
 
         JPanel referenciaMultibanco = new JPanel(new GridLayout(3, 2, 0, 0));
         referenciaMultibanco.setBounds(200, 300, 300, 200);
-        JLabel entidade = new JLabel("Entidade:");
-        JLabel referencia = new JLabel("Referencia:");
-        JLabel valor = new JLabel("Valor");
-        JLabel entidadeInfo = new JLabel("12345");
-        JLabel referenciaInfo = new JLabel("gerado automaticamente");
-        JLabel valorInfo = new JLabel("gerado automaticamente");
+        entidade = new JLabel("Entidade:");
+        referencia = new JLabel("Referencia:");
+        valor = new JLabel("Valor");
+        entidadeInfo = new JLabel("12345");
+        referenciaInfo = new JLabel(" ");
+        valorInfo = new JLabel(" ");
         referenciaMultibanco.add(entidade);
         referenciaMultibanco.add(entidadeInfo);
         referenciaMultibanco.add(referencia);
@@ -138,14 +150,27 @@ public class Multibanco extends JPanel implements ActionListener {
         mudarPagamentoButton.addActionListener(this);
         sairBotao.addActionListener(this);
 
-
-
-
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Cliente logado;
+        Pagamento pagamento;
+        Reserva reserva;
+
+        if(e.getActionCommand().equals("Confirmar")){
+            logado = (Cliente) aor_autocarro.getUserLogado();
+            reserva=aor_autocarro.identificarReservaPagamento(logado);
+            String referenciaMB= programa.Multibanco.gerarRefMultibanco();
+            pagamento=new programa.Multibanco(reserva,12345,referenciaMB, reserva.getCusto());
+            //Adicionado pagamento da reserva à lista de Reservas
+            aor_autocarro.addPagamento(pagamento);
+                JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
+                        " nº"+Reserva.getId()+" deverá ser efetuada por Multibanco:\n" +
+                        "Entidade: 12345\nReferência:"+referenciaMB+"\nValor:"+reserva.getCusto()+"€");
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            }
+
         if(e.getActionCommand().equals("ReservaViagem")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
@@ -166,9 +191,6 @@ public class Multibanco extends JPanel implements ActionListener {
         }
         if(e.getActionCommand().equals("Sair")){
             painelFundo.mudaEcra("Login");
-        }
-        if(e.getActionCommand().equals("Confirmar")){
-
         }
         if(e.getActionCommand().equals("Mudar Pagamento")){
             painelFundo.mudaEcra("Pagamentos");

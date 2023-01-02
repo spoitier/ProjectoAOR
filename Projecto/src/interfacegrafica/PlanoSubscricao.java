@@ -135,7 +135,6 @@ normalCheck.addActionListener(this);
         if(e.getActionCommand().equals("Registar")) {
             if(premiumCheck.isSelected()){
                 logado=(Cliente)aor_autocarro.getUserLogado();
-                System.out.println(logado);
                 logado.setTipoCliente("Premium");
                 JOptionPane.showMessageDialog(null,"Subscreveu o plano premium.\n" +
                         "Para manter as vantagens deste pacote, deverá proceder ao pagamento mensal de 10 euros.\n" +
@@ -143,6 +142,8 @@ normalCheck.addActionListener(this);
 
             }
             else if(normalCheck.isSelected()){
+                logado=(Cliente)aor_autocarro.getUserLogado();
+                logado.setTipoCliente("Normal");
                 JOptionPane.showMessageDialog(null,"Subscreveu o plano normal");}
             painelFundo.mudaEcra("ReservaViagem");
             FicheiroDeObjectos.escreveObjeto(aor_autocarro);

@@ -1,23 +1,39 @@
 package interfacegrafica;
 
+import programa.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class CartaoCredito  extends JPanel implements ActionListener {
+public class CartaoCredito extends JPanel implements ActionListener {
 
+    Aor_Autocarro aor_autocarro;
+
+    CartaoCredito cartão;
     PainelFundo painelFundo;
     JButton sairBotao;
-    JButton opcao1 ;
-    JButton opcao2 ;
-    JButton opcao3 ;
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
     JButton opcao4;
     JButton opcao5;
 
     JButton cartaocreditoButton;
     JButton botaoConfirmar;
     JButton mudarPagamentoButton;
+    JLabel numeroCartao;
+    JLabel nomeCliente;
+    JLabel dataExpiracao;
+    JLabel codigoSeguranca;
+    TextField numeroCartaoField;
+    TextField nomeClienteField;
+    TextField dataExpiracaoField;
+    TextField codigoSegurancaField;
+
 
     public CartaoCredito(PainelFundo painelfundo) {
 
@@ -49,17 +65,16 @@ public class CartaoCredito  extends JPanel implements ActionListener {
         //===========================================================
         //Painel de escolhas do cliente
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5,15,0));
+        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-         opcao1 = new JButton("programa.Reserva Autocarro");
-         opcao2 = new JButton("Histórico Reservas");
-         opcao3 = new JButton("Consultar Reservas");
-         opcao4 = new JButton("Cancelar Reservas");
-         opcao5 = new JButton("Dados Pessoais");
+        opcao1 = new JButton("programa.Reserva Autocarro");
+        opcao2 = new JButton("Histórico Reservas");
+        opcao3 = new JButton("Consultar Reservas");
+        opcao4 = new JButton("Cancelar Reservas");
+        opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -71,19 +86,19 @@ public class CartaoCredito  extends JPanel implements ActionListener {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Realizar reserva de Autocarro:\n");
-        segundoTitulo.setBounds(50,100,900,30);
+        JLabel segundoTitulo = new JLabel("Realizar reserva de Autocarro:\n");
+        segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
         //=====================================================================
         //Custo da viagem
         JPanel custoViagem = new JPanel();
         custoViagem.setLayout(null);
-        custoViagem.setBounds(625,250,200,200);
+        custoViagem.setBounds(625, 250, 200, 200);
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
-        tituloCusto.setBounds(45,30,200,10);
+        tituloCusto.setBounds(45, 30, 200, 10);
         JLabel valorViagem = new JLabel("Valor");
-        valorViagem.setBounds(75,100,200,10);
+        valorViagem.setBounds(75, 100, 200, 10);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
         custoViagem.add(valorViagem);
@@ -92,8 +107,8 @@ public class CartaoCredito  extends JPanel implements ActionListener {
         //===========================================
         //programa.Paypal
 
-        JPanel pagamentoPanel= new JPanel(new GridLayout(2,1,0,15));
-        pagamentoPanel.setBounds(200,150,350,100);
+        JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
+        pagamentoPanel.setBounds(200, 150, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
         cartaocreditoButton = new JButton("CARTÃO CREDITO");
         pagamentoPanel.add(tipoPagamento);
@@ -107,36 +122,36 @@ public class CartaoCredito  extends JPanel implements ActionListener {
         cartaoCreditoPanel.setBounds(170, 275, 425, 225);
 
         //Label do numerocartao
-        JLabel numeroCartao = new JLabel("Nº Cartão:");
+        numeroCartao = new JLabel("Nº Cartão:");
         numeroCartao.setBounds(0, 25, 80, 30);
 
         //Label do nome cliente
-        JLabel nomeCliente = new JLabel("Nome do Cliente do cartão:\n");
+        nomeCliente = new JLabel("Nome do Cliente do cartão:\n");
         nomeCliente.setBounds(0, 75, 200, 30);
 
         //Label do nome cliente
-        JLabel dataExpiracao = new JLabel("Data expiração: ");
+        dataExpiracao = new JLabel("Data expiração: ");
         dataExpiracao.setBounds(0, 125, 200, 30);
 
         //Label do nome cliente
-        JLabel codigoSeguranca = new JLabel("Codigo de Segurança:");
+        codigoSeguranca = new JLabel("Codigo de Segurança:");
         codigoSeguranca.setBounds(0, 175, 200, 30);
 
 
         // Textofield do numero cartao
-        TextField numeroCartaoField = new TextField();
+        numeroCartaoField = new TextField();
         numeroCartaoField.setBounds(200, 25, 170, 30);
 
         // Textofield do nome cliente
-        TextField nomeClienteField = new TextField();
+        nomeClienteField = new TextField();
         nomeClienteField.setBounds(200, 75, 170, 30);
 
         // Textofield da data expiracao
-        TextField dataExpiracaoField = new TextField();
+        dataExpiracaoField = new TextField();
         dataExpiracaoField.setBounds(200, 125, 170, 30);
 
         // Textofield do codigo Segurança
-        TextField codigoSegurancaField = new TextField();
+        codigoSegurancaField = new TextField();
         codigoSegurancaField.setBounds(200, 175, 170, 30);
 
         cartaoCreditoPanel.add(numeroCartao);
@@ -149,7 +164,6 @@ public class CartaoCredito  extends JPanel implements ActionListener {
         cartaoCreditoPanel.add(codigoSegurancaField);
         cartaoCreditoPanel.add(codigoSegurancaField);
         this.add(cartaoCreditoPanel);
-
 
 
         //Botão de auntenticar
@@ -173,31 +187,81 @@ public class CartaoCredito  extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("ReservaViagem")) {
+        boolean validar = true;
+        Cliente logado;
+        Pagamento pagamento;
+        Reserva reserva;
+        LocalDate dataExpiração = LocalDate.parse(dataExpiracaoField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+
+        if (e.getActionCommand().equals("Confirmar")) {
+            if (numeroCartaoField.getText().equals("") || nomeClienteField.getText().equals("")
+                    || dataExpiracaoField.getText().equals("") || codigoSegurancaField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+                validar = false;
+            }
+            //Verificar se o número do cartão crédito é constituído por 14-16 números
+            if (!programa.CartaoCredito.validarnumCartaoCredito(numeroCartaoField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número Cartão Crédito inválido");
+                validar = false;
+            }
+
+            //Verificar se o nome é constituído só por letras
+            if (!programa.CartaoCredito.validarNome(nomeClienteField.getText())) {
+                JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
+                validar = false;
+            }
+            //Verificar se data Aluguer é válida
+            if (!programa.CartaoCredito.validarDataFormato(dataExpiracaoField.getText())) {
+                JOptionPane.showMessageDialog(null, "Por favor,preencha a data com o formato dd/mm/AAAA");
+                validar = false;
+            } else if (!programa.CartaoCredito.validarDataValida(dataExpiracaoField.getText())) {
+                JOptionPane.showMessageDialog(null, "Data com mês ou dia inválidos");
+                validar = false;
+            } else if (!programa.CartaoCredito.validarDataExpiração(dataExpiracaoField.getText())) {
+                JOptionPane.showMessageDialog(null, "Data de Expiração não pode ser inferior à data atual");
+                validar = false;
+            }
+            //Verificar se o pin de segurança do cartão crédito é constituído por 3 números
+            if (!programa.CartaoCredito.validarPinCartaoCredito(codigoSegurancaField.getText())) {
+                JOptionPane.showMessageDialog(null, "Pin inválido");
+                validar = false;
+            }
+            if (validar) {
+                logado = (Cliente) aor_autocarro.getUserLogado();
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                pagamento = new programa.CartaoCredito(reserva, numeroCartaoField.getText(), nomeClienteField.getText(),
+                        dataExpiração, codigoSegurancaField.getText());
+                //Adicionado pagamento da reserva à lista de Reservas
+                aor_autocarro.addPagamento(pagamento);
+                JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
+                        " nº" + Reserva.getId() + " no valor de " + reserva.getCusto() + "€");
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            }
+        }
+
+        if (e.getActionCommand().equals("ReservaViagem")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
+        if (e.getActionCommand().equals("Consultar Reservas")) {
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
             painelFundo.mudaEcra("CancelarReserva");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
-        if(e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
         }
-        if(e.getActionCommand().equals("Confirmar")){
-
-        }
-        if(e.getActionCommand().equals("Mudar Pagamento")){
+        if (e.getActionCommand().equals("Mudar Pagamento")) {
             painelFundo.mudaEcra("Pagamentos");
 
         }

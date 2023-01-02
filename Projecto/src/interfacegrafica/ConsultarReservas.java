@@ -32,7 +32,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do programa.Cliente");
+        JLabel clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -51,7 +51,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
 
 
 
-         opcao1 = new JButton("programa.Reserva programa.Autocarro");
+         opcao1 = new JButton("ReservaViagem");
          opcao2 = new JButton("Histórico Reservas");
          opcao3 = new JButton("Consultar Reservas");
          opcao4 = new JButton("Cancelar Reservas");

@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,7 @@ import java.awt.event.ActionListener;
 
 public class PayPal extends JPanel implements ActionListener {
 
+    Aor_Autocarro aor_autocarro;
     PainelFundo painelFundo;
 
     JButton opcao1;
@@ -20,6 +23,12 @@ public class PayPal extends JPanel implements ActionListener {
 
     JButton mudarPagamentoButton;
     JButton sairBotao;
+
+    JLabel login;
+    JLabel email;
+    JLabel palavraChave;
+    TextField emailField;
+    JPasswordField palavraChaveField;
 
     public PayPal(PainelFundo painelFundo) {
         this.painelFundo = painelFundo;
@@ -56,7 +65,7 @@ public class PayPal extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Reserva Autocarro");
+        opcao1 = new JButton("ReservaViagem");
         opcao2 = new JButton("Histórico Reservas");
         opcao3 = new JButton("Consultar Reservas");
         opcao4 = new JButton("Cancelar Reservas");
@@ -108,23 +117,23 @@ public class PayPal extends JPanel implements ActionListener {
         loginPanel.setBounds(200, 300, 350, 200);
 
         //Label do login
-        JLabel login = new JLabel("Login:");
+        login = new JLabel("Login:");
         login.setBounds(10, 0, 50, 30);
 
         //Label do email
-        JLabel email = new JLabel("Email");
+        email = new JLabel("Email");
         email.setBounds(30, 50, 80, 30);
 
         //Label da palavra chave
-        JLabel palavraChave = new JLabel("Palavra-Chave");
+        palavraChave = new JLabel("Palavra-Chave");
         palavraChave.setBounds(30, 100, 100, 30);
 
         // Textofield do email
-        TextField emailField = new TextField("Escreve aqui o seu email");
+        emailField = new TextField("Escreve aqui o seu email");
         emailField.setBounds(150, 50, 170, 30);
 
         // Textofield da palavrachave
-        JPasswordField palavraChaveField = new JPasswordField("Escreve aqui a sua Palavra-Chave");
+        palavraChaveField = new JPasswordField("Escreve aqui a sua Palavra-Chave");
         palavraChaveField.setBounds(150, 100, 170, 30);
         loginPanel.add(email);
         loginPanel.add(palavraChave);
@@ -155,6 +164,34 @@ public class PayPal extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        boolean validar=true;
+        String email = emailField.getText();
+        String password = new String(palavraChaveField.getPassword());//para transformar em string
+        Cliente logado;
+        Pagamento pagamento;
+        Reserva reserva;
+
+        if(e.getActionCommand().equals("Confirmar")){
+            if (emailField.getText().equals("") || password.equals("")) {
+                JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
+            validar=false;
+            }
+            if(!Paypal.validarEmail(email)){
+                JOptionPane.showMessageDialog(null, "Email inválido");
+            validar=false;
+            }
+            if(validar){
+                logado = (Cliente) aor_autocarro.getUserLogado();
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                pagamento=new Paypal(reserva,email,password);
+                //Adicionado pagamento da reserva à lista de Reservas
+                aor_autocarro.addPagamento(pagamento);
+                JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
+                        " nº"+Reserva.getId()+" no valor de "+reserva.getCusto()+"€");
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            }
+        }
+
         if(e.getActionCommand().equals("ReservaViagem")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
@@ -175,9 +212,6 @@ public class PayPal extends JPanel implements ActionListener {
         }
         if(e.getActionCommand().equals("Sair")){
             painelFundo.mudaEcra("Login");
-        }
-        if(e.getActionCommand().equals("Confirmar")){
-
         }
         if(e.getActionCommand().equals("Mudar Pagamento")){
             painelFundo.mudaEcra("Pagamentos");

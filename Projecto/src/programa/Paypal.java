@@ -38,4 +38,17 @@ public class Paypal extends Pagamento implements Serializable
                 ", reserva=" + reserva +
                 '}';
     }
+    public static boolean validarEmail(String email) {
+        boolean validar = false;
+        String[] email2 = email.split("");
+        for (int i = 0; i < email2.length; i++) {
+            if (email2[i].equals("@")) {
+                for (int j = i; j < email2.length; j++) {
+                    if (email2[j].equals(".")) {
+                        validar = true;
+                    }
+                }
+            }
+        }return validar;
+    }
 }

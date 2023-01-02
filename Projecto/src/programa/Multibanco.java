@@ -7,10 +7,10 @@ public class Multibanco extends Pagamento implements Serializable {
 
 
     private int entidade;
-    private int referencia;
+    private String referencia;
     private double montante;
 
-    public Multibanco(Reserva reserva, int entidade, int referencia, double montante) {
+    public Multibanco(Reserva reserva, int entidade, String referencia, double montante) {
         super(reserva);
         this.entidade = 12345;
         this.referencia = referencia;
@@ -25,11 +25,11 @@ public class Multibanco extends Pagamento implements Serializable {
         this.entidade = entidade;
     }
 
-    public int getReferencia() {
+    public String getReferencia() {
         return referencia;
     }
 
-    public void setReferencia(int referencia) {
+    public void setReferencia(String referencia) {
         this.referencia = referencia;
     }
 
@@ -43,11 +43,16 @@ public class Multibanco extends Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Multibanco{" +
+        return "Reserva=" + reserva +"|Multibanco:" +
                 "entidade=" + entidade +
-                ", referencia=" + referencia +
-                ", montante=" + montante +
-                ", reserva=" + reserva +
-                '}';
+                ",referencia=" + referencia +
+                ",montante=" + montante;
     }
+    public static String gerarRefMultibanco(){
+        String referenciaMB= String.valueOf(Math.round((Math.random()*999)*100)/100+" "+
+                String.valueOf(Math.round((Math.random()*999)*100)/100)+" "+
+                String.valueOf(Math.round((Math.random()*999)*100)/100));
+        return referenciaMB;
+    }
+
 }
