@@ -184,31 +184,37 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
             }
             //Verificar se email é válido
             if (!Utilizador.validarEmail(emailField.getText())) {
+                emailLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Email inválido");
                 validar = false;
             }
             //Verificar se o nome é constituído só por letras
             if (!Utilizador.validarNome(nomeField.getText())) {
+                nomeLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
                 validar = false;
             }
             //Verificar se o nif é constituído por 9 números
-            if (!Utilizador.validarTlfeNif(nifField.getText())) {
+            if (Utilizador.validarTlfeNif(nifField.getText())) {
+                nifLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Nif inválido");
                 validar = false;
             }
             //Verificar se o telefone é constituído por 9 números
-            if (!Utilizador.validarTlfeNif(telefoneField.getText())) {
+            if (Utilizador.validarTlfeNif(telefoneField.getText())) {
+                telefoneLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Número de telefone inválido");
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
             if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+                nifLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
             if (aor_autocarro.verificarDuplicaçãoEmail(emailField.getText())) {
+                emailLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse email");
                 validar = false;
             }
@@ -220,7 +226,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
                         moradaField.getText(), telefoneField.getText()));
                 JOptionPane.showMessageDialog(null, "Administrador adicionado com sucesso.\n" +
                         "Será enviado para o email "+emailField.getText()+" uma password provisória, a qual deverá" +
-                        "ser alterada, no campo Dados Pessoais da sua sessão.");
+                        "ser alterada." );
 
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
@@ -229,17 +235,21 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         }
 
         if(e.getActionCommand().equals("Motoristas")) {
+            ((Motoristas)(painelFundo.mapaPaineis.get("Motoristas"))).nomeLogado();
             painelFundo.mudaEcra("Motoristas");
         }
 
         if(e.getActionCommand().equals("Autocarros")) {
+            ((Autocarros)(painelFundo.mapaPaineis.get("Autocarros"))).nomeLogado();
             painelFundo.mudaEcra("Autocarros");
         }
 
         if(e.getActionCommand().equals("Clientes")) {
+            ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).nomeLogado();
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if(e.getActionCommand().equals("Estatistica")) {
+            ((Estatistica)(painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
         if(e.getActionCommand().equals("Dados Pessoais")) {

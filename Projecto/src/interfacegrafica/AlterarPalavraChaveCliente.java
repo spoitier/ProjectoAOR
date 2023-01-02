@@ -57,7 +57,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("programa.Reserva programa.Autocarro");
+        opcao1 = new JButton("Reserva programa.Autocarro");
         opcao2 = new JButton("Histórico Reservas");
         opcao3 = new JButton("Consultar Reservas");
         opcao4 = new JButton("Cancelar Reservas");
@@ -164,7 +164,5 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
         }
-
-
     }
 }

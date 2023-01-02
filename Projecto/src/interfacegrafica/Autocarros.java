@@ -33,6 +33,7 @@ public class Autocarros extends JPanel implements ActionListener {
 
     JLabel adminNome;
 
+
     public JTextField matriculaField;
 
     private JTextField marcaField;
@@ -174,7 +175,6 @@ public class Autocarros extends JPanel implements ActionListener {
         //========================================
         // Tabela
 
-
         String[] colunas = {"Matricula", "Marca", "Modelo", "Lotação"};
 
         String[][] data = new String[aor_autocarro.getAutocarros().size()][4];
@@ -185,6 +185,7 @@ public class Autocarros extends JPanel implements ActionListener {
             data[i][2] = aor_autocarro.getAutocarros().get(i).getModelo();
             data[i][3] = String.valueOf(aor_autocarro.getAutocarros().get(i).getLotacao());
         }
+
         tabela = new JTable(data, colunas);
         sp = new JScrollPane(tabela);
         sp = new JScrollPane(tabela);
@@ -214,12 +215,12 @@ public class Autocarros extends JPanel implements ActionListener {
     }
 
 
-
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         String[] colunas = {"Matricula", "Marca", "Modelo", "Lotação"};
 
         String[][] data = new String[aor_autocarro.getAutocarros().size()][4];
+
         this.remove(sp);
         for (int i = 0; i < aor_autocarro.getAutocarros().size(); i++) {
             data[i][0] = aor_autocarro.getAutocarros().get(i).getMatricula();
@@ -229,9 +230,20 @@ public class Autocarros extends JPanel implements ActionListener {
 
         }
         tabela = new JTable(data, colunas);
-        JScrollPane sp = new JScrollPane(tabela);
+        sp = new JScrollPane(tabela);
         sp.setBounds(550, 150, 300, 400);
         this.add(sp);
+        revalidate();
+        repaint();
+
+    }
+
+    public void nomeLogado(){
+
+        if(aor_autocarro.getUserLogado()==null){
+            adminNome.setText("");
+        }else
+            adminNome.setText(aor_autocarro.getUserLogado().getNome());
         revalidate();
         repaint();
 
@@ -245,14 +257,17 @@ public class Autocarros extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Motoristas")) {
+            ((Motoristas)(painelFundo.mapaPaineis.get("Motoristas"))).nomeLogado();
             painelFundo.mudaEcra("Motoristas");
         }
 
 
         if (e.getActionCommand().equals("Clientes")) {
+            ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).nomeLogado();
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if (e.getActionCommand().equals("Estatistica")) {
+            ((Estatistica)(painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
@@ -303,15 +318,15 @@ public class Autocarros extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Remover")) {
             if (matriculaFieldRemover.getText() == null) {
                 JOptionPane.showMessageDialog(null, "Falta preencher");
-            } else if ((aor_autocarro.removerAutocarro(matriculaFieldRemover.getText())) == null) {
+            } else if ((aor_autocarro.getAutocarro(matriculaFieldRemover.getText())) == null) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
             } else {
                 try {
                     JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                    Autocarro removido = aor_autocarro.removerAutocarro(matriculaFieldRemover.getText());
+                    Autocarro removido = aor_autocarro.getAutocarro(matriculaFieldRemover.getText());
                     aor_autocarro.getAutocarros().remove(removido);
+                    matriculaFieldRemover.setText("");
                     atualizar();
-                    matriculaField.setText("");
                 } catch (NullPointerException n) {
                     JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
                 }
@@ -321,13 +336,19 @@ public class Autocarros extends JPanel implements ActionListener {
 
         }
 
+
         if (e.getActionCommand().equals("Editar")) {
+            Autocarro auto = aor_autocarro.getAutocarro(matriculaFieldEditar.getText());
             if (matriculaFieldEditar.getText() == null) {
                 JOptionPane.showMessageDialog(null, "Falta preencher");
-            } else if ((aor_autocarro.removerAutocarro(matriculaFieldEditar.getText())) == null) {
+            } else if (auto == null) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum autocarro com essa matricula");
             } else {
+                ((AutocarrosEditar) (painelFundo.mapaPaineis.get("AutocarrosEditar"))).setAutocarro(auto);
                 painelFundo.mudaEcra("AutocarrosEditar");
+                matriculaFieldEditar.setText("");
+                atualizar();
+
 
             }
 

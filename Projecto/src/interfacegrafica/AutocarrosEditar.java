@@ -2,6 +2,7 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Autocarro;
+import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     Aor_Autocarro aor_autocarro;
-    Autocarros autocarros;
+    Autocarro autocarro;
 
     JButton opcao1;
     JButton opcao2;
@@ -31,6 +32,8 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
     JTextField modeloField;
 
     JTextField lotacaoField;
+
+    JLabel matriculaPreenchida;
 
 
     public AutocarrosEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
@@ -103,7 +106,7 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         //Labels
         JLabel matriculaEditarLabel = new JLabel("Matricula");
         matriculaEditarLabel.setBounds(50, 40, 200, 30);
-        JLabel matriculaPreenchida = new JLabel("PREENCHIDO");
+        matriculaPreenchida = new JLabel();
         matriculaPreenchida.setBounds(150, 40, 200, 30);
 
         JLabel matriculaLabel = new JLabel("Matricula:");
@@ -153,6 +156,24 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
     }
 
 
+
+    public void setAutocarro(Autocarro autocarro){
+
+        if(!(autocarro==null)){
+            this.autocarro = autocarro;
+            matriculaPreenchida.setText(autocarro.getMatricula());
+            matriculaField.setText(autocarro.getMatricula());
+            marcaField.setText(autocarro.getMarca());
+            modeloField.setText(autocarro.getModelo());
+            lotacaoField.setText(String.valueOf(autocarro.getLotacao()));
+            revalidate();
+            repaint();
+        }
+    }
+
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Adminstradores")) {
@@ -181,9 +202,20 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Login");
         }
 
+        if (e.getActionCommand().equals("Editar")) {
+            this.autocarro.setMatricula(matriculaField.getText());
+            this.autocarro.setMarca(marcaField.getText());
+            this.autocarro.setModelo(modeloField.getText());
+            this.autocarro.setLotacao(lotacaoField.getText());
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
-
-
+            matriculaField.setText("");
+            marcaField.setText("");
+            modeloField.setText("");
+            lotacaoField.setText("");
+            JOptionPane.showMessageDialog(null,"Editado com sucesso!");
+            ((Autocarros)(painelFundo.mapaPaineis.get("Autocarros"))).atualizar();
+            painelFundo.mudaEcra("Autocarros");
+        }
     }
-
 }

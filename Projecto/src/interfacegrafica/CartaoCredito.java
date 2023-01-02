@@ -35,8 +35,8 @@ public class CartaoCredito extends JPanel implements ActionListener {
     TextField codigoSegurancaField;
 
 
-    public CartaoCredito(PainelFundo painelfundo) {
-
+    public CartaoCredito(PainelFundo painelfundo,Aor_Autocarro aor_autocarro) {
+this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelfundo;
         this.setLayout(null);
 
@@ -213,13 +213,10 @@ public class CartaoCredito extends JPanel implements ActionListener {
             }
             //Verificar se data Aluguer é válida
             if (!programa.CartaoCredito.validarDataFormato(dataExpiracaoField.getText())) {
-                JOptionPane.showMessageDialog(null, "Por favor,preencha a data com o formato dd/mm/AAAA");
-                validar = false;
-            } else if (!programa.CartaoCredito.validarDataValida(dataExpiracaoField.getText())) {
-                JOptionPane.showMessageDialog(null, "Data com mês ou dia inválidos");
+                JOptionPane.showMessageDialog(null, "Por favor,preencha a data com o formato mm/AA");
                 validar = false;
             } else if (!programa.CartaoCredito.validarDataExpiração(dataExpiracaoField.getText())) {
-                JOptionPane.showMessageDialog(null, "Data de Expiração não pode ser inferior à data atual");
+                JOptionPane.showMessageDialog(null, "Data de Expiração inválida");
                 validar = false;
             }
             //Verificar se o pin de segurança do cartão crédito é constituído por 3 números

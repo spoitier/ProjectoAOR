@@ -1,5 +1,8 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.Utilizador;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +11,7 @@ import java.awt.event.ActionListener;
 public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
     JButton sairBotao;
     JButton opcao1;
     JButton opcao2;
@@ -18,8 +22,21 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
     JButton alterarPalavraChave;
     JButton alterarPlanoSubscricao;
 
+    JLabel nomeField;
 
-    public DadosPessoaisCliente(PainelFundo painelFundo) {
+    JLabel nifField;
+    JLabel moradaField;
+
+    JLabel telefoneField;
+
+    JLabel emailField;
+
+    JLabel palavraChaveField;
+    JLabel clienteNome;
+
+
+    public DadosPessoaisCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -35,7 +52,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel();
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -53,7 +70,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("ReservaViagem");
+        opcao1 = new JButton("Reserva Autocarro");
         opcao2 = new JButton("Histórico Reservas");
         opcao3 = new JButton("Consultar Reservas");
         opcao4 = new JButton("Cancelar Reservas");
@@ -95,17 +112,17 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         palavraChaveLabel.setBounds(50, 250, 200, 30);
 
         //Fields
-        JLabel nomeField = new JLabel("Valor preenchido");
+        nomeField = new JLabel();
         nomeField.setBounds(150, 50, 200, 30);
-        JLabel nifField = new JLabel("Valor preenchido");
+        nifField = new JLabel();
         nifField.setBounds(150, 90, 200, 30);
-        JLabel moradaField = new JLabel("Valor preenchido");
+        moradaField = new JLabel();
         moradaField.setBounds(150, 130, 200, 30);
-        JLabel telefoneField = new JLabel("Valor preenchido");
+        telefoneField = new JLabel();
         telefoneField.setBounds(150, 170, 200, 30);
-        JLabel emailField = new JLabel("Valor preenchido");
+        emailField = new JLabel();
         emailField.setBounds(150, 210, 200, 30);
-        JLabel palavraChaveField = new JLabel("Valor preenchido");
+        palavraChaveField = new JLabel();
         palavraChaveField.setBounds(150, 250, 200, 30);
 
         formulario.add(nomeLabel);
@@ -147,11 +164,26 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
     }
 
+    public Utilizador nomeLogado() {
+        if (aor_autocarro.getUserLogado() == null) {
+            nomeField.setText("");
+        } else {
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+            nomeField.setText(aor_autocarro.getUserLogado().getNome());
+            nifField.setText(aor_autocarro.getUserLogado().getNif());
+            moradaField.setText(aor_autocarro.getUserLogado().getMorada());
+            telefoneField.setText(aor_autocarro.getUserLogado().getTelefone());
+            emailField.setText(aor_autocarro.getUserLogado().getEmail());
+            palavraChaveField.setText(aor_autocarro.getUserLogado().getPalavraChave());
+        }
+        return null;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand().equals("ReservaViagem")) {
+        if (e.getActionCommand().equals("Reserva Autocarro")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 

@@ -4,6 +4,7 @@ import programa.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Main {
 
@@ -38,6 +39,7 @@ public class Main {
 
         aor_autocarro=ficheiroDeObjectos.leObjeto();
         System.out.println(aor_autocarro);
+        System.out.println(aor_autocarro.getReservas());
 
 
     }

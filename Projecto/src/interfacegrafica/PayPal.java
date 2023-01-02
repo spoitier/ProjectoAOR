@@ -30,7 +30,8 @@ public class PayPal extends JPanel implements ActionListener {
     TextField emailField;
     JPasswordField palavraChaveField;
 
-    public PayPal(PainelFundo painelFundo) {
+    public PayPal(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -187,7 +188,7 @@ public class PayPal extends JPanel implements ActionListener {
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº"+Reserva.getId()+" no valor de "+reserva.getCusto()+"€");
+                        " nº"+Reserva.getId()+" no valor de €");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
             }
         }

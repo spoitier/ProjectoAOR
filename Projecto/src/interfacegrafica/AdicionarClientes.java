@@ -31,6 +31,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     JLabel palavraChaveLabel;
     JLabel nifRemoverLabel;
     JLabel nifEditarLabel;
+    JScrollPane sp;
 
     JTextField nomeField;
     JTextField nifField;
@@ -42,9 +43,10 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     JTextField nifEditarField;
 
     String nifEditavel;
+    JTable tabela;
 
     public AdicionarClientes(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
-        this.aor_autocarro=aor_autocarro;
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -61,7 +63,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        clienteNome = new JLabel("Nome do Admin");
+        clienteNome = new JLabel();
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -184,16 +186,27 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
         //========================================
         // Tabela
+
         String[] colunas = {"Id", "Nome", "NIF", "Morada", "Telefone", "Email"};
 
-        String[][] data = {{"", "", "", "", "", ""}
-                , {"", "", "", "", "", ""}};
+        String[][] data = new String[aor_autocarro.getUtilizadores().size()][6];
 
-        JTable tabela = new JTable(data, colunas);
-        JScrollPane sp = new JScrollPane(tabela);
-        sp.setBounds(500, 150, 350, 400);
+        for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
+            if (utilizador instanceof Cliente) {
+                for (int i = 0; i < aor_autocarro.getUtilizadores().size(); i++) {
+                    data[i][0] = aor_autocarro.getUtilizadores().get(i).getId();
+                    data[i][1] = aor_autocarro.getUtilizadores().get(i).getNome();
+                    data[i][2] = aor_autocarro.getUtilizadores().get(i).getNif();
+                    data[i][3] = aor_autocarro.getUtilizadores().get(i).getMorada();
+                    data[i][4] = aor_autocarro.getUtilizadores().get(i).getTelefone();
+                    data[i][5] = aor_autocarro.getUtilizadores().get(i).getEmail();
+                }
+            }
+        }
 
-
+        tabela = new JTable(data, colunas);
+        sp = new JScrollPane(tabela);
+        sp.setBounds(500, 150, 375, 400);
         this.add(sp);
 
         opcao1.addActionListener(this);
@@ -210,12 +223,53 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
     }
 
+
+    public void atualizar() {
+        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+        String[] colunas = {"Id", "Nome", "NIF", "Morada", "Telefone", "Email"};
+
+        String[][] data = new String[aor_autocarro.getUtilizadores().size()][6];
+
+        this.remove(sp);
+        for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
+            if (utilizador instanceof Cliente) {
+                for (int i = 0; i < aor_autocarro.getUtilizadores().size(); i++) {
+                    data[i][0] = aor_autocarro.getUtilizadores().get(i).getId();
+                    data[i][1] = aor_autocarro.getUtilizadores().get(i).getNome();
+                    data[i][2] = aor_autocarro.getUtilizadores().get(i).getNif();
+                    data[i][3] = aor_autocarro.getUtilizadores().get(i).getMorada();
+                    data[i][4] = aor_autocarro.getUtilizadores().get(i).getTelefone();
+                    data[i][5] = aor_autocarro.getUtilizadores().get(i).getEmail();
+                }
+            }
+        }
+
+
+        tabela = new JTable(data, colunas);
+        sp = new JScrollPane(tabela);
+        sp.setBounds(550, 150, 375, 400);
+        this.add(sp);
+        revalidate();
+        repaint();
+
+    }
+
     public String getNifEditavel() {
         return nifEditavel;
     }
 
     public void setNifEditavel(String nifEditavel) {
         this.nifEditavel = nifEditavel;
+    }
+
+    public void nomeLogado() {
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
+
     }
 
     @Override
@@ -231,31 +285,37 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             }
             //Verificar se email é válido
             if (!Utilizador.validarEmail(emailField.getText())) {
+                emailLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Email inválido");
                 validar = false;
             }
             //Verificar se o nome é constituído só por letras
             if (!Utilizador.validarNome(nomeField.getText())) {
+                nomeLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
                 validar = false;
             }
             //Verificar se o nif é constituído por 9 números
-            if (!Utilizador.validarTlfeNif(nifField.getText())) {
+            if (Utilizador.validarTlfeNif(nifField.getText())) {
+                nifLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Nif inválido");
                 validar = false;
             }
             //Verificar se o telefone é constituído por 9 números
-            if (!Utilizador.validarTlfeNif(telefoneField.getText())) {
+            if (Utilizador.validarTlfeNif(telefoneField.getText())) {
+                telefoneLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Número de telefone inválido");
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
             if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+                nifLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
             if (aor_autocarro.verificarDuplicaçãoEmail(emailField.getText())) {
+                emailLabel.setForeground(Color.red);
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse email");
                 validar = false;
             }
@@ -265,10 +325,14 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 aor_autocarro.getUtilizadores().add(new Cliente(id, emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
                         moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
                 JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso.\n" +
-                        "Será enviado para o email "+emailField.getText()+" uma password provisória, a qual deverá" +
-                        "ser alterada, no campo Dados Pessoais da sua sessão." );
-
-                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                        "Será enviado para o email " + emailField.getText() + " uma password provisória, a qual deverá" +
+                        "ser alterada.");
+                atualizar();
+                nomeField.setText("");
+                nifField.setText("");
+                emailField.setText("");
+                moradaField.setText("");
+                telefoneField.setText("");
 
             }
         }
@@ -279,26 +343,36 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "O cliente só irá ser removido da lista de clientes, " +
                         "após ter sido informado sobre encerramento da sua conta, ao efetuar login");
-                if(aor_autocarro.getReservas().size()!=0){
-                aor_autocarro.cancelarReservasdoClienteRemovido(nifRemoverField.getText());}
+                atualizar();
+                nifRemoverField.setText("");
+                if (aor_autocarro.getReservas().size() != 0) {
+                    aor_autocarro.cancelarReservasdoClienteRemovido(nifRemoverField.getText());
+                }
 
-                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
             }
         }
         if (e.getActionCommand().equals("Editar")) {
-            setNifEditavel(nifEditarField.getText());
-            ((ClientesEditar)(painelFundo.mapaPaineis.get("ClientesEditar"))).nifDescrito();
-            painelFundo.mudaEcra("ClientesEditar");
-
+            if (!(aor_autocarro.getCliente(nifEditarField.getText()) == null)) {
+                Utilizador cliente = aor_autocarro.getCliente(nifEditarField.getText());
+                setNifEditavel(nifEditarField.getText());
+                ((ClientesEditar) (painelFundo.mapaPaineis.get("ClientesEditar"))).setCliente(cliente);
+                nifEditarField.setText("");
+                painelFundo.mudaEcra("ClientesEditar");
+            } else {
+                nifEditarField.setText("");
+                JOptionPane.showMessageDialog(null, "Não existe nenhum cliente com esse nif");
+            }
         }
         if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");
         }
         if (e.getActionCommand().equals("Motoristas")) {
+            ((Motoristas) (painelFundo.mapaPaineis.get("Motoristas"))).nomeLogado();
             painelFundo.mudaEcra("Motoristas");
         }
         if (e.getActionCommand().equals("Autocarros")) {
+            ((Autocarros) (painelFundo.mapaPaineis.get("Autocarros"))).nomeLogado();
             painelFundo.mudaEcra("Autocarros");
         }
 
@@ -306,6 +380,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if (e.getActionCommand().equals("Estatistica")) {
+            ((Estatistica) (painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
@@ -316,6 +391,4 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         }
     }
 
-        }
-
-
+}

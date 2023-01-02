@@ -1,5 +1,6 @@
 package programa;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -330,6 +331,7 @@ int contaRservas=0;
         LocalDate hoje = LocalDate.now(); //data de hoje
         Reserva reserva;
 
+        FicheiroDeObjectos.escreveObjeto(this);
         //Ordenar Lista de autocarros por Lotação
         autocarros.sort(Comparator.comparing(Autocarro::getLotacao));
 
@@ -362,7 +364,6 @@ int contaRservas=0;
             reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, "nDias", "nPessoas",
                     "partida", "destino", "distancia");
             reservas.add(reserva);
-            //FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
         else{
             reserva=null;
@@ -448,11 +449,11 @@ int contaRservas=0;
                 reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, "nDias", "nPessoas",
                         "partida", "destino", "distancia");
                 reservas.add(reserva);
-            //FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            FicheiroDeObjectos.escreveObjeto(this);
 
             } else if(resultadoReserva == "indisponível") {
                 reserva=null;
-            //FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
             }
         return reserva;
         }
@@ -651,16 +652,8 @@ int contaRservas=0;
     }
 
 
-    //Cancelamento reservas de clientes, por autocarro ter sido removido por um Gerente
-    //1º - remover autocarro da lista de autocarros;
-    //2ª- remover todas as reservas associadas a esse autocarro da lista de reservas da empresa
-    //3º - adicionar as reservas canceladas à lista de reservas canceladas
-    //4º - Notificar cliente, que o autocarro associado à sua reserva deixou de estar disponível
-    //5º - Método Adicionar Notificação de Cancelamento de reservas
-    //- verifica tipo de subscrição do cliente
-    //- verifica se tem direito a reembolso
-    //- adiciona notificação à lista de notificações do cliente
-    public void cancelarReservasporGerente(String matrícula) {
+    //Cancelamento reservas de clientes, por autocarro ter sido removido por um Administrador
+    public void cancelarReservasporAutocarro(String matrícula) {
         LocalDate hoje = LocalDate.now(); //data de hoje
 
         for (Autocarro bus : autocarros) {
@@ -822,6 +815,80 @@ int contaRservas=0;
         }
         return null;
     }
+
+    public Utilizador getCliente(String nif) {
+        for (Utilizador cliente : utilizadores) {
+            if(cliente instanceof Cliente) {
+                if ((cliente.getNif().equals(nif))) {
+                    return cliente;
+                }
+            }
+
+        }
+        return null;
+    }
+
+    public int contarMotorista() {
+        int motorista = 0;
+        for (Motorista moto :motoristas) {
+            motorista++;
+        }
+        return motorista;
+    }
+
+    public int contarAutocarro() {
+        int autocarro = 0;
+        for (Autocarro auto :autocarros) {
+            autocarro++;
+        }
+        return autocarro;
+    }
+
+    public Utilizador getAdministrador(String email) {
+        for (Utilizador administrador : utilizadores) {
+            if ((administrador.getEmail().equals(email))) {
+                return administrador;
+            }
+        }
+        return null;
+    }
+
+
+    public  void alterarPalavraChave(String email, String palavraChaveAtual,
+                                     String novaPalavraChave, String confirmePalavraChave) {
+        if (validarRegisto(email, palavraChaveAtual)) {
+            if (novaPalavraChave.equals(confirmePalavraChave)) {
+                for (Utilizador cliente : getUtilizadores()) {
+                    if (cliente.getEmail() == email) {
+                        cliente.setPalavraChave(novaPalavraChave);
+                        JOptionPane.showMessageDialog(null,"Palavra chave alterado com sucesso");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Palavra chave não coincidem");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"Palavra chave atual incorrecta");
+        }
+    }
+    public Autocarro getAutocarro(String matricula) {
+        for (Autocarro autocarro : autocarros) {
+            if ((autocarro.getMatricula().equals(matricula))) {
+                return autocarro;
+            }
+        }
+        return null;
+    }
+    public Motorista getMotorista(String email) {
+        for (Motorista motorista : motoristas) {
+            if ((motorista.getEmail().equals(email))) {
+                return motorista;
+            }
+        }
+        return null;
+    }
+
+
 
 }
 

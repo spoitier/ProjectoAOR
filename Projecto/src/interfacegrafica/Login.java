@@ -28,6 +28,7 @@ public class Login extends JPanel implements ActionListener {
     JButton botaoregistar;
 
 
+
     public Login(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelfundo;
@@ -114,6 +115,7 @@ public class Login extends JPanel implements ActionListener {
 
     //*******************************************
     //Eventos
+
     @Override
     public void actionPerformed(ActionEvent ae) {
 
@@ -129,7 +131,7 @@ public class Login extends JPanel implements ActionListener {
 
                 if (aor_autocarro.verificarTipoUtilizador(email, password).equals("cliente")) {
                     logado = (Cliente) aor_autocarro.getUserLogado();
-
+                    ((ReservaViagem)(painelFundo.mapaPaineis.get("ReservaViagem"))).nomeLogado();
                     if (logado.getNotificações().size() == 0) {
                         painelFundo.mudaEcra("ReservaViagem");
                     } else {

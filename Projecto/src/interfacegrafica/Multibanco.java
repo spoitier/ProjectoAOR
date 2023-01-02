@@ -33,7 +33,8 @@ public class Multibanco extends JPanel implements ActionListener {
 
 
 
-    public  Multibanco (PainelFundo painelFundo) {
+    public  Multibanco (PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 

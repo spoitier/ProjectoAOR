@@ -1,6 +1,9 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
+import programa.FicheiroDeObjectos;
+import programa.Utilizador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +13,9 @@ import java.awt.event.ActionListener;
 public class ClientesEditar extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro;
-    AdicionarClientes adicionarClientes;
     PainelFundo painelFundo;
 
+    Utilizador utilizador;
     JButton sairButton;
     JButton opcao1;
     JButton opcao2;
@@ -27,7 +30,7 @@ public class ClientesEditar extends JPanel implements ActionListener {
     JLabel telefoneLabel;
     JLabel emailLabel;
     JTextField nameField;
-    JLabel nifField;
+    JLabel nifLabelPreenchido;
     JTextField moradaField;
     JTextField telefoneField;
     JTextField emailField;
@@ -115,8 +118,8 @@ public class ClientesEditar extends JPanel implements ActionListener {
         //Fields
         nameField = new JTextField();
         nameField.setBounds(150, 50, 200, 30);
-        nifField = new JLabel("");
-        nifField.setBounds(150, 90, 200, 30);
+        nifLabelPreenchido = new JLabel();
+        nifLabelPreenchido.setBounds(150, 90, 200, 30);
         moradaField = new JTextField();
         moradaField.setBounds(150, 130, 200, 30);
         telefoneField = new JTextField();
@@ -132,7 +135,7 @@ public class ClientesEditar extends JPanel implements ActionListener {
         formulario.add(telefoneLabel);
         formulario.add(emailLabel);
         formulario.add(nameField);
-        formulario.add(nifField);
+        formulario.add(nifLabelPreenchido);
         formulario.add(moradaField);
         formulario.add(telefoneField);
         formulario.add(emailField);
@@ -154,6 +157,22 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
     }
 
+    public void setCliente(Utilizador utilizador) {
+        if(!(utilizador==null)) {
+            this.utilizador=utilizador;
+            nifLabelPreenchido.setText(utilizador.getNif());
+            nameField.setText(utilizador.getNome());
+            moradaField.setText(utilizador.getMorada());
+            telefoneField.setText(utilizador.getTelefone());
+            emailField.setText(utilizador.getEmail());
+            revalidate();
+            repaint();
+        }
+
+
+    }
+
+    /*
     public void nifDescrito() {
 
         if (adicionarClientes== null) {
@@ -166,9 +185,26 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
     }
 
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Editar")) {
+            this.utilizador.setNome(nameField.getText());
+            this.utilizador.setEmail(emailField.getText());
+            this.utilizador.setMorada(moradaField.getText());
+            this.utilizador.setTelefone(telefoneField.getText());
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
+            nameField.setText("");
+            nifLabelPreenchido.setText("");
+            emailField.setText("");
+            moradaField.setText("");
+            telefoneField.setText("");
+            JOptionPane.showMessageDialog(null,"Editado com sucesso!");
+            ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).atualizar();
+            painelFundo.mudaEcra("AdicionarClientes");
+
 
         }
         if (e.getActionCommand().equals("Adminstradores")) {

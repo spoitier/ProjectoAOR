@@ -1,6 +1,7 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.FicheiroDeObjectos;
 import programa.Utilizador;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     Aor_Autocarro aor_autocarro;
+
+    Utilizador utilizador;
     JLabel clienteNome;
     JButton sairBotao;
     JButton opcao1;
@@ -150,9 +153,8 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
 
 
-
-
     }
+
 
     public Utilizador nomeLogado() {
         if (aor_autocarro.getUserLogado() == null) {
@@ -163,6 +165,16 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         }
         return null;
 
+    }
+
+    public void setAdministrador(Utilizador utilizador) {
+        if(!(utilizador==null)){
+            this.utilizador=utilizador;
+            emailPreenchido.setText(utilizador.getEmail());
+            clienteNome.setText(utilizador.getNome());
+            revalidate();
+            repaint();
+        }
     }
 
     @Override
@@ -188,6 +200,13 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
         if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
+        }
+        if (e.getActionCommand().equals("Alterar palavra chave")) {
+            aor_autocarro.alterarPalavraChave(emailPreenchido.getText(), palavraChaveAtualField.getText(),
+                    novaPalavraChaveField.getText(), confirmePalavraChaveField.getText());
+            this.utilizador.setPalavraChave(novaPalavraChaveField.getText());
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
         }
 
 

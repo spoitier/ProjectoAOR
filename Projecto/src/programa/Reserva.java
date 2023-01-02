@@ -195,7 +195,7 @@ public Reserva(){
 
         int dia = Integer.parseInt(dataSemEspaços.substring(0, 2));
         int mes = Integer.parseInt(dataSemEspaços.substring(2, 4));
-        int ano = Integer.parseInt(dataSemEspaços.substring(4, 8));
+
 
         if(dia<0&&dia>31&&mes<0&&mes>12){
             validar=false;

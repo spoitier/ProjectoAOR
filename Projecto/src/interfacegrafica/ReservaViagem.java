@@ -37,6 +37,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
     JTextField partidaField;
     JTextField destinoField;
     JTextField numeroKmTotalField;
+    JLabel clienteNome;
 
     double custo;
 
@@ -59,7 +60,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("");
+        clienteNome = new JLabel("");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -185,13 +186,23 @@ public class ReservaViagem extends JPanel implements ActionListener {
         return custo = 0.55 * (Integer.parseInt(numeroKmTotalField.getText())) + 1.2 *(Integer.parseInt(numeroPessoasField.getText()));
     }*/
 
+    public void nomeLogado() {
+
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
+
+    }
     @Override
 
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
         Reserva reservaNova;
         Cliente logado = (Cliente) aor_autocarro.getUserLogado();
-        LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
 
         if (e.getActionCommand().equals("Prosseguir")) {
             //verificar se todos os campos estão preenchidos
@@ -246,6 +257,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                             "Empresa autocarros com capacidade para " + numeroPessoasField.getText());
                     painelFundo.mudaEcra("ReservaViagem");
                 }
+                LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 try {
                     reservaNova = aor_autocarro.verificarAutocarroSemReservas(logado, dataAluguer, numeroDiasField.getText(),
                             numeroPessoasField.getText(), partidaField.getText(), destinoField.getText(), numeroKmTotalField.getText());
@@ -282,18 +294,22 @@ public class ReservaViagem extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
         if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
             painelFundo.mudaEcra("CancelarReserva");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");

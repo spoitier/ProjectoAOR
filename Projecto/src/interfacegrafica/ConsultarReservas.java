@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,14 +10,20 @@ import java.awt.event.ActionListener;
 public class ConsultarReservas extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
     JButton sairBotao;
-    JButton opcao1 ;
-    JButton opcao2 ;
-    JButton opcao3 ;
-    JButton opcao4 ;
-    JButton opcao5 ;
+    JButton opcao1;
+    JButton opcao2;
+    JButton opcao3;
+    JButton opcao4;
+    JButton opcao5;
 
-    public ConsultarReservas (PainelFundo painelFundo) {
+    JTable tabela;
+    JScrollPane sp;
+    JLabel clienteNome;
+
+    public ConsultarReservas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -32,7 +40,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        JLabel clienteNome = new JLabel();
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -45,17 +53,16 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         //===========================================================
         //Painel de escolhas do cliente
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5,15,0));
+        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-         opcao1 = new JButton("ReservaViagem");
-         opcao2 = new JButton("Histórico Reservas");
-         opcao3 = new JButton("Consultar Reservas");
-         opcao4 = new JButton("Cancelar Reservas");
-         opcao5 = new JButton("Dados Pessoais");
+        opcao1 = new JButton("Reserva Autocarro");
+        opcao2 = new JButton("Histórico Reservas");
+        opcao3 = new JButton("Consultar Reservas");
+        opcao4 = new JButton("Cancelar Reservas");
+        opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -67,35 +74,44 @@ public class ConsultarReservas extends JPanel implements ActionListener {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Consultar reservas agendadas");
-        segundoTitulo.setBounds(50,100,900,30);
+        JLabel segundoTitulo = new JLabel("Consultar reservas agendadas");
+        segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
         // Botoes de filtragem
-        JPanel botoesFiltro =  new JPanel(new GridLayout(1,4,5,5));
-        botoesFiltro.setBounds(100,150,200,30);
-        JLabel anoLabel = new JLabel("Ano:");
+        JPanel botoesFiltro = new JPanel(new GridLayout(1, 4, 5, 5));
+        botoesFiltro.setBounds(100, 150, 200, 30);
         JLabel mesLabel = new JLabel("Mes:");
-        JTextField anoField = new JTextField();
-        JTextField mesField = new JTextField();
-        botoesFiltro.add(anoLabel);
-        botoesFiltro.add(anoField);
+        String[] mes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        JComboBox mesCombobox = new JComboBox(mes);
         botoesFiltro.add(mesLabel);
-        botoesFiltro.add(mesField);
+        botoesFiltro.add(mesCombobox);
         this.add(botoesFiltro);
+
 
         //========================================
         // Tabela
 
-        String [] colunas = {"Nº programa.Reserva","Data Aluguer","NºDias","NºPessoas",
-                "Local Partida","Local Destino","Custo total Viagem","Estado"};
+        String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem", "Estado"};
 
-        String [][] data = {{"111","19/12/2022","15","30","Coimbra","Lisboa","50","Pendente"}
-                ,{"121","21/12/2022","15","30","Coimbra","Lisboa","50","Pendente"}};
+        String[][] data = new String[aor_autocarro.getReservasemEspera().size()][8];
+        for (int i = 0; i < aor_autocarro.getReservasemEspera().size(); i++) {
+            data[i][0] = aor_autocarro.getReservasemEspera().get(i).toString();
+            data[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataReserva());
+            data[i][2] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getNumeroDias());
+            data[i][3] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getNumeroPessoas());
+            data[i][4] = aor_autocarro.getReservasemEspera().get(i).getLocalPartida();
+            data[i][5] = aor_autocarro.getReservasemEspera().get(i).getLocalDestino();
+            data[i][6] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getCusto());
+            data[i][7] = aor_autocarro.getReservasemEspera().get(i).toString();
 
-        JTable tabela = new JTable(data, colunas);
-        JScrollPane sp = new JScrollPane(tabela);
-        sp.setBounds(100,200,500,400);
+        }
+
+
+        tabela = new JTable(data, colunas);
+        sp = new JScrollPane(tabela);
+        sp.setBounds(100, 200, 500, 400);
         this.add(sp);
 
         opcao1.addActionListener(this);
@@ -106,35 +122,44 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
 
 
+    }
 
+    public void nomeLogado() {
+
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
 
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("ReservaViagem")) {
+        if (e.getActionCommand().equals("Reserva Autocarro\"")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
-            painelFundo.mudaEcra("ConsultarReservas");
-        }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
+
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
+
             painelFundo.mudaEcra("CancelarReserva");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
         }
-        if(e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
         }
 
     }
 
-    }
+}

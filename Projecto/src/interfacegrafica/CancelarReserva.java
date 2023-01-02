@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,17 +11,18 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     JButton sairBotao;
-    JButton opcao1 ;
-    JButton opcao2 ;
+    JButton opcao1;
+    JButton opcao2;
     JButton opcao3;
-    JButton opcao4 ;
-    JButton opcao5 ;
+    JButton opcao4;
+    JButton opcao5;
     JButton cancelarButton;
+    Aor_Autocarro aor_autocarro;
+    JLabel clienteNome;
 
 
-
-
-    public CancelarReserva(PainelFundo painelFundo) {
+    public CancelarReserva(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -35,7 +38,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -49,17 +52,16 @@ public class CancelarReserva extends JPanel implements ActionListener {
         //===========================================================
         //Painel de escolhas do cliente
         JPanel opcaoPainel = new JPanel();
-        opcaoPainel.setLayout(new GridLayout(1, 5,15,0));
+        opcaoPainel.setLayout(new GridLayout(1, 5, 15, 0));
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-         opcao1 = new JButton("ReservaViagem");
-         opcao2 = new JButton("Histórico Reservas");
-         opcao3 = new JButton("Consultar Reservas");
-         opcao4 = new JButton("Cancelar Reservas");
-         opcao5 = new JButton("Dados Pessoais");
+        opcao1 = new JButton("Reserva Autocarro");
+        opcao2 = new JButton("Histórico Reservas");
+        opcao3 = new JButton("Consultar Reservas");
+        opcao4 = new JButton("Cancelar Reservas");
+        opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -71,16 +73,16 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
         //=====================================================================
         //Segundo titulo
-        JLabel segundoTitulo =new JLabel("Cancelar reservas agendadas:\n");
-        segundoTitulo.setBounds(50,100,900,30);
+        JLabel segundoTitulo = new JLabel("Cancelar reservas agendadas:\n");
+        segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
-        JPanel reservaPainel = new JPanel(new GridLayout(1,3,10,10));
-        reservaPainel.setBounds(50,200,300,30);
+        JPanel reservaPainel = new JPanel(new GridLayout(1, 3, 10, 10));
+        reservaPainel.setBounds(50, 200, 300, 30);
 
         JLabel reservaLabel = new JLabel("NºReserva");
         JTextField reservaField = new JTextField();
-        cancelarButton  = new JButton("Cancelar");
+        cancelarButton = new JButton("Cancelar");
         reservaPainel.add(reservaLabel);
         reservaPainel.add(reservaField);
         reservaPainel.add(cancelarButton);
@@ -95,31 +97,39 @@ public class CancelarReserva extends JPanel implements ActionListener {
         cancelarButton.addActionListener(this);
 
 
+    }
 
+    public void nomeLogado() {
+
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("ReservaViagem")) {
+        if (e.getActionCommand().equals("Reserva Autocarro")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
+        if (e.getActionCommand().equals("Consultar Reservas")) {
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
-            painelFundo.mudaEcra("CancelarReserva");
+
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
-        }
-        if(e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals("Sair")) {
             painelFundo.mudaEcra("Login");
         }
 

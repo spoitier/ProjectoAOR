@@ -182,6 +182,10 @@ public class DadosPessoaisAdmin extends JPanel implements ActionListener {
         return null;
     }
 
+
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Adminstradores")) {
@@ -197,9 +201,11 @@ public class DadosPessoaisAdmin extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Clientes")) {
+            ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).nomeLogado();
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if (e.getActionCommand().equals("Estatistica")) {
+            ((Estatistica)(painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
 
@@ -208,7 +214,8 @@ public class DadosPessoaisAdmin extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Alterar palavra chave")) {
-            ((AlterarPalavraChaveAdmin)painelFundo.mapaPaineis.get("AlterarPalavraChaveAdmin")).nomeLogado();
+            Utilizador administrador =aor_autocarro.getAdministrador(emailField.getText());
+            ((AlterarPalavraChaveAdmin)painelFundo.mapaPaineis.get("AlterarPalavraChaveAdmin")).setAdministrador(administrador);
 
             painelFundo.mudaEcra("AlterarPalavraChaveAdmin");
         }

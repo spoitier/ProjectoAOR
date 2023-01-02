@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.OptionalDataException;
 
 public class Motoristas extends JPanel implements ActionListener {
 
@@ -25,7 +23,6 @@ public class Motoristas extends JPanel implements ActionListener {
     JButton opcao6;
     JButton adicionarButton;
     JButton removerButton;
-    //JButton editarButton;
     JTable tabela;
     JLabel nomeLabel;
     JLabel emailLabel;
@@ -34,7 +31,12 @@ public class Motoristas extends JPanel implements ActionListener {
 
     TextField emailField;
     JTextField removerField;
-    JTextField editarField;
+
+    JTextField emailEditarField;
+
+    JButton editarButton;
+
+    JTextField nomeeditarField;
 
 
     public Motoristas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
@@ -54,7 +56,7 @@ public class Motoristas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        adminNome = new JLabel("Nome do Admin");
+        adminNome = new JLabel();
         adminNome.setBounds(700, 0, 100, 30);
         cabecalho.add(adminNome);
 
@@ -134,19 +136,24 @@ public class Motoristas extends JPanel implements ActionListener {
         removerPanel.add(removerField);
         this.add(removerPanel);
 
-        /*
+
         JPanel editarPanel = new JPanel();
         editarPanel.setLayout(null);
         editarPanel.setBounds(10, 450, 300, 100);
-        JLabel editarLabel = new JLabel("Email:");
-        editarLabel.setBounds(0, 0, 80, 30);
-        editarField = new JTextField();
-        editarField.setBounds(100, 0, 170, 30);
-        editarPanel.add(editarLabel);
-        editarPanel.add(editarField);
+        JLabel emailEditarLabel = new JLabel("Email:");
+        emailEditarLabel.setBounds(0, 0, 80, 30);
+        emailEditarField = new JTextField("Altere o nome associado ao email");
+        emailEditarField.setBounds(100, 0, 170, 30);
+        JLabel nomeeditarLabel = new JLabel("Nome:");
+        nomeeditarLabel.setBounds(0, 50, 80, 30);
+        nomeeditarField = new JTextField();
+        nomeeditarField.setBounds(100, 50 ,170, 30);
+        editarPanel.add(emailEditarLabel);
+        editarPanel.add(emailEditarField);
+        editarPanel.add(nomeeditarLabel);
+        editarPanel.add(nomeeditarField);
         this.add(editarPanel);
 
-         */
 
         //==========================================
         // Painel botoes
@@ -156,21 +163,17 @@ public class Motoristas extends JPanel implements ActionListener {
         adicionarButton.setBounds(350, 200, 100, 30);
         removerButton = new JButton("Remover");
         removerButton.setBounds(350, 300, 100, 30);
-        // editarButton = new JButton("Editar");
-        //    editarButton.setBounds(350, 450, 100, 30);
+        editarButton = new JButton("Editar");
+        editarButton.setBounds(350, 450, 100, 30);
 
 
         this.add(adicionarButton);
         this.add(removerButton);
-        // this.add(editarButton);
+        this.add(editarButton);
 
         //========================================
         // Tabela
 
-        JPanel tabelaPainel = new JPanel();
-        tabelaPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        tabelaPainel.setBounds(550, 250, 250, 200);
-        setLayout(null);
 
         String[] colunas = {"Nome", "Email"};
         String[][] data = new String[aor_autocarro.getMotoristas().size()][2];
@@ -196,7 +199,7 @@ public class Motoristas extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
         adicionarButton.addActionListener(this);
         removerButton.addActionListener(this);
-        //editarButton.addActionListener(this);
+        editarButton.addActionListener(this);
 
 
     }
@@ -206,7 +209,7 @@ public class Motoristas extends JPanel implements ActionListener {
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         String[] colunas = {"Nome", "Email"};
-        String data[][] =new String[aor_autocarro.getMotoristas().size()][2];
+        String data[][] = new String[aor_autocarro.getMotoristas().size()][2];
         this.remove(sp);
         for (int i = 0; i < aor_autocarro.getMotoristas().size(); i++) {
             data[i][0] = aor_autocarro.getMotoristas().get(i).getNome();
@@ -220,8 +223,21 @@ public class Motoristas extends JPanel implements ActionListener {
         revalidate();
         repaint();
     }
+
+
     //=======================================================
 
+    public void nomeLogado() {
+
+
+        if (aor_autocarro.getUserLogado() == null) {
+            adminNome.setText("");
+        } else
+            adminNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
+
+    }
 
 
     @Override
@@ -286,6 +302,20 @@ public class Motoristas extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Não existe nenhum motorista com esse email");
                 }
                 //FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
+            }
+
+
+        }
+        if (e.getActionCommand().equals("Editar")) {
+            if(aor_autocarro.getMotorista(emailEditarField.getText()).getEmail().equals(emailEditarField.getText())){
+                aor_autocarro.getMotorista(emailEditarField.getText()).setNome(nomeeditarField.getText());
+                JOptionPane.showMessageDialog(null,"Editado com sucesso!");
+                atualizar();
+                emailEditarField.setText("");
+                nomeeditarField.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null,"Não existe motorista com esse email");
 
             }
 

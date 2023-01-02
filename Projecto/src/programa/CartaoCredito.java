@@ -95,7 +95,7 @@ public class CartaoCredito extends Pagamento implements Serializable {
     public static boolean validarDataFormato(String data) {
         boolean validar = false;
         //Validar o formato da data
-        if ((data.length() == 10) && (data.charAt(2) == '/') && (data.charAt(5) == '/')) {
+        if ((data.length() == 5) && (data.charAt(2) == '/')) {
             data.replaceAll("/", "");
             for (int i = 0; i < data.length(); i++) {
                 if (Character.isDigit(data.charAt(i))) {
@@ -104,38 +104,31 @@ public class CartaoCredito extends Pagamento implements Serializable {
             }
         }return validar;
     }
-    //Validar o valor da data
-    public static boolean validarDataValida(String data) {
-        boolean validar = false;
-        String dataSemEspaços=data.replaceAll("/", "");
-
-        int dia = Integer.parseInt(dataSemEspaços.substring(0, 2));
-        int mes = Integer.parseInt(dataSemEspaços.substring(2, 4));
-        int ano = Integer.parseInt(dataSemEspaços.substring(4, 8));
-
-        if(dia<0&&dia>31&&mes<0&&mes>12){
-            validar=false;
-        }
-
-        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8) && (dia <= 31)) {
-            validar = true;
-        } else if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) {
-            validar = true;
-        } else if (mes == 2 && dia <= 28) {
-            validar = true;
-        }
-        return validar;
-    }
 
     //Verificar se a data é igual ou superior à data atual
     public static boolean validarDataExpiração(String data) {
         boolean validar = false;
-        LocalDate dataAluguer = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        if (dataAluguer.isAfter(LocalDate.now())) {
-            validar = true;
+        LocalDate hoje=LocalDate.now();
+        String dataHoje=hoje.toString();
+        int mesAtual = Integer.parseInt(dataHoje.substring(5, 7));
+        int anoAtual= Integer.parseInt(dataHoje.substring(2, 4));
+
+        String dataSemEspaços=data.replaceAll("/", "");
+
+        int mes = Integer.parseInt(dataSemEspaços.substring(0, 2));
+        int ano= Integer.parseInt(dataSemEspaços.substring(2, 4));
+
+        if(mes>0&&mes<=12){
+            validar=true;
         }
-        System.out.println(dataAluguer+" "+LocalDate.now());
+        if(ano==anoAtual&&mes>=mesAtual){
+            validar=true;
+        }
+        if(ano>anoAtual){
+            validar=true;
+        }
         return validar;
+
     }
     public static boolean validarPinCartaoCredito(String dadoNumerico) {
         boolean validar=false;
