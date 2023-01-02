@@ -167,7 +167,7 @@ public class Multibanco extends JPanel implements ActionListener {
             //Adicionado pagamento da reserva à lista de Reservas
             aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº"+Reserva.getId()+" deverá ser efetuada por Multibanco:\n" +
+                        " nº"+reserva.getId()+" deverá ser efetuada por Multibanco:\n" +
                         "Entidade: 12345\nReferência:"+referenciaMB+"\nValor:"+reserva.getCusto()+"€");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
             }

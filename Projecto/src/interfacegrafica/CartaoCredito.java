@@ -232,7 +232,7 @@ this.aor_autocarro=aor_autocarro;
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº" + Reserva.getId() + " no valor de " + reserva.getCusto() + "€");
+                        " nº" + reserva.getId() + " no valor de " + reserva.getCusto() + "€");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
             }
         }

@@ -66,7 +66,8 @@ public class Aor_Autocarro implements Serializable {
                 ", autocarros=" + autocarros +
                 '}';
     }
-//==============================================================================================
+
+    //==============================================================================================
     //Métodos LOGIN
     //Validar Registo de Login
     public boolean validarRegisto(String email, String palavraChave) {
@@ -127,10 +128,10 @@ public class Aor_Autocarro implements Serializable {
     //Retornar Utilizador logado
     public Utilizador utilizadorLogado(String email) {
         for (Utilizador user : utilizadores) {
-                if (user.getEmail().equals(email)) {
-                    userLogado=user;
-                }
+            if (user.getEmail().equals(email)) {
+                userLogado = user;
             }
+        }
         return userLogado;
     }
 
@@ -163,33 +164,27 @@ public class Aor_Autocarro implements Serializable {
     //Métodos ADMINISTRADORES
 
     public boolean removerCliente(String nif) {
-        LocalDate hoje= LocalDate.now();
+        LocalDate hoje = LocalDate.now();
         Cliente removido = null;
         //pesquisa cliente com base no nif solicitado
         for (Utilizador utilizador : utilizadores) {
             if ((utilizador instanceof Cliente) && (utilizador.getNif().equals(nif))) {
                 removido = (Cliente) utilizador;
                 //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
-                if(cancelarReservasdoClienteRemovido(nif)==0){
+
                 Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
                         "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente",
                         hoje, false);
                 removido.getNotificações().add(clienteRemovido);
-                return true;}
-                else if(cancelarReservasdoClienteRemovido(nif)>0){
-                    Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
-                            "Foi removido da aplicação desta empresa.Pelo que não terá acesso ao seu menu Cliente.\n" +
-                                    "As suas reservas foram canceladas.",
-                            hoje, false);
-                    removido.getNotificações().add(clienteRemovido);
-                    return true;}
+                return true;
             }
-        }return false;
+        }
+        return false;
     }
 
 
     public int cancelarReservasdoClienteRemovido(String nifCliente) {//Cancelamento reservas, por cliente ter sido removido por um Administrador
-int contaRservas=0;
+        int contaRservas = 0;
         // Verificar se este cliente tinha reservas pendentes
         for (Reserva res : reservas) {
             //Identificar a reserva deste cliente, remover da lista de reservas e adicionar à lista de reservas canceladas
@@ -202,30 +197,32 @@ int contaRservas=0;
 
                 //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
                 if (reservasemEspera.size() != 0) {
-                    verificarListaEspera(res);}
+                    verificarListaEspera(res);
+                }
 
             }
-        }return contaRservas;
+        }
+        return contaRservas;
     }
-
-
-
 
 
     //===========================================================================================
     //Métodos CLIENTES
     //Verifica se existe disponível na empresa algum autocarro com capacidade para o nºpessoas solicitadas
     public boolean verificarAutocarroLotaçao(String n_pessoas) {
-        boolean existe = true;
+        int numeroPessoas = Integer.parseInt(n_pessoas);
+
+        boolean existe = false;
         for (Autocarro bus : autocarros) {
-            if (Integer.parseInt(bus.getLotacao()) >= Integer.parseInt(n_pessoas)) {
-            } else existe = false;
+            if (numeroPessoas <= Integer.parseInt(bus.getLotacao())) {
+                existe = true;
+            }
         }
         return existe;
     }
 
     //Efetuar reserva de autocarro pelo cliente:
-   /* public String efetuarReserva(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) throws IOException {
+   /*public Reserva efetuarReserva(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) throws IOException {
         String resultadoReserva = null;
         ArrayList<Autocarro> autDisponiveis = new ArrayList<>();
         ArrayList<Reserva> reservasAlvo = new ArrayList<>();
@@ -237,14 +234,35 @@ int contaRservas=0;
         long difDias;//diferença de dias
         Autocarro autocarro = new Autocarro();
         Motorista motorista = new Motorista();
+        Reserva reservaAutocarro=new Reserva();
 
-        //Verificar se existe algum autocarro(e respetivo motorista) reservado para o período solicitado
+       //Ordenar Lista de autocarros por Lotação
+        autocarros.sort(Comparator.comparing(Autocarro::getLotacao));
 
         for (Autocarro bus : autocarros) {
             if (Integer.parseInt(bus.getLotacao()) >= numeroPessoas) {
                 //lista com autocarros com capacidade >=lotaçao pretendida
                 autDisponiveis.add(bus);
                 for (Reserva res : reservas) {
+                //Verificar se existem reservas na lista de espera
+                    if(reservas.size()==0){
+                    autocarro = autocarros.get(0);
+                    motorista = motoristas.get(0);
+                    reservaAutocarro = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
+                            partida, destino, distancia);
+                    return reservaAutocarro;
+                }
+                    //Verificar se os autocarro tem reservas
+                    else{
+                        if(reservaAutocarro.getAutocarro().equals(bus)){
+                            autocarro=bus;
+                            motorista = identificarMotoristaDisponível(cliente, dataReq, nDias);
+                            reservaAutocarro = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
+                                    partida, destino, distancia);
+                            return reservaAutocarro;
+                        }
+
+                    }
                     //Verificar se existe alguma reserva com data (início ou fim) compreendida para o periodo pretendido
                     if ((res.getDataPartida().isEqual(dataReq) || res.getDataPartida().isEqual(datafim)
                             || res.getDataPartida().isAfter(dataReq) && res.getDataPartida().isBefore(datafim))
@@ -320,58 +338,48 @@ int contaRservas=0;
                 reservasemEspera.add(reserva3);
             }
         }
-        return resultadoReserva;
+        return reservaAutocarro;
     }*/
 
-    public Reserva verificarAutocarroSemReservas(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) throws IOException {
-        boolean existe=false;
-        int numeroPessoas = Integer.parseInt(nPessoas);
-        Autocarro autocarro = new Autocarro();
-        Motorista motorista = new Motorista();
-        LocalDate hoje = LocalDate.now(); //data de hoje
-        Reserva reserva;
+    public Reserva verificarAutocarroSemReservas(Cliente cliente, LocalDate dataReq, String numeroDias, String numeroPessoas, String localPartida, String localDestino, String distancia) {
 
-        FicheiroDeObjectos.escreveObjeto(this);
+        int nPessoas = Integer.parseInt(numeroPessoas);
+        Autocarro autocarro;
+        Motorista motorista;
+        LocalDate hoje = LocalDate.now(); //data de hoje
+        Reserva reserva = new Reserva();
+
         //Ordenar Lista de autocarros por Lotação
         autocarros.sort(Comparator.comparing(Autocarro::getLotacao));
 
         for (Autocarro bus : autocarros) {
-            if (Integer.parseInt(bus.getLotacao()) >= numeroPessoas) {
+            if (Integer.parseInt(bus.getLotacao()) >= nPessoas) {
                 if (reservas.size() == 0) {
-                    autocarro = bus;
+                    autocarro = autocarros.get(0);
                     motorista = motoristas.get(0);
-                    existe = true;
+                    reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, numeroDias, numeroPessoas,
+                            localPartida, localDestino, distancia);
+                    return reserva;
                 } else {
                     for (Reserva res : reservas) {
                         //Verificar se o autocarro tem reservas
                         if (res.getAutocarro().equals(bus)) {
                             if (reservas.size() == 0) {
                                 autocarro = bus;
-                                motorista = identificarMotoristaDisponível(cliente, dataReq, nDias);
-                                if (motorista != null) {
-                                    existe = true;
-                                } else {
-                                    existe = false;
-                                }
+                                motorista = identificarMotoristaDisponível();
+                                reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, numeroDias, numeroPessoas,
+                                        localPartida, localDestino, distancia);
+                                return reserva;
                             }
                         }
                     }
                 }
             }
         }
-
-        if(existe) {
-            reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, "nDias", "nPessoas",
-                    "partida", "destino", "distancia");
-            reservas.add(reserva);
-        }
-        else{
-            reserva=null;
-        }
         return reserva;
     }
 
-    public Reserva verificarAutocarrocomReservas(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) throws IOException {
+    public Reserva verificarAutocarrocomReservas(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) {
         String resultadoReserva = null;
         ArrayList<Autocarro> autDisponiveis = new ArrayList<>();
         ArrayList<Reserva> reservasAlvo = new ArrayList<>();//lista de reservas com potencial para serem canceladas
@@ -383,7 +391,7 @@ int contaRservas=0;
         long difDias;//diferença de dias
         Autocarro autocarro;
         Motorista motorista;
-        Reserva reserva=new Reserva();
+        Reserva reserva = new Reserva();
 
         //Ordenar Lista de autocarros por Lotação
         autocarros.sort(Comparator.comparing(Autocarro::getLotacao));
@@ -414,7 +422,7 @@ int contaRservas=0;
                                 //As reservas dos clientes "normais" só podem ser canceladas se:
                                 if (difDias <= 2) {
                                     resultadoReserva = "indisponível";
-                                } else if (difDias > 2) {
+                                } else {
                                     //elimina autocarros reservados, para ficarmos no final apenas com os disponíveis
                                     autDisponiveis.remove(res.getAutocarro());
                                     //elimina motoristas autocarros, para ficarmos no final apenas com os disponíveis
@@ -430,62 +438,52 @@ int contaRservas=0;
         }
         //Verificar se existem reservas que podem ser canceladas
         if (reservasAlvo.size() != 0) {
-                //Verificar qual o cliente com a data de reserva mais recente
-                //Ordenar reservas por ordem decrescente relativamente à data de Reserva
-                reservasAlvo.sort(Comparator.comparing(Reserva::getDataReserva).reversed());
-                Reserva cancelada = reservasAlvo.get(0);
-                //Adicionar notificação à lista de notificações do Cliente com reserva cancelada
-                adicionarNotificaçãoCancelamento(cancelada);
-                //Remover da Lista de Reservas da Empresa a reserva cancelada
-                reservas.remove(reservasAlvo.get(0));
-                //Adicionar a reserva cancelada à Lista de Reservas Canceladas da Empresa
-                reservasCanceladas.add(reservasAlvo.get(0));
-                //O autocarro associado à reserva cancelada fica disponível para reserva
-                autocarro = reservasAlvo.get(0).getAutocarro();
-                //O motorista associado ao autocarro fica disponível
-                motorista = reservasAlvo.get(0).getMotorista();
-                //Criar e adicionar reserva à lista de reservas da Empresa
-                resultadoReserva = "Sucesso";
-                reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, "nDias", "nPessoas",
-                        "partida", "destino", "distancia");
-                reservas.add(reserva);
+            //Verificar qual o cliente com a data de reserva mais recente
+            //Ordenar reservas por ordem decrescente relativamente à data de Reserva
+            reservasAlvo.sort(Comparator.comparing(Reserva::getDataReserva).reversed());
+            Reserva cancelada = reservasAlvo.get(0);
+            //Adicionar notificação à lista de notificações do Cliente com reserva cancelada
+            adicionarNotificaçãoCancelamento(cancelada);
+            //Remover da Lista de Reservas da Empresa a reserva cancelada
+            reservas.remove(reservasAlvo.get(0));
+            //Adicionar a reserva cancelada à Lista de Reservas Canceladas da Empresa
+            reservasCanceladas.add(reservasAlvo.get(0));
+            //O autocarro associado à reserva cancelada fica disponível para reserva
+            autocarro = reservasAlvo.get(0).getAutocarro();
+            //O motorista associado ao autocarro fica disponível
+            motorista = reservasAlvo.get(0).getMotorista();
+            //Criar e adicionar reserva à lista de reservas da Empresa
+
+            reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
+                    partida, destino, distancia);
             FicheiroDeObjectos.escreveObjeto(this);
 
-            } else if(resultadoReserva == "indisponível") {
-                reserva=null;
-
-            }
-        return reserva;
+        } else if (resultadoReserva.equals("indisponível")) {
+            reserva = new Reserva();
         }
+        return reserva;
+    }
 
     //Identificar o Autocarro que foi atribuido à reserva
     public Autocarro identificarAutocarroReservado(Reserva reserva) {
         return reserva.getAutocarro();
     }
-    public Motorista identificarMotoristaDisponível(Cliente cliente, LocalDate dataReq, String nDias) throws IOException {
-        int duração = Integer.parseInt(nDias);
-        LocalDate datafim = dataReq.plusDays(duração);//calcula data fim do periodo de reserva pretendido
-        long difDias;//diferença de dias
-        Motorista motorista=new Motorista();
+
+    public Motorista identificarMotoristaDisponível() {
+
+        Motorista motorista = new Motorista();
 
         for (Motorista disponivel : motoristas) {
             for (Reserva res : reservas) {
                 if (res.getMotorista().equals(disponivel)) {
                     if (reservas.size() == 0) {
                         motorista = disponivel;
-                        //Verificar se existe(para cada motorista) alguma reserva com data (início ou fim) compreendida para o periodo pretendido
-                    } else if ((res.getDataPartida().isEqual(dataReq) || res.getDataPartida().isEqual(datafim)
-                            || res.getDataPartida().isAfter(dataReq) && res.getDataPartida().isBefore(datafim))
-                            || (res.getDataFim().isEqual(dataReq) || res.getDataFim().isEqual(datafim)
-                            || res.getDataFim().isAfter(dataReq) && res.getDataFim().isBefore(datafim))) {
-                        motorista = null;
-                    } else {
-                        motorista = disponivel;
                     }
                 }
             }
-        }return motorista;
         }
+        return motorista;
+    }
 
 
     public void adicionarNotificaçãoCancelamento(Reserva reserva) {//Adicionar notificação de cancelamento à lista de Notificações do Cliente
@@ -524,15 +522,16 @@ int contaRservas=0;
     //========================================================================================
     //Metodos PAGAMENTO
 
-    public Reserva identificarReservaPagamento(Cliente cliente){
-        LocalDate hoje=LocalDate.now();
-        Reserva resPagamento=new Reserva();
+    public Reserva identificarReservaPagamento(Cliente cliente) {
+        LocalDate hoje = LocalDate.now();
+        Reserva resPagamento = new Reserva();
 
-        for(Reserva res: reservas){
-            if(res.getCliente().equals(cliente)&&res.getDataReserva().isEqual(hoje)){
-              resPagamento=res;
+        for (Reserva res : reservas) {
+            if (res.getCliente().equals(cliente) && res.getDataReserva().isEqual(hoje)) {
+                resPagamento = res;
             }
-        }return resPagamento;
+        }
+        return resPagamento;
 
     }
 
@@ -599,12 +598,6 @@ int contaRservas=0;
         return descrição;
     }
 
-    //Verificar reservas em lista de espera, após ter sido cancelada uma reserva e notificação dos clientes
-    // - Este método só é corrido se a dimensão da lista de espera for diferente de 0;
-    // - Verificar se o autocarro da reserva cancelada cumpre os requisitos da reserva em lista de espera,
-    // nomeadamente lotação.
-    //criar uma lista, para guardar o nº de reservas em espera candidatas
-    //Identificar email do cliente/clientes e adicionar notificação à lista do/s Cliente/s
 
     public void verificarListaEspera(Reserva reserva) {
 
@@ -616,7 +609,7 @@ int contaRservas=0;
 
         for (Reserva resEspera : reservasemEspera) {
             //verifica se o autocarro da reserva cancelada tem capacidade para o nº pessoas e período das reservas em espera
-            if (Integer.parseInt(resEspera.getNumeroPessoas()) <= Integer.parseInt(reserva.getAutocarro().getLotacao())){
+            if (Integer.parseInt(resEspera.getNumeroPessoas()) <= Integer.parseInt(reserva.getAutocarro().getLotacao())) {
                 //Adiciona à lista de candidatas, as reservas que satisfazem os requisitos pretendidos
                 candidatas.add(resEspera);
                 //Verifica na lista de reservas, quais as reservas atribuidas ao autocarro da reserva cancelada
@@ -773,16 +766,16 @@ int contaRservas=0;
     public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
         this.utilizadores = utilizadores;
     }
+
     //========================================================================================
     //Metodos MOTORISTA
     public Motorista removerMotorista(String email) {
         Motorista motoristaRemovido = null;
-        for (Motorista motorista:motoristas) {
-            if((motorista.getEmail().equals(email))) {
-                motoristaRemovido=motorista;
-            }
-            else {
-                motoristaRemovido=null;
+        for (Motorista motorista : motoristas) {
+            if ((motorista.getEmail().equals(email))) {
+                motoristaRemovido = motorista;
+            } else {
+                motoristaRemovido = null;
             }
         }
         return motoristaRemovido;
@@ -798,6 +791,7 @@ int contaRservas=0;
         }
         return duplicado;
     }
+
     public boolean verificarDuplicacaoMatricula(String matricula) {
         for (Autocarro autocarro : autocarros) {
             if (autocarro.getMatricula().equals(matricula)) {
@@ -818,7 +812,7 @@ int contaRservas=0;
 
     public Utilizador getCliente(String nif) {
         for (Utilizador cliente : utilizadores) {
-            if(cliente instanceof Cliente) {
+            if (cliente instanceof Cliente) {
                 if ((cliente.getNif().equals(nif))) {
                     return cliente;
                 }
@@ -830,7 +824,7 @@ int contaRservas=0;
 
     public int contarMotorista() {
         int motorista = 0;
-        for (Motorista moto :motoristas) {
+        for (Motorista moto : motoristas) {
             motorista++;
         }
         return motorista;
@@ -838,7 +832,7 @@ int contaRservas=0;
 
     public int contarAutocarro() {
         int autocarro = 0;
-        for (Autocarro auto :autocarros) {
+        for (Autocarro auto : autocarros) {
             autocarro++;
         }
         return autocarro;
@@ -854,23 +848,24 @@ int contaRservas=0;
     }
 
 
-    public  void alterarPalavraChave(String email, String palavraChaveAtual,
-                                     String novaPalavraChave, String confirmePalavraChave) {
+    public void alterarPalavraChave(String email, String palavraChaveAtual,
+                                    String novaPalavraChave, String confirmePalavraChave) {
         if (validarRegisto(email, palavraChaveAtual)) {
             if (novaPalavraChave.equals(confirmePalavraChave)) {
                 for (Utilizador cliente : getUtilizadores()) {
                     if (cliente.getEmail() == email) {
                         cliente.setPalavraChave(novaPalavraChave);
-                        JOptionPane.showMessageDialog(null,"Palavra chave alterado com sucesso");
+                        JOptionPane.showMessageDialog(null, "Palavra chave alterado com sucesso");
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null,"Palavra chave não coincidem");
+                JOptionPane.showMessageDialog(null, "Palavra chave não coincidem");
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Palavra chave atual incorrecta");
+            JOptionPane.showMessageDialog(null, "Palavra chave atual incorrecta");
         }
     }
+
     public Autocarro getAutocarro(String matricula) {
         for (Autocarro autocarro : autocarros) {
             if ((autocarro.getMatricula().equals(matricula))) {
@@ -879,6 +874,7 @@ int contaRservas=0;
         }
         return null;
     }
+
     public Motorista getMotorista(String email) {
         for (Motorista motorista : motoristas) {
             if ((motorista.getEmail().equals(email))) {
@@ -887,7 +883,6 @@ int contaRservas=0;
         }
         return null;
     }
-
 
 
 }

@@ -39,8 +39,6 @@ public class ReservaViagem extends JPanel implements ActionListener {
     JTextField numeroKmTotalField;
     JLabel clienteNome;
 
-    double custo;
-
 
     public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
@@ -196,12 +194,18 @@ public class ReservaViagem extends JPanel implements ActionListener {
         repaint();
 
     }
+
     @Override
 
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
         Reserva reservaNova;
         Cliente logado = (Cliente) aor_autocarro.getUserLogado();
+        String numeroDias = numeroDiasField.getText();
+        String numeroPessoas = numeroPessoasField.getText();
+        String localPartida = partidaField.getText();
+        String localDestino = destinoField.getText();
+        String distancia = numeroKmTotalField.getText();
 
 
         if (e.getActionCommand().equals("Prosseguir")) {
@@ -252,34 +256,29 @@ public class ReservaViagem extends JPanel implements ActionListener {
             if (validar == false) {
                 painelFundo.mudaEcra("ReservaViagem");
             } else {
-                if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoasField.getText())) {
+                if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoas)) {
                     JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
-                            "Empresa autocarros com capacidade para " + numeroPessoasField.getText());
+                            "Empresa autocarros com capacidade para " + numeroPessoas);
                     painelFundo.mudaEcra("ReservaViagem");
                 }
                 LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                try {
-                    reservaNova = aor_autocarro.verificarAutocarroSemReservas(logado, dataAluguer, numeroDiasField.getText(),
-                            numeroPessoasField.getText(), partidaField.getText(), destinoField.getText(), numeroKmTotalField.getText());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                reservaNova = aor_autocarro.verificarAutocarroSemReservas(logado, dataAluguer, numeroDias,
+                            numeroPessoas, localPartida, localDestino, distancia);
+
                 if (reservaNova != null) {
+                    aor_autocarro.addReserva(reservaNova);
                     Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
-                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + Reserva.getId() + " foi efetuada com sucesso.\n" +
+                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.\n" +
                             "Autocarro: " + autocarro);
                     FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                     painelFundo.mudaEcra("Pagamentos");
-                } else {
-                    try {
-                        reservaNova = aor_autocarro.verificarAutocarrocomReservas(logado, dataAluguer, numeroDiasField.getText(),
-                                numeroPessoasField.getText(), partidaField.getText(), destinoField.getText(), numeroKmTotalField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                } else{
+                    reservaNova = aor_autocarro.verificarAutocarrocomReservas(logado, dataAluguer, numeroDias,
+                                numeroPessoas, localPartida, localDestino, distancia);
                     if (reservaNova != null) {
+                        aor_autocarro.addReserva(reservaNova);
                         Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
-                        JOptionPane.showMessageDialog(null, "A sua reserva nº" + Reserva.getId() + " foi efetuada com sucesso.\n" +
+                        JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.\n" +
                                 "Autocarro: " + autocarro);
                         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                         painelFundo.mudaEcra("Pagamentos");
@@ -291,29 +290,28 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
             }
 
-        }
 
-        if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
-            painelFundo.mudaEcra("HistoricoReservas");
-        }
+            if (e.getActionCommand().equals("Histórico Reservas")) {
+                ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
+                painelFundo.mudaEcra("HistoricoReservas");
+            }
 
-        if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
-            painelFundo.mudaEcra("ConsultarReservas");
-        }
+            if (e.getActionCommand().equals("Consultar Reservas")) {
+                ((HistoricoReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
+                painelFundo.mudaEcra("ConsultarReservas");
+            }
 
-        if (e.getActionCommand().equals("Cancelar Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
-            painelFundo.mudaEcra("CancelarReserva");
+            if (e.getActionCommand().equals("Cancelar Reservas")) {
+                ((HistoricoReservas) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
+                painelFundo.mudaEcra("CancelarReserva");
+            }
+            if (e.getActionCommand().equals("Dados Pessoais")) {
+                ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+                painelFundo.mudaEcra("DadosPessoaisCliente");
+            }
+            if (e.getActionCommand().equals("Sair")) {
+                painelFundo.mudaEcra("Login");
+            }
         }
-        if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
-            painelFundo.mudaEcra("DadosPessoaisCliente");
-        }
-        if (e.getActionCommand().equals("Sair")) {
-            painelFundo.mudaEcra("Login");
-        }
-
     }
 }

@@ -21,16 +21,10 @@ public class Main {
         }
         PainelFundo painelFundo = new PainelFundo(aor_autocarro);
 
-        //System.out.println(aor_autocarro.getUtilizadores());
 
-        Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
-                "123456789", "Coimbra", "967895432");
-        aor_autocarro.getUtilizadores().add(gerente);
-
-        /*Utilizador cli1 = new Cliente("cl1","maria@gmail.com", "123456", "Maria", "124123443", "Coimbra", "913123123","Normal", LocalDate.of(2022, 12, 13));
-        Utilizador cli2 = new Cliente("cl2","albertina@gmail.com", "123456", "Albertina", "124123454", "Coimbra", "913123123",  "Premium", LocalDate.of(2022, 12, 13));
-        aor_autocarro.getUtilizadores().add(cli1);
-        aor_autocarro.getUtilizadores().add(cli2);*/
+            Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
+                    "123456789", "Coimbra", "967895432");
+            aor_autocarro.getUtilizadores().add(gerente);
 
 
 
@@ -38,8 +32,7 @@ public class Main {
 
 
         aor_autocarro=ficheiroDeObjectos.leObjeto();
-        System.out.println(aor_autocarro);
-        System.out.println(aor_autocarro.getReservas());
+
 
 
     }

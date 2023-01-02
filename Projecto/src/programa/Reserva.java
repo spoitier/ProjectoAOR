@@ -21,7 +21,8 @@ public class Reserva implements Serializable {
     private LocalDate dataFim;
     private double custo; // não pode estar no construtor
 
-    private static int id = 1;
+    private static int contador = 1;
+    private int id;
 
 public Reserva(){
 }
@@ -38,7 +39,8 @@ public Reserva(){
         this.localDestino = localDestino;
         this.distancia = distancia;
         dataFim = dataPartida.plusDays(Integer.parseInt(numeroDias));//calcula data fim do periodo de reserva pretendido
-        criaID();
+        contador++;
+        this.id=contador;
     }
 
     private void criaID() {
@@ -133,12 +135,8 @@ public Reserva(){
         this.numeroDias = numeroDias;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
-    }
-
-    public static void setId(int id) {
-        Reserva.id = id;
     }
 
     public double getCusto() {
