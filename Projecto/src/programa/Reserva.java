@@ -21,7 +21,7 @@ public class Reserva implements Serializable {
     private LocalDate dataFim;
     private double custo; // não pode estar no construtor
 
-    private static int contador = 1;
+    private static int contador = 0;
     private int id;
 
 public Reserva(){

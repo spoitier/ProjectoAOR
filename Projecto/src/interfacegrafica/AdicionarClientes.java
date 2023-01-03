@@ -321,6 +321,8 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso.\n" +
                         "Será enviado para o email " + emailField.getText() + " uma password provisória, a qual deverá" +
                         "ser alterada.");
+
+
                 atualizar();
                 nomeField.setText("");
                 nifField.setText("");

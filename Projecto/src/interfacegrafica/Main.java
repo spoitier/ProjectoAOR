@@ -35,7 +35,7 @@ if(aor_autocarro.getUtilizadores().size()==0){
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
 
-        aor_autocarro=ficheiroDeObjectos.leObjeto();
+        //aor_autocarro=ficheiroDeObjectos.leObjeto();
 
 
 

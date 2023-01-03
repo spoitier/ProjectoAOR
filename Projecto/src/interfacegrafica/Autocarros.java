@@ -114,7 +114,7 @@ public class Autocarros extends JPanel implements ActionListener {
 
 
         //Labels
-        JLabel matriculaLabel = new JLabel("Matricula:");
+        JLabel matriculaLabel = new JLabel("Matricula (  -  -  ):");
         matriculaLabel.setBounds(50, 50, 200, 30);
         JLabel marcaLabel = new JLabel("Marca:");
         marcaLabel.setBounds(50, 90, 200, 30);
@@ -316,6 +316,7 @@ public class Autocarros extends JPanel implements ActionListener {
 
         }
         if (e.getActionCommand().equals("Remover")) {
+            String matricula=matriculaFieldRemover.getText();
             if (matriculaFieldRemover.getText() == null) {
                 JOptionPane.showMessageDialog(null, "Falta preencher");
             } else if ((aor_autocarro.getAutocarro(matriculaFieldRemover.getText())) == null) {
@@ -323,8 +324,10 @@ public class Autocarros extends JPanel implements ActionListener {
             } else {
                 try {
                     JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                    Autocarro removido = aor_autocarro.getAutocarro(matriculaFieldRemover.getText());
+                    Autocarro removido = aor_autocarro.getAutocarro(matricula);
                     aor_autocarro.getAutocarros().remove(removido);
+                    //Cancela reservas dos clientes e adiciona notificação
+                    aor_autocarro.cancelarReservasporAutocarro(matricula);
                     matriculaFieldRemover.setText("");
                     atualizar();
                 } catch (NullPointerException n) {

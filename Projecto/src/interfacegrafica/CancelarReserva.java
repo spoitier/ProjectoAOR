@@ -20,6 +20,8 @@ public class CancelarReserva extends JPanel implements ActionListener {
     Aor_Autocarro aor_autocarro;
     JLabel clienteNome;
 
+    JTextField reservaField;
+
 
     public CancelarReserva(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
@@ -81,7 +83,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
         reservaPainel.setBounds(50, 200, 300, 30);
 
         JLabel reservaLabel = new JLabel("NºReserva");
-        JTextField reservaField = new JTextField();
+        reservaField = new JTextField();
         cancelarButton = new JButton("Cancelar");
         reservaPainel.add(reservaLabel);
         reservaPainel.add(reservaField);
@@ -112,6 +114,14 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String descrição;
+        int id= Integer.parseInt(reservaField.getText());
+        if (e.getActionCommand().equals("Cancelar")) {
+            descrição= aor_autocarro.cancelarReservaCliente(id);
+            JOptionPane.showMessageDialog(null, descrição);
+        }
+
+
         if (e.getActionCommand().equals("Reserva Autocarro")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
@@ -123,7 +133,6 @@ public class CancelarReserva extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Consultar Reservas")) {
             painelFundo.mudaEcra("ConsultarReservas");
         }
-
 
         if (e.getActionCommand().equals("Dados Pessoais")) {
             ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();

@@ -210,8 +210,13 @@ public class Aor_Autocarro implements Serializable {
     //Métodos CLIENTES
     //Verifica se existe disponível na empresa algum autocarro com capacidade para o nºpessoas solicitadas
     public boolean verificarAutocarroLotaçao(String n_pessoas) {
-        int numeroPessoas = Integer.parseInt(n_pessoas);
-
+        int numeroPessoas=0;
+        try {
+            numeroPessoas = Integer.parseInt(n_pessoas);
+        }
+        catch (Exception e){
+          JOptionPane.showMessageDialog(null,"Preencha número pessoas");
+        }
         boolean existe = false;
         for (Autocarro bus : autocarros) {
             if (numeroPessoas <= Integer.parseInt(bus.getLotacao())) {
@@ -470,7 +475,14 @@ public class Aor_Autocarro implements Serializable {
                         partida, destino, distancia);
                 return reserva;
 
+            }else if(resultadoReserva =="indisponível"){
+                autocarro = null;
+                motorista = null;
+                //Criar e adicionar reserva à lista de reservas em Espera
+                reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
+                        partida, destino, distancia);
             }
+
             return reserva;
         }
 
@@ -500,8 +512,8 @@ public class Aor_Autocarro implements Serializable {
         }
 
 
-        public void adicionarNotificaçãoCancelamento (Reserva reserva)
-        {//Adicionar notificação de cancelamento à lista de Notificações do Cliente
+        public void adicionarNotificaçãoCancelamento (Reserva reserva) {
+        //Adicionar notificação de cancelamento à lista de Notificações do Cliente
 
             LocalDate hoje = LocalDate.now(); //data de hoje
             long diferençaDias = ChronoUnit.DAYS.between(hoje, reserva.getDataPartida());//Calcular diferença de dias entre hoje e a data partida
@@ -574,23 +586,25 @@ public class Aor_Autocarro implements Serializable {
         }
 
         //Cancela reserva pelo cliente, e verifica clientes em lista espera
-        public String cancelarReservaCliente (LocalDate data_aluguer){
+        public String cancelarReservaCliente (int id){
 
             double reembolso;
             String descrição = null;
             LocalDate hoje = LocalDate.now(); //data de hoje
-            long diferençaDias = ChronoUnit.DAYS.between(hoje, data_aluguer);
+
+            long diferençaDias;
 
             for (Reserva res : reservas) {
                 //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
-                if (res.getDataPartida().isEqual(data_aluguer)) {
+                if (res.getId()==id) {
                     reservas.remove(res);
                     reservasCanceladas.add(res);
                     //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
                     if (reservasemEspera.size() != 0) {
                         verificarListaEspera(res);
                     }
-
+                    LocalDate data_aluguer=res.getDataPartida();
+                    diferençaDias = ChronoUnit.DAYS.between(hoje, data_aluguer);
                     //Verificar tipo de subscrição do cliente e se tem direito a reembolso
                     //Cliente "normal" tem direito a reembolso com penalização 50% se diferençaDias>7
                     if (diferençaDias > 7 && res.getCliente().getTipoCliente().equals("Normal")) {
@@ -608,6 +622,10 @@ public class Aor_Autocarro implements Serializable {
                     } else {
                         descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso. De acordo, com o seu pacote de subscrição, não irá ter direito a reembolso.";
                     }
+                }
+                else{
+                    descrição="Não existe nenuhuma reserva com esse id.\n" +
+                            "Sugerimos que proceda à consulta das suas reservas para confirmar id da reserva.";
                 }
             }
             return descrição;
@@ -664,12 +682,6 @@ public class Aor_Autocarro implements Serializable {
         public void cancelarReservasporAutocarro (String matrícula){
             LocalDate hoje = LocalDate.now(); //data de hoje
 
-            for (Autocarro bus : autocarros) {
-                if (bus.getMatricula().equals(matrícula)) {
-                    autocarros.remove(bus);
-                }
-            }
-
             for (Reserva res : reservas) {
                 if (res.getAutocarro().getMatricula().equals(matrícula)) {
                     reservas.remove(res);
@@ -685,7 +697,7 @@ public class Aor_Autocarro implements Serializable {
             }
         }
 
-        //Atribuir reserva efetiva a cliente em lista de espera:
+        //Atribuir reserva efetiva a cliente em lista de espera, quando faz login
         public String atribuirReservaListaEspera (String email){
 
             Cliente logado = (Cliente) utilizadorLogado(email);//identificar cliente através do email
@@ -694,10 +706,10 @@ public class Aor_Autocarro implements Serializable {
             String descrição = null;
             int contador = 0;
             //Verificar qual a reserva e o autocarro atribuidos à sua reserva em lista de espera
-            for (Reserva reservas : reservasemEspera) {
-                if (reservas.getCliente().equals(logado)) {
-                    novaReserva = reservas;
-                    reservado = reservas.getAutocarro();
+            for (Reserva reserva : reservasemEspera) {
+                if (reserva.getCliente().equals(logado)) {
+                    novaReserva = reserva;
+                    reservado = reserva.getAutocarro();
                 }
             }
             // Caso o valor atribuido ao autocarro seja "null", o cliente volta para a lista de espera

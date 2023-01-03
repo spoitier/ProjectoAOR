@@ -3,6 +3,7 @@ package interfacegrafica;
 import programa.Aor_Autocarro;
 import programa.Cliente;
 import programa.FicheiroDeObjectos;
+import programa.Notificação;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         JLabel normalLabel1 = new JLabel("Penalização de 50% até 7 dias");
         normalLabel1.setBounds(0,40,200,20);
         normalLabel1.setHorizontalAlignment(JLabel.CENTER);
-        JLabel normalLabel2 = new JLabel("Sem prioridade na reserva");
+        JLabel normalLabel2 = new JLabel("Sem prioridade na reserva\n (reserva pode ser cancelada até 2 dias");
         normalLabel2.setBounds(0,70,200,20);
         normalLabel2.setHorizontalAlignment(JLabel.CENTER);
         JLabel normalLabel3 = new JLabel("Mensalidade: gratuito");
@@ -121,24 +122,31 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         retrocessoButton.addActionListener(this);
         registarbutton.addActionListener(this);
         premiumCheck.addActionListener(this);
-normalCheck.addActionListener(this);
-
+        normalCheck.addActionListener(this);
 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
         Cliente logado;
-        if(e.getActionCommand().equals("Retrocesso")) {
+        if(e.getActionCommand().equals("Retroceder")) {
             painelFundo.mudaEcra("RegistarUtilizador");
         }
         if(e.getActionCommand().equals("Registar")) {
             if(premiumCheck.isSelected()){
                 logado=(Cliente)aor_autocarro.getUserLogado();
                 logado.setTipoCliente("Premium");
+                LocalDate hoje=LocalDate.now();
+                LocalDate dataExpiração=hoje.plusDays(30);
                 JOptionPane.showMessageDialog(null,"Subscreveu o plano premium.\n" +
                         "Para manter as vantagens deste pacote, deverá proceder ao pagamento mensal de 10 euros.\n" +
-                        "O prazo da sua subscrição atual é de 30 dias.\n");
+                        "O prazo da sua subscrição atual é de 30 dias.\n Data expiração: "+dataExpiração);
+                Notificação subscrição=new Notificação(logado.getEmail(),"Subscrição","O pagamento da" +
+                        "sua mensalidade expira em "+dataExpiração+".Caso não proceda ao seu pagamento, deixará de" +
+                        " aceder às vantagens da subscrição.",dataExpiração,false);
+                //Adiciona notificação à lista das notificaçóes do cliente
+                logado.getNotificações().add(subscrição);
+
 
             }
             else if(normalCheck.isSelected()){
