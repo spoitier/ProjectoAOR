@@ -180,10 +180,6 @@ public class ReservaViagem extends JPanel implements ActionListener {
         sairBotao.addActionListener(this);
 
     }
-    /*private double getCusto() {
-        return custo = 0.55 * (Integer.parseInt(numeroKmTotalField.getText())) + 1.2 *(Integer.parseInt(numeroPessoasField.getText()));
-    }*/
-
     public void nomeLogado() {
 
         if (aor_autocarro.getUserLogado() == null) {
@@ -253,65 +249,53 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Número de km inválido");
                 validar = false;
             }
-            if (validar == false) {
-                painelFundo.mudaEcra("ReservaViagem");
-            } else {
-                if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoas)) {
-                    JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
-                            "Empresa autocarros com capacidade para " + numeroPessoas);
-                    painelFundo.mudaEcra("ReservaViagem");
-                }
+            if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoas)) {
+                JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
+                        "Empresa autocarros com capacidade para " + numeroPessoas);
+                validar = false;
+            }
+            if (validar) {
                 LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                reservaNova = aor_autocarro.verificarAutocarroSemReservas(logado, dataAluguer, numeroDias,
-                            numeroPessoas, localPartida, localDestino, distancia);
+                reservaNova = aor_autocarro.efetuarReservaAutocarro(logado, dataAluguer, numeroDias,
+                        numeroPessoas, localPartida, localDestino, distancia);
 
                 if (reservaNova != null) {
                     aor_autocarro.addReserva(reservaNova);
                     Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
-                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.\n" +
-                            "Autocarro: " + autocarro);
+                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.");
+
                     FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
                     painelFundo.mudaEcra("Pagamentos");
-                } else{
-                    reservaNova = aor_autocarro.verificarAutocarrocomReservas(logado, dataAluguer, numeroDias,
-                                numeroPessoas, localPartida, localDestino, distancia);
-                    if (reservaNova != null) {
-                        aor_autocarro.addReserva(reservaNova);
-                        Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
-                        JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.\n" +
-                                "Autocarro: " + autocarro);
-                        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                        painelFundo.mudaEcra("Pagamentos");
-                    } else {
-                        JOptionPane.showConfirmDialog(null, "A sua reserva ficou em lista de espera" +
-                                ".Pretende prosseguir?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
-                    }
+                } else {
+                    JOptionPane.showConfirmDialog(null, "A sua reserva ficou em lista de espera" +
+                            ".Pretende prosseguir?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
                 }
+            }
+        }
 
-            }
+        if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
+            painelFundo.mudaEcra("HistoricoReservas");
+        }
 
+        if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
+            painelFundo.mudaEcra("ConsultarReservas");
+        }
 
-            if (e.getActionCommand().equals("Histórico Reservas")) {
-                ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
-                painelFundo.mudaEcra("HistoricoReservas");
-            }
-
-            if (e.getActionCommand().equals("Consultar Reservas")) {
-                ((HistoricoReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
-                painelFundo.mudaEcra("ConsultarReservas");
-            }
-
-            if (e.getActionCommand().equals("Cancelar Reservas")) {
-                ((HistoricoReservas) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
-                painelFundo.mudaEcra("CancelarReserva");
-            }
-            if (e.getActionCommand().equals("Dados Pessoais")) {
-                ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
-                painelFundo.mudaEcra("DadosPessoaisCliente");
-            }
-            if (e.getActionCommand().equals("Sair")) {
-                painelFundo.mudaEcra("Login");
-            }
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
+            painelFundo.mudaEcra("CancelarReserva");
+        }
+        if (e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
+        }
+        if (e.getActionCommand().equals("Sair")) {
+            painelFundo.mudaEcra("Login");
         }
     }
 }
+
+

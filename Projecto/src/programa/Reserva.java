@@ -140,7 +140,9 @@ public Reserva(){
     }
 
     public double getCusto() {
-        return custo = 0.55 * Integer.parseInt(distancia) + 1.2 * Integer.parseInt(numeroPessoas);
+    int distancia1=Integer.parseInt(distancia);
+    int nPessoas=Integer.parseInt(numeroPessoas);
+        return custo = 0.55 * distancia1 + 1.2 * nPessoas;
     }
 
     public static boolean validarLocal(String local) {

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -21,12 +22,15 @@ public class Main {
         }
         PainelFundo painelFundo = new PainelFundo(aor_autocarro);
 
-
+if(aor_autocarro.getUtilizadores().size()==0){
             Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
                     "123456789", "Coimbra", "967895432");
-            aor_autocarro.getUtilizadores().add(gerente);
+            aor_autocarro.getUtilizadores().add(gerente);}
 
-
+        System.out.println(aor_autocarro.getMotoristas());
+        System.out.println(aor_autocarro.getAutocarros());
+        System.out.println(aor_autocarro.getUtilizadores());
+        System.out.println(aor_autocarro.getReservas());
 
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
