@@ -170,6 +170,13 @@ public class Aor_Autocarro implements Serializable {
         for (Utilizador utilizador : utilizadores) {
             if ((utilizador instanceof Cliente) && (utilizador.getNif().equals(nif))) {
                 removido = (Cliente) utilizador;
+                removido.setTipoCliente("");
+                removido.setNome("");
+                removido.setMorada("");
+                removido.setTelefone("");
+                removido.setId("");
+                removido.setNif("");
+
                 //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
 
                 Notificação clienteRemovido = new Notificação(removido.getEmail(), "ClienteRemovido",
@@ -224,6 +231,30 @@ public class Aor_Autocarro implements Serializable {
             }
         }
         return existe;
+    }
+
+    //Conta o nº total de reservas:efetuadas,canceladas e emEspera.Utilizado para atribuir ID à reserva
+    public int contarReservas() {
+        int contaReservas=1;
+        int reserva = 0;
+        int reservaCancelada=0;
+        int reservaEmEspera=0;
+
+        for (Reserva res : reservas) {
+                reserva++;
+            }
+
+        for(Reserva cancelada:reservasCanceladas){
+            reservaCancelada++;
+        }
+
+        for(Reserva emEspera:reservasemEspera){
+            reservaEmEspera++;
+        }
+
+        contaReservas=reserva+reservaCancelada+reservaEmEspera;
+
+        return contaReservas;
     }
 
     //Efetuar reserva de autocarro pelo cliente:
@@ -503,6 +534,7 @@ public class Aor_Autocarro implements Serializable {
                     for (Reserva res : reservas) {
                         if (!res.getMotorista().equals(disponivel)) {
                                 motorista = disponivel;
+                                return motorista;
 
                         }
                     }
@@ -586,7 +618,7 @@ public class Aor_Autocarro implements Serializable {
         }
 
         //Cancela reserva pelo cliente, e verifica clientes em lista espera
-        public String cancelarReservaCliente (int id){
+        public String cancelarReservaCliente (Cliente cliente,String id){
 
             double reembolso;
             String descrição = null;
@@ -596,7 +628,7 @@ public class Aor_Autocarro implements Serializable {
 
             for (Reserva res : reservas) {
                 //Identificar a reserva, remover da lista de reservas e adicionar à lista de reservas canceladas
-                if (res.getId()==id) {
+                if (res.getCliente().equals(cliente)&&res.getId().equals(id)) {
                     reservas.remove(res);
                     reservasCanceladas.add(res);
                     //Verificar se existem clientes em lista de espera que possam ficar com esta reserva
@@ -624,7 +656,7 @@ public class Aor_Autocarro implements Serializable {
                     }
                 }
                 else{
-                    descrição="Não existe nenuhuma reserva com esse id.\n" +
+                    descrição="Não existe nenhuma reserva com esse id em nome de "+res.getCliente().getNome()+"\n " +
                             "Sugerimos que proceda à consulta das suas reservas para confirmar id da reserva.";
                 }
             }

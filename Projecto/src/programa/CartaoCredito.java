@@ -9,10 +9,10 @@ public class CartaoCredito extends Pagamento implements Serializable {
 
     private String numeroCartao;
     private String nomeClienteCartao;
-    private LocalDate dataExpiracao;
+    private String dataExpiracao;
     private String codigoSeguranca;
 
-    public CartaoCredito(Reserva reserva, String numeroCartao, String nomeClienteCartao, LocalDate dataExpiracao, String codigoSeguranca) {
+    public CartaoCredito(Reserva reserva, String numeroCartao, String nomeClienteCartao, String dataExpiracao, String codigoSeguranca) {
         super(reserva);
         this.numeroCartao = numeroCartao;
         this.nomeClienteCartao = nomeClienteCartao;
@@ -43,15 +43,6 @@ public class CartaoCredito extends Pagamento implements Serializable {
     public void setNomeClienteCartao(String nomeClienteCartao) {
         this.nomeClienteCartao = nomeClienteCartao;
     }
-
-    public LocalDate getDataExpiracao() {
-        return dataExpiracao;
-    }
-
-    public void setDataExpiracao(LocalDate dataExpiracao) {
-        this.dataExpiracao = dataExpiracao;
-    }
-
 
 
     @Override

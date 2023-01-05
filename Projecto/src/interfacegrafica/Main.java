@@ -31,6 +31,7 @@ if(aor_autocarro.getUtilizadores().size()==0){
         System.out.println(aor_autocarro.getAutocarros());
         System.out.println(aor_autocarro.getUtilizadores());
         System.out.println(aor_autocarro.getReservas());
+        System.out.println(aor_autocarro.getListaPagamentos());
 
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 

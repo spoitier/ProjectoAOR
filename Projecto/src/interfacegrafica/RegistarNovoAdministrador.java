@@ -204,12 +204,12 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
             }
             //Verificar se existe já algum Cliente registado com o nif registado
             if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
-                JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
+                JOptionPane.showMessageDialog(null, "Já existe um administrador registado com esse nif");
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o email registado
             if (aor_autocarro.verificarDuplicaçãoEmail(emailField.getText())) {
-                JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse email");
+                JOptionPane.showMessageDialog(null, "Já existe um administrador registado com esse email");
                 validar = false;
             }
             if (validar == false) {

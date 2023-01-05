@@ -266,11 +266,10 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 if (reservaNova != null) {
                     aor_autocarro.addReserva(reservaNova);
                     //Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
-                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " foi efetuada com sucesso.");
-
-                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                    JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " está disponível para pagamento.");
 
                     painelFundo.mudaEcra("Pagamentos");
+
                 } else if(reservaNova.getAutocarro()==null) {
                     reservaNova = aor_autocarro.efetuarReservaAutocarro(logado, dataAluguer, numeroDias,
                             numeroPessoas, localPartida, localDestino, distancia);

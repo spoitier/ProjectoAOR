@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -191,7 +192,6 @@ this.aor_autocarro=aor_autocarro;
         Cliente logado;
         Pagamento pagamento;
         Reserva reserva;
-        LocalDate dataExpiração = LocalDate.parse(dataExpiracaoField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 
         if (e.getActionCommand().equals("Confirmar")) {
@@ -227,8 +227,9 @@ this.aor_autocarro=aor_autocarro;
             if (validar) {
                 logado = (Cliente) aor_autocarro.getUserLogado();
                 reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.addReserva(reserva);
                 pagamento = new programa.CartaoCredito(reserva, numeroCartaoField.getText(), nomeClienteField.getText(),
-                        dataExpiração, codigoSegurancaField.getText());
+                        dataExpiracaoField.getText(), codigoSegurancaField.getText());
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +

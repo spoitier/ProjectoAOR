@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Reserva implements Serializable {
 
-
+Aor_Autocarro aor_autocarro=new Aor_Autocarro();
     private Cliente cliente;
     private Autocarro autocarro;
     private Motorista motorista;
@@ -20,9 +20,7 @@ public class Reserva implements Serializable {
 
     private LocalDate dataFim;
     private double custo; // não pode estar no construtor
-
-    private static int contador = 0;
-    private int id;
+    private String id;
 
 public Reserva(){
 }
@@ -39,13 +37,9 @@ public Reserva(){
         this.localDestino = localDestino;
         this.distancia = distancia;
         dataFim = dataPartida.plusDays(Integer.parseInt(numeroDias));//calcula data fim do periodo de reserva pretendido
-        contador++;
-        this.id=contador;
+        this.id="res".concat(String.valueOf(aor_autocarro.contarReservas()));
     }
 
-    private void criaID() {
-        id = id++;
-    }
 
 
     public Cliente getCliente() {
@@ -135,7 +129,7 @@ public Reserva(){
         this.numeroDias = numeroDias;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

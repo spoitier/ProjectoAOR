@@ -119,26 +119,51 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        int resultado;
         if(e.getActionCommand().equals("ReservaViagem")) {
-            painelFundo.mudaEcra("ReservaViagem");
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("ReservaViagem");
+            }
         }
 
         if(e.getActionCommand().equals("Histórico Reservas")) {
-            painelFundo.mudaEcra("HistoricoReservas");
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("HistoricoReservas");
+            }
         }
 
         if(e.getActionCommand().equals("Consultar Reservas")) {
-            painelFundo.mudaEcra("ConsultarReservas");
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("ConsultarReservas");
+            }
         }
 
         if(e.getActionCommand().equals("Cancelar Reservas")) {
-            painelFundo.mudaEcra("CancelarReserva");
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("CancelarReserva");
+            }
         }
         if(e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("DadosPessoaisClientes");
+            }
         }
-        if(e.getActionCommand().equals("Sair")){
-            painelFundo.mudaEcra("Login");
+        if(e.getActionCommand().equals("Sair")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("Login");
+            }
         }
         if(e.getActionCommand().equals("PayPAL")){
             painelFundo.mudaEcra("PayPal");
@@ -149,8 +174,6 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         if(e.getActionCommand().equals("Multibanco")){
             painelFundo.mudaEcra("Multibanco");
         }
-
-
 
     }
 }

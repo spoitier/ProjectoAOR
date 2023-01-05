@@ -183,11 +183,12 @@ public class PayPal extends JPanel implements ActionListener {
             if(validar){
                 logado = (Cliente) aor_autocarro.getUserLogado();
                 reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.addReserva(reserva);
                 pagamento=new Paypal(reserva,email,password);
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
-                JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº"+reserva.getId()+" no valor de €");
+                JOptionPane.showMessageDialog(null, "A sua reserva" +
+                        " nº"+reserva.getId()+" está confirmada");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
             }
         }
