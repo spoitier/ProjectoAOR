@@ -112,43 +112,6 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         palavraChaveAtualField = new TextField();
         palavraChaveAtualField.setBounds(200, 75, 170, 30);
 
-        palavraChaveAtualField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                palavraChaveAtualField.setText("asdasdasd");
-                revalidate();
-                repaint();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                palavraChaveAtualField.setText("");
-                revalidate();
-                repaint();
-            }
-        });
-
-        palavraChaveAtualField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(e.getKeyChar() == 'a'){
-                    palavraChaveAtualField.setText("");
-                    revalidate();
-                    repaint();
-
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
 
         novaPalavraChaveField = new TextField();
         novaPalavraChaveField.setBounds(200, 125, 170, 30);

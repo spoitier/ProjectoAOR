@@ -40,7 +40,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel();
+        clienteNome = new JLabel();
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -143,12 +143,14 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
 
 
         if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((CancelarReserva) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
 
             painelFundo.mudaEcra("CancelarReserva");
         }

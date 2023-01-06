@@ -130,6 +130,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 

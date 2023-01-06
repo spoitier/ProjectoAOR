@@ -216,7 +216,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
-            Utilizador cliente = aor_autocarro.getCliente(nifField.getText());
+            Utilizador cliente = aor_autocarro.getUserLogado();
             ((AlterarPalavraChaveCliente)painelFundo.mapaPaineis.get("AlterarPalavraChave")).setCliente(cliente);
             painelFundo.mudaEcra("AlterarPalavraChave");
         }

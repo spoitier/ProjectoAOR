@@ -906,26 +906,29 @@ public class Aor_Autocarro implements Serializable {
             return null;
         }
 
-
-        public void alterarPalavraChave (String email, String palavraChaveAtual,
-                String novaPalavraChave, String confirmePalavraChave){
-            if (validarRegisto(email, palavraChaveAtual)) {
-                if (novaPalavraChave.equals(confirmePalavraChave)) {
-                    for (Utilizador cliente : getUtilizadores()) {
-                        if (cliente.getEmail() == email) {
-                            cliente.setPalavraChave(novaPalavraChave);
-                            JOptionPane.showMessageDialog(null, "Palavra chave alterado com sucesso");
-                        }
+    public void alterarPalavraChave(String email, String palavraChaveAtual,
+                                    String novaPalavraChave, String confirmePalavraChave) {
+        if (validarRegisto(email, palavraChaveAtual)) {
+            if (novaPalavraChave.equals(confirmePalavraChave)) {
+                for (Utilizador cliente : getUtilizadores()) {
+                    if (cliente.getEmail().equals(email) ) {
+                        cliente.setPalavraChave(novaPalavraChave);
+                        JOptionPane.showMessageDialog(null, "Palavra chave alterado com sucesso");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Palavra chave não coincidem");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Palavra chave atual incorrecta");
+                JOptionPane.showMessageDialog(null, "Palavra chave não coincidem");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Palavra chave atual incorrecta");
         }
+    }
 
-        public Autocarro getAutocarro (String matricula){
+
+
+
+
+    public Autocarro getAutocarro (String matricula){
             for (Autocarro autocarro : autocarros) {
                 if ((autocarro.getMatricula().equals(matricula))) {
                     return autocarro;

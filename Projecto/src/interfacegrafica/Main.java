@@ -91,10 +91,12 @@ public class Main {
         aor_autocarro.getReservas().add(r5);
 
 
-
-
-
          */
+
+
+
+
+
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
 

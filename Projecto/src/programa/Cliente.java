@@ -25,6 +25,8 @@ public Cliente (){
 
     }
 
+
+
     public String getPalavraChave() {
         return palavraChave;
     }
