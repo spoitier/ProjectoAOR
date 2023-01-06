@@ -186,7 +186,8 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
             painelFundo.mudaEcra("CancelarReserva");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
             ((Login)painelFundo.mapaPaineis.get("Login")).sair();
@@ -195,8 +196,11 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         if (e.getActionCommand().equals("Alterar palavra chave")) {
             aor_autocarro.alterarPalavraChave(emailPreenchido.getText(), palavraChaveAtualField.getText(),
                     novaPalavraChaveField.getText(), confirmePalavraChaveField.getText());
-            this.utilizador.setPalavraChave(novaPalavraChaveField.getText());
             FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+
         }
+        palavraChaveAtualField.setText("");
+        novaPalavraChaveField.setText("");
+        confirmePalavraChaveField.setText("");
     }
 }

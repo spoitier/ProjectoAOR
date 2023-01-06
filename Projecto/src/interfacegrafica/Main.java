@@ -90,12 +90,11 @@ public class Main {
         aor_autocarro.getReservas().add(r4);
         aor_autocarro.getReservas().add(r5);
 
-
          */
 
-
-
-
+        System.out.println(aor_autocarro.getUtilizadores());
+        System.out.println(aor_autocarro.getReservas());
+        System.out.println(aor_autocarro.getListaPagamentos());
 
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
