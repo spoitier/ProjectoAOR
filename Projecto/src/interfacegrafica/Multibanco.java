@@ -120,22 +120,23 @@ public class Multibanco extends JPanel implements ActionListener {
         //================================================================
         //Painel de referencia multibanco
 
+        /*
         JPanel referenciaMultibanco = new JPanel(new GridLayout(3, 2, 0, 0));
         referenciaMultibanco.setBounds(200, 300, 300, 200);
         entidade = new JLabel("Entidade:");
         referencia = new JLabel("Referencia:");
         valor = new JLabel("Valor");
         entidadeInfo = new JLabel("12345");
-        referenciaInfo = new JLabel(" ");
-        valorInfo = new JLabel(" ");
+        referenciaInfo = new JLabel(programa.Multibanco.gerarRefMultibanco());;
         referenciaMultibanco.add(entidade);
         referenciaMultibanco.add(entidadeInfo);
         referenciaMultibanco.add(referencia);
         referenciaMultibanco.add(referenciaInfo);
         referenciaMultibanco.add(valor);
-        referenciaMultibanco.add(valorInfo);
         this.add(referenciaMultibanco);
 
+
+         */
 
 
         //Botão de auntenticar

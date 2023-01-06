@@ -106,36 +106,36 @@ public class ReservaViagem extends JPanel implements ActionListener {
         JPanel formulario = new JPanel();
         formulario.setLayout(null);
         formulario.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        formulario.setBounds(200, 200, 400, 350);
+        formulario.setBounds(150, 200, 450, 350);
 
 
         //Labels
         dataAluguer = new JLabel("Data do Aluguer (dd/mm/AAAA):");
-        dataAluguer.setBounds(40, 50, 200, 30);
+        dataAluguer.setBounds(20, 50, 200, 30);
         numeroDias = new JLabel("Numero de dias:");
-        numeroDias.setBounds(40, 90, 200, 30);
+        numeroDias.setBounds(20, 90, 200, 30);
         numeroPessoas = new JLabel("Numero de Pessoas:");
-        numeroPessoas.setBounds(40, 130, 200, 30);
+        numeroPessoas.setBounds(20, 130, 200, 30);
         partida = new JLabel("Local de Partida:");
-        partida.setBounds(40, 170, 200, 30);
+        partida.setBounds(20, 170, 200, 30);
         destino = new JLabel("Local de Destino:");
-        destino.setBounds(40, 210, 200, 30);
+        destino.setBounds(20, 210, 200, 30);
         numeroKmTotal = new JLabel("Numero Km total:");
-        numeroKmTotal.setBounds(40, 250, 200, 30);
+        numeroKmTotal.setBounds(20, 250, 200, 30);
 
         //Fields
         dataAluguerField = new JTextField();
-        dataAluguerField.setBounds(160, 50, 200, 30);
+        dataAluguerField.setBounds(225, 50, 150, 30);
         numeroDiasField = new JTextField();
-        numeroDiasField.setBounds(160, 90, 200, 30);
+        numeroDiasField.setBounds(225, 90, 150, 30);
         numeroPessoasField = new JTextField();
-        numeroPessoasField.setBounds(160, 130, 200, 30);
+        numeroPessoasField.setBounds(225, 130, 150, 30);
         partidaField = new JTextField();
-        partidaField.setBounds(160, 170, 200, 30);
+        partidaField.setBounds(225, 170, 150, 30);
         destinoField = new JTextField();
-        destinoField.setBounds(160, 210, 200, 30);
+        destinoField.setBounds(225, 210, 150, 30);
         numeroKmTotalField = new JTextField();
-        numeroKmTotalField.setBounds(160, 250, 200, 30);
+        numeroKmTotalField.setBounds(225, 250, 150, 30);
 
         formulario.add(dataAluguer);
         formulario.add(numeroDias);
