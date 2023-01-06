@@ -156,16 +156,6 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
     }
 
 
-    public Utilizador nomeLogado() {
-        if (aor_autocarro.getUserLogado() == null) {
-            clienteNome.setText("");
-        } else {
-            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
-            emailPreenchido.setText(aor_autocarro.getUserLogado().getEmail());
-        }
-        return null;
-
-    }
 
     public void setAdministrador(Utilizador utilizador) {
         if(!(utilizador==null)){
@@ -199,6 +189,7 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {

@@ -113,6 +113,11 @@ public class Login extends JPanel implements ActionListener {
         this.loginEmail = loginEmail;
     }
 
+    public void sair() {
+        emailField.setText("");
+        palavraChaveField.setText("");
+    }
+
     //*******************************************
     //Eventos
 

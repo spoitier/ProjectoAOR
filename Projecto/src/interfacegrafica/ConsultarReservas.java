@@ -157,6 +157,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
             painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 

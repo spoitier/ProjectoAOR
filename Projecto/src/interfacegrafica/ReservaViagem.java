@@ -16,6 +16,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
     Aor_Autocarro aor_autocarro;
+    Reserva reservaNova;
 
     JButton prosseguirButton;
     JButton opcao1;
@@ -40,6 +41,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
     JTextField destinoField;
     JTextField numeroKmTotalField;
     JLabel clienteNome;
+    JButton atualizar;
 
 
     public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
@@ -164,12 +166,15 @@ public class ReservaViagem extends JPanel implements ActionListener {
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
 
+
         valorViagem = new JLabel("custoViagem");
         valorViagem.setBounds(75, 100, 200, 10);
-
+        atualizar = new JButton("Atualizar");
+        atualizar.setBounds(50,150,100,30);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
         custoViagem.add(valorViagem);
+        custoViagem.add(atualizar);
         this.add(custoViagem);
 
 
@@ -180,7 +185,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         opcao5.addActionListener(this);
         prosseguirButton.addActionListener(this);
         sairBotao.addActionListener(this);
-
+        atualizar.addActionListener(this);
     }
 
     public void nomeLogado() {
@@ -257,6 +262,13 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
                         "Empresa autocarros com capacidade para " + numeroPessoas);
                 validar = false;
+                dataAluguerField.setText("");
+                numeroDiasField.setText("");
+                numeroPessoasField.setText("");
+                partidaField.setText("");
+                destinoField.setText("");
+                numeroKmTotalField.setText("");
+
             }}}}}}
             if (validar) {
                 LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -267,7 +279,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                     aor_autocarro.addReserva(reservaNova);
                     //Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
                     JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " está disponível para pagamento.");
-
+                    ((TipoDePagamentos)painelFundo.mapaPaineis.get("Pagamentos")).custoAutocarro(reservaNova);
                     painelFundo.mudaEcra("Pagamentos");
 
                 } else if(reservaNova.getAutocarro()==null) {
@@ -289,6 +301,30 @@ public class ReservaViagem extends JPanel implements ActionListener {
                     }
                 }
             }
+
+        }
+        if(e.getActionCommand().equals("Atualizar")) {
+            boolean validarAtualizar= true;
+            //Verificar se é constituído só por números
+            if (!Reserva.validarNumeros(numeroDiasField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número de dias inválido");
+                validarAtualizar = false;
+            }
+            //Verificar se é constituído só por números
+            if (!Reserva.validarNumeros(numeroPessoasField.getText())) {
+                JOptionPane.showMessageDialog(null, "Número de Pessoas inválido");
+                validarAtualizar = false;
+            }
+            if(validarAtualizar==false) {
+
+            } else {
+                double custoReserva =0;
+                custoReserva=0.55*Integer.parseInt(distancia)+1.2*Integer.parseInt(numeroPessoas);
+                valorViagem.setText(String.valueOf(custoReserva));
+            }
+
+
+
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
@@ -310,6 +346,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
             painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
     }

@@ -11,7 +11,9 @@ public class Multibanco extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro;
 
+
     Multibanco multibanco1;
+    Reserva reserva;
     PainelFundo painelFundo;
 
     JButton opcao1;
@@ -30,6 +32,8 @@ public class Multibanco extends JPanel implements ActionListener {
     JLabel entidadeInfo;
     JLabel referenciaInfo;
     JLabel valorInfo;
+    JLabel valorViagem;
+    JLabel clienteNome;
 
 
 
@@ -50,7 +54,7 @@ public class Multibanco extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -95,7 +99,7 @@ public class Multibanco extends JPanel implements ActionListener {
         custoViagem.setBounds(625, 250, 200, 200);
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
-        JLabel valorViagem = new JLabel("Valor");
+        valorViagem = new JLabel("Valor");
         valorViagem.setBounds(75, 100, 200, 10);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
@@ -108,7 +112,7 @@ public class Multibanco extends JPanel implements ActionListener {
         JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
         pagamentoPanel.setBounds(200, 200, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-         multibanco = new JButton("Multibanco");
+        multibanco = new JButton("Multibanco");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(multibanco);
         this.add(pagamentoPanel);
@@ -153,6 +157,15 @@ public class Multibanco extends JPanel implements ActionListener {
 
     }
 
+    public void custoAutocarro(Reserva reserva) {
+        if (!(reserva == null)) {
+            this.reserva = reserva;
+            clienteNome.setText(reserva.getCliente().getNome());
+            valorViagem.setText(String.valueOf(reserva.getCusto()));
+
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Cliente logado;
@@ -192,6 +205,7 @@ public class Multibanco extends JPanel implements ActionListener {
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
         if(e.getActionCommand().equals("Sair")){
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if(e.getActionCommand().equals("Mudar Pagamento")){

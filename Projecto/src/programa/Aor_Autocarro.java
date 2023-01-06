@@ -943,8 +943,27 @@ public class Aor_Autocarro implements Serializable {
             return null;
         }
 
-
+        public String matriculaMaisRequisitado() {
+            String elementoMaisFrequente = "";
+            int contador = 0;
+            for(Reserva reserva1:reservas) {
+                int tempContador =0;
+                for (Reserva reserva2:reservas){
+                    if(reserva2.getAutocarro().getMatricula().equals(reserva1.getAutocarro().getMatricula())){
+                        tempContador++;
+                    }
+                }
+                if(tempContador>contador){
+                    elementoMaisFrequente=reserva1.getAutocarro().getMatricula();
+                    contador=tempContador;
+                }
+            }
+            return  elementoMaisFrequente;
+        }
     }
+
+
+
 
 
 

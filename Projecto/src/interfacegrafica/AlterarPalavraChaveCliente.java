@@ -1,13 +1,17 @@
 package interfacegrafica;
 
+import programa.Aor_Autocarro;
+import programa.FicheiroDeObjectos;
+import programa.Utilizador;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class AlterarPalavraChaveCliente extends JPanel implements ActionListener {
 
     PainelFundo painelFundo;
+    Aor_Autocarro aor_autocarro;
     JButton opcao1;
     JButton opcao2;
     JButton opcao3;
@@ -15,6 +19,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
     JButton opcao5;
     JButton sairBotao;
     JButton alterarPalavraChaveButton;
+    Utilizador utilizador;
 
     JLabel clienteNome;
     JLabel emailPreenchido;
@@ -23,7 +28,9 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
     TextField confirmePalavraChaveField;
 
 
-    public AlterarPalavraChaveCliente(PainelFundo painelFundo) {
+
+    public AlterarPalavraChaveCliente(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -105,6 +112,44 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         palavraChaveAtualField = new TextField();
         palavraChaveAtualField.setBounds(200, 75, 170, 30);
 
+        palavraChaveAtualField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                palavraChaveAtualField.setText("asdasdasd");
+                revalidate();
+                repaint();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                palavraChaveAtualField.setText("");
+                revalidate();
+                repaint();
+            }
+        });
+
+        palavraChaveAtualField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyChar() == 'a'){
+                    palavraChaveAtualField.setText("");
+                    revalidate();
+                    repaint();
+
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
         novaPalavraChaveField = new TextField();
         novaPalavraChaveField.setBounds(200, 125, 170, 30);
 
@@ -138,6 +183,27 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
     }
 
+    public Utilizador nomeLogado() {
+        if (aor_autocarro.getUserLogado() == null) {
+            clienteNome.setText("");
+        } else {
+            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+            emailPreenchido.setText(aor_autocarro.getUserLogado().getEmail());
+        }
+        return null;
+
+    }
+
+    public void setCliente(Utilizador utilizador) {
+        if(!(utilizador==null)){
+            this.utilizador=utilizador;
+            emailPreenchido.setText(utilizador.getEmail());
+            clienteNome.setText(utilizador.getNome());
+            revalidate();
+            repaint();
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -160,9 +226,14 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
+            aor_autocarro.alterarPalavraChave(emailPreenchido.getText(), palavraChaveAtualField.getText(),
+                    novaPalavraChaveField.getText(), confirmePalavraChaveField.getText());
+            this.utilizador.setPalavraChave(novaPalavraChaveField.getText());
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
     }
 }

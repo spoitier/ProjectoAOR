@@ -34,6 +34,9 @@ public class CartaoCredito extends JPanel implements ActionListener {
     TextField nomeClienteField;
     TextField dataExpiracaoField;
     TextField codigoSegurancaField;
+    JLabel clienteNome;
+    JLabel valorViagem;
+    Reserva reserva;
 
 
     public CartaoCredito(PainelFundo painelfundo,Aor_Autocarro aor_autocarro) {
@@ -53,7 +56,7 @@ this.aor_autocarro=aor_autocarro;
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -98,7 +101,7 @@ this.aor_autocarro=aor_autocarro;
         custoViagem.setBounds(625, 250, 200, 200);
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
-        JLabel valorViagem = new JLabel("Valor");
+        valorViagem = new JLabel("Valor");
         valorViagem.setBounds(75, 100, 200, 10);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
@@ -183,8 +186,20 @@ this.aor_autocarro=aor_autocarro;
         botaoConfirmar.addActionListener(this);
         mudarPagamentoButton.addActionListener(this);
         sairBotao.addActionListener(this);
-
     }
+    public void custoAutocarro(Reserva reserva) {
+        if (!(reserva == null)) {
+            this.reserva = reserva;
+            clienteNome.setText(reserva.getCliente().getNome());
+            valorViagem.setText(String.valueOf(reserva.getCusto()));
+
+        }
+    }
+
+
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -257,6 +272,7 @@ this.aor_autocarro=aor_autocarro;
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Mudar Pagamento")) {

@@ -11,6 +11,9 @@ public class PayPal extends JPanel implements ActionListener {
 
     Aor_Autocarro aor_autocarro;
     PainelFundo painelFundo;
+    JLabel valorViagem;
+    Reserva reserva;
+    JLabel clienteNome;
 
     JButton opcao1;
     JButton opcao2;
@@ -47,7 +50,7 @@ public class PayPal extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+         clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -92,7 +95,7 @@ public class PayPal extends JPanel implements ActionListener {
         custoViagem.setBounds(625, 250, 200, 200);
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
-        JLabel valorViagem = new JLabel("Valor");
+        valorViagem = new JLabel("Valor");
         valorViagem.setBounds(75, 100, 200, 10);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
@@ -160,6 +163,14 @@ public class PayPal extends JPanel implements ActionListener {
 
 
     }
+    public void custoAutocarro(Reserva reserva) {
+        if (!(reserva == null)) {
+            this.reserva = reserva;
+            clienteNome.setText(reserva.getCliente().getNome());
+            valorViagem.setText(String.valueOf(reserva.getCusto()));
+
+        }
+    }
 
 
     @Override
@@ -212,6 +223,7 @@ public class PayPal extends JPanel implements ActionListener {
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
         if(e.getActionCommand().equals("Sair")){
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if(e.getActionCommand().equals("Mudar Pagamento")){

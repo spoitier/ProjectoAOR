@@ -64,8 +64,8 @@ public class PainelFundo {
   painelPrincipal.add(mapaPaineis.get("CancelarReserva"),"CancelarReserva");
   mapaPaineis.put("DadosPessoaisCliente",new DadosPessoaisCliente(this,aor_autocarro));
   painelPrincipal.add(mapaPaineis.get("DadosPessoaisCliente"),"DadosPessoaisCliente");
-  mapaPaineis.put("AlterarPalavraChave",new AlterarPalavraChaveCliente(this));
-  painelPrincipal.add(new AlterarPalavraChaveCliente(this),"AlterarPalavraChave");
+  mapaPaineis.put("AlterarPalavraChave",new AlterarPalavraChaveCliente(this,aor_autocarro));
+  painelPrincipal.add(mapaPaineis.get("AlterarPalavraChave"),"AlterarPalavraChave");
   mapaPaineis.put("RegistarNovoAdministrador",new RegistarNovoAdministrador(this,aor_autocarro));
   painelPrincipal.add(mapaPaineis.get("RegistarNovoAdministrador"),"RegistarNovoAdministrador");
   mapaPaineis.put("Motoristas",new Motoristas(this,aor_autocarro));

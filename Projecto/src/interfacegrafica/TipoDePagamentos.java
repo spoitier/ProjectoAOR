@@ -1,5 +1,7 @@
 package interfacegrafica;
 
+import programa.Reserva;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class TipoDePagamentos extends JPanel implements ActionListener {
     PainelFundo painelFundo;
+    Reserva reserva;
+    JLabel valorViagem;
 
     JButton opcao1;
     JButton opcao2;
@@ -17,6 +21,8 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
     JButton paypalButton;
     JButton cartaoCreditoButton;
     JButton multibancoButton;
+    JLabel clienteNome;
+    JButton sairBotao;
 
 
     public TipoDePagamentos(PainelFundo painelFundo) {
@@ -35,12 +41,12 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-        JLabel clienteNome = new JLabel("Nome do Cliente");
+         clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        JButton sairBotao = new JButton("Sair");
+         sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -80,7 +86,7 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         custoViagem.setBounds(625, 250, 200, 200);
         JLabel tituloCusto = new JLabel("CUSTO DA VIAGEM");
         tituloCusto.setBounds(45, 30, 200, 10);
-        JLabel valorViagem = new JLabel("Valor");
+        valorViagem = new JLabel("Valor");
         valorViagem.setBounds(75, 100, 200, 10);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
@@ -113,6 +119,16 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
 
 
         sairBotao.addActionListener(this);
+
+
+    }
+    public void custoAutocarro(Reserva reserva) {
+        if (!(reserva == null)) {
+            this.reserva = reserva;
+            clienteNome.setText(reserva.getCliente().getNome());
+            valorViagem.setText(String.valueOf(reserva.getCusto()));
+
+        }
 
 
     }
@@ -162,16 +178,20 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                ((Login)painelFundo.mapaPaineis.get("Login")).sair();
                 painelFundo.mudaEcra("Login");
             }
         }
         if(e.getActionCommand().equals("PayPAL")){
+            ((PayPal)(painelFundo.mapaPaineis.get("PayPal"))).custoAutocarro(this.reserva);
             painelFundo.mudaEcra("PayPal");
         }
         if(e.getActionCommand().equals("Cartão de Crédito")){
+            ((CartaoCredito)(painelFundo.mapaPaineis.get("CartaoCredito"))).custoAutocarro(this.reserva);
             painelFundo.mudaEcra("CartaoCredito");
         }
         if(e.getActionCommand().equals("Multibanco")){
+            ((Multibanco)(painelFundo.mapaPaineis.get("Multibanco"))).custoAutocarro(this.reserva);
             painelFundo.mudaEcra("Multibanco");
         }
 

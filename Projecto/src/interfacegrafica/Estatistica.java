@@ -32,6 +32,8 @@ public class Estatistica extends JPanel implements ActionListener {
     String[] colunasReservas ;
 
     String[][] dataReservas;
+    JLabel totalRequisitadoLabel;
+
 
     public Estatistica(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
@@ -159,8 +161,8 @@ public class Estatistica extends JPanel implements ActionListener {
 
         JPanel totalRequisitado = new JPanel(new GridLayout(1, 2, 0, 0));
         totalRequisitado.setBounds(200, 350, 400, 15);
-        JLabel totalRequisitadoLabel = new JLabel("Autocarro mais requisitado");
-        JLabel totalRequisitadoPreenchidoLabel = new JLabel("Preenchido");
+        JLabel totalRequisitadoLabel = new JLabel();
+        JLabel totalRequisitadoPreenchidoLabel = new JLabel();
         totalRequisitado.add(totalRequisitadoLabel);
         totalRequisitado.add(totalRequisitadoPreenchidoLabel);
 
@@ -382,10 +384,12 @@ public class Estatistica extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 

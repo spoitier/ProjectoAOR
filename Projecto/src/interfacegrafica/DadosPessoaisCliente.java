@@ -1,6 +1,7 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
 import programa.Utilizador;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
     JLabel palavraChaveField;
     JLabel clienteNome;
-
+    JLabel tipoSubscricao;
 
     public DadosPessoaisCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -110,6 +111,8 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         emailLabel.setBounds(50, 210, 200, 30);
         JLabel palavraChaveLabel = new JLabel("Palavra Chave:");
         palavraChaveLabel.setBounds(50, 250, 200, 30);
+        JLabel tipoSubscricaoLabel = new JLabel("Tipo de subscrição: ");
+        tipoSubscricaoLabel.setBounds(25, 290, 200, 30);
 
         //Fields
         nomeField = new JLabel();
@@ -124,6 +127,9 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         emailField.setBounds(150, 210, 200, 30);
         palavraChaveField = new JLabel();
         palavraChaveField.setBounds(150, 250, 200, 30);
+        tipoSubscricao = new JLabel();
+        tipoSubscricao.setBounds(150, 290, 200, 30);
+
 
         formulario.add(nomeLabel);
         formulario.add(nifLabel);
@@ -137,6 +143,8 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         formulario.add(telefoneField);
         formulario.add(emailField);
         formulario.add(palavraChaveField);
+        formulario.add(tipoSubscricaoLabel);
+        formulario.add(tipoSubscricao);
         this.add(formulario);
 
         //===============================================
@@ -175,6 +183,8 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
             telefoneField.setText(aor_autocarro.getUserLogado().getTelefone());
             emailField.setText(aor_autocarro.getUserLogado().getEmail());
             palavraChaveField.setText(aor_autocarro.getUserLogado().getPalavraChave());
+            Cliente logado = (Cliente) aor_autocarro.getUserLogado();
+            tipoSubscricao.setText(logado.getTipoCliente());
         }
         return null;
     }
@@ -183,7 +193,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand().equals("Reserva Autocarro")) {
+        if (e.getActionCommand().equals("Reserva Viagem")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
@@ -202,9 +212,12 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
             painelFundo.mudaEcra("DadosPessoaisClientes");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
+            Utilizador cliente = aor_autocarro.getCliente(nifField.getText());
+            ((AlterarPalavraChaveCliente)painelFundo.mapaPaineis.get("AlterarPalavraChave")).setCliente(cliente);
             painelFundo.mudaEcra("AlterarPalavraChave");
         }
         if (e.getActionCommand().equals("Alterar plano subsrição")) {

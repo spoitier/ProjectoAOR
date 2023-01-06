@@ -230,6 +230,7 @@ public class ClientesEditar extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 

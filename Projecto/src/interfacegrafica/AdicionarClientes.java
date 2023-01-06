@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AdicionarClientes extends JPanel implements ActionListener {
     Aor_Autocarro aor_autocarro;
@@ -189,22 +191,22 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
         String[] colunas = {"Id", "Nome", "NIF", "Morada", "Telefone", "Email"};
 
-        String[][] data = new String[aor_autocarro.getUtilizadores().size()][6];
-
+        ArrayList<String[]> data = new ArrayList<>();
         for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
             if (utilizador instanceof Cliente) {
-                for (int i = 0; i < aor_autocarro.getUtilizadores().size(); i++) {
-                    data[i][0] = aor_autocarro.getUtilizadores().get(i).getId();
-                    data[i][1] = aor_autocarro.getUtilizadores().get(i).getNome();
-                    data[i][2] = aor_autocarro.getUtilizadores().get(i).getNif();
-                    data[i][3] = aor_autocarro.getUtilizadores().get(i).getMorada();
-                    data[i][4] = aor_autocarro.getUtilizadores().get(i).getTelefone();
-                    data[i][5] = aor_autocarro.getUtilizadores().get(i).getEmail();
-                }
+                String[] utilizadorInfo = new String[6];
+                utilizadorInfo[0] = utilizador.getId();
+                utilizadorInfo[1] = utilizador.getNome();
+                utilizadorInfo[2] = utilizador.getNif();
+                utilizadorInfo[3] = utilizador.getMorada();
+                utilizadorInfo[4] = utilizador.getTelefone();
+                utilizadorInfo[5] = utilizador.getEmail();
+                data.add(utilizadorInfo);
             }
-        }
 
-        tabela = new JTable(data, colunas);
+        }
+        String[][] dataArray = data.toArray(new String[0][0]);
+        tabela = new JTable(dataArray, colunas);
         sp = new JScrollPane(tabela);
         sp.setBounds(500, 150, 375, 400);
         this.add(sp);
@@ -228,24 +230,26 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         String[] colunas = {"Id", "Nome", "NIF", "Morada", "Telefone", "Email"};
 
-        String[][] data = new String[aor_autocarro.getUtilizadores().size()][6];
+        ArrayList<String[]> data = new ArrayList<>();
 
         this.remove(sp);
         for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
             if (utilizador instanceof Cliente) {
-                for (int i = 0; i < aor_autocarro.getUtilizadores().size(); i++) {
-                    data[i][0] = aor_autocarro.getUtilizadores().get(i).getId();
-                    data[i][1] = aor_autocarro.getUtilizadores().get(i).getNome();
-                    data[i][2] = aor_autocarro.getUtilizadores().get(i).getNif();
-                    data[i][3] = aor_autocarro.getUtilizadores().get(i).getMorada();
-                    data[i][4] = aor_autocarro.getUtilizadores().get(i).getTelefone();
-                    data[i][5] = aor_autocarro.getUtilizadores().get(i).getEmail();
-                }
+                String[] utilizadorInfo = new String[6];
+                utilizadorInfo[0] = utilizador.getId();
+                utilizadorInfo[1] = utilizador.getNome();
+                utilizadorInfo[2] = utilizador.getNif();
+                utilizadorInfo[3] = utilizador.getMorada();
+                utilizadorInfo[4] = utilizador.getTelefone();
+                utilizadorInfo[5] = utilizador.getEmail();
+                data.add(utilizadorInfo);
             }
+
         }
 
 
-        tabela = new JTable(data, colunas);
+        String[][] dataArray = data.toArray(new String[0][0]);
+        tabela = new JTable(dataArray, colunas);
         sp = new JScrollPane(tabela);
         sp.setBounds(550, 150, 375, 400);
         this.add(sp);
@@ -253,6 +257,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         repaint();
 
     }
+
 
     public String getNifEditavel() {
         return nifEditavel;
@@ -321,8 +326,6 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso.\n" +
                         "Será enviado para o email " + emailField.getText() + " uma password provisória, a qual deverá" +
                         "ser alterada.");
-
-
                 atualizar();
                 nomeField.setText("");
                 nifField.setText("");
@@ -380,9 +383,12 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
+            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
         if (e.getActionCommand().equals("Sair")) {
+            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+
             painelFundo.mudaEcra("Login");
         }
     }
