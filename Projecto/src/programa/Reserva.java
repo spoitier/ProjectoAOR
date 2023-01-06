@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Reserva implements Serializable {
 
-Aor_Autocarro aor_autocarro=new Aor_Autocarro();
     private Cliente cliente;
     private Autocarro autocarro;
     private Motorista motorista;
@@ -25,7 +24,7 @@ Aor_Autocarro aor_autocarro=new Aor_Autocarro();
 public Reserva(){
 }
 
-    public Reserva(Cliente cliente, Autocarro autocarro, Motorista motorista, LocalDate dataReserva, LocalDate dataPartida, String numeroDias, String numeroPessoas, String localPartida, String localDestino, String distancia) {
+    public Reserva(Cliente cliente, Autocarro autocarro, Motorista motorista, LocalDate dataReserva, LocalDate dataPartida, String numeroDias, String numeroPessoas, String localPartida, String localDestino, String distancia,String id) {
         this.cliente = cliente;
         this.autocarro = autocarro;
         this.motorista = motorista;
@@ -37,8 +36,10 @@ public Reserva(){
         this.localDestino = localDestino;
         this.distancia = distancia;
         dataFim = dataPartida.plusDays(Integer.parseInt(numeroDias));//calcula data fim do periodo de reserva pretendido
-        this.id="res".concat(String.valueOf(aor_autocarro.contarReservas()));
+        this.id=id;
     }
+
+
 
 
 
@@ -191,11 +192,11 @@ public Reserva(){
         int mes = Integer.parseInt(dataSemEspaços.substring(2, 4));
 
 
-        if(dia<0&&dia>31&&mes<0&&mes>12){
+       if(dia<0&&dia>31&&mes<0&&mes>12){
             validar=false;
         }
 
-        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8) && (dia <= 31)) {
+        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8||mes==10) && (dia <= 31)) {
             validar = true;
         } else if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) {
             validar = true;

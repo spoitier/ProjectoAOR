@@ -89,8 +89,8 @@ public class Main {
         aor_autocarro.getReservas().add(r3);
         aor_autocarro.getReservas().add(r4);
         aor_autocarro.getReservas().add(r5);
+*/
 
-         */
 
         System.out.println(aor_autocarro.getUtilizadores());
         System.out.println(aor_autocarro.getReservas());

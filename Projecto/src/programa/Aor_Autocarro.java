@@ -235,24 +235,13 @@ public class Aor_Autocarro implements Serializable {
 
     //Conta o nº total de reservas:efetuadas,canceladas e emEspera.Utilizado para atribuir ID à reserva
     public int contarReservas() {
-        int contaReservas=1;
-        int reserva = 0;
-        int reservaCancelada=0;
-        int reservaEmEspera=0;
 
-        for (Reserva res : reservas) {
-                reserva++;
-            }
+        int contaReservas=reservas.size()+reservasCanceladas.size()+reservasemEspera.size();
 
-        for(Reserva cancelada:reservasCanceladas){
-            reservaCancelada++;
-        }
-
-        for(Reserva emEspera:reservasemEspera){
-            reservaEmEspera++;
-        }
-
-        contaReservas=reserva+reservaCancelada+reservaEmEspera;
+if(contaReservas==0){
+    contaReservas=1;
+}else
+        contaReservas++;
 
         return contaReservas;
     }
@@ -428,7 +417,7 @@ public class Aor_Autocarro implements Serializable {
                     autocarro = bus;
                     motorista = identificarMotoristaDisponível();
                     reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                            partida, destino, distancia);
+                            partida, destino, distancia,"res"+contarReservas());
                     return reserva;
                 } else {
                     for (Reserva res : reservas) {
@@ -436,7 +425,7 @@ public class Aor_Autocarro implements Serializable {
                             autocarro = bus;
                             motorista = identificarMotoristaDisponível();
                             reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                                    partida, destino, distancia);
+                                    partida, destino, distancia,"res"+contarReservas());
                             return reserva;
                         } else {
                             //Verificar se existe(para cada autocarro) alguma reserva com data (início ou fim) compreendida para o periodo pretendido
@@ -474,7 +463,7 @@ public class Aor_Autocarro implements Serializable {
                                 autocarro = bus;
                                 motorista = identificarMotoristaDisponível();
                                 reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                                        partida, destino, distancia);
+                                        partida, destino, distancia,"res"+contarReservas());
                                 return reserva;
                             }
                         }
@@ -503,7 +492,7 @@ public class Aor_Autocarro implements Serializable {
                 //Criar e adicionar reserva à lista de reservas da Empresa
 
                 reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                        partida, destino, distancia);
+                        partida, destino, distancia,"res"+contarReservas());
                 return reserva;
 
             }else if(resultadoReserva =="indisponível"){
@@ -511,7 +500,7 @@ public class Aor_Autocarro implements Serializable {
                 motorista = null;
                 //Criar e adicionar reserva à lista de reservas em Espera
                 reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                        partida, destino, distancia);
+                        partida, destino, distancia,"res"+contarReservas());
             }
 
             return reserva;

@@ -194,17 +194,19 @@ public class ClientesEditar extends JPanel implements ActionListener {
             this.utilizador.setEmail(emailField.getText());
             this.utilizador.setMorada(moradaField.getText());
             this.utilizador.setTelefone(telefoneField.getText());
-            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
-            nameField.setText("");
-            nifLabelPreenchido.setText("");
-            emailField.setText("");
-            moradaField.setText("");
-            telefoneField.setText("");
+
+            nameField.setText("inativo");
+            nifLabelPreenchido.setText("inativo");
+            emailField.setText("inativo");
+            moradaField.setText("inativo");
+            telefoneField.setText("inativo");
+
             JOptionPane.showMessageDialog(null,"Editado com sucesso!");
             ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).atualizar();
             painelFundo.mudaEcra("AdicionarClientes");
 
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
         }
         if (e.getActionCommand().equals("Adminstradores")) {
