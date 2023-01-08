@@ -7,38 +7,34 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Motoristas.
+ */
 public class Motoristas extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    JScrollPane sp;
+  private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
+    private   JScrollPane sp;
 
 
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao4;
-    JButton opcao3;
-    JButton opcao5;
-    JButton opcao6;
-    JButton adicionarButton;
-    JButton removerButton;
-    JTable tabela;
-    JLabel nomeLabel;
-    JLabel emailLabel;
-    JLabel adminNome;
-    TextField nomeField;
+    private   JTable tabela;
+    private final JLabel adminNome;
+    private final TextField nomeField;
 
-    TextField emailField;
-    JTextField removerField;
+    private final TextField emailField;
+    private final JTextField removerField;
 
-    JTextField emailEditarField;
+    private final JTextField emailEditarField;
 
-    JButton editarButton;
-
-    JTextField nomeeditarField;
+    private final JTextField nomeeditarField;
 
 
+    /**
+     * Instantiates a new Motoristas.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public Motoristas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -61,7 +57,7 @@ public class Motoristas extends JPanel implements ActionListener {
         cabecalho.add(adminNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -75,12 +71,12 @@ public class Motoristas extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -103,11 +99,11 @@ public class Motoristas extends JPanel implements ActionListener {
         loginPanel.setBounds(10, 150, 300, 100);
 
         //Label do nomeLabel
-        nomeLabel = new JLabel("Nome:");
+        JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(0, 0, 80, 30);
 
         //Label da palavra chave
-        emailLabel = new JLabel("Email");
+        JLabel emailLabel = new JLabel("Email");
         emailLabel.setBounds(0, 50, 80, 30);
 
         // Textofield do nomeLabel
@@ -159,11 +155,11 @@ public class Motoristas extends JPanel implements ActionListener {
         // Painel botoes
 
 
-        adicionarButton = new JButton("Adicionar");
+        JButton adicionarButton = new JButton("Adicionar");
         adicionarButton.setBounds(350, 200, 100, 30);
-        removerButton = new JButton("Remover");
+        JButton removerButton = new JButton("Remover");
         removerButton.setBounds(350, 300, 100, 30);
-        editarButton = new JButton("Editar");
+        JButton editarButton = new JButton("Editar");
         editarButton.setBounds(350, 450, 100, 30);
 
 
@@ -204,7 +200,10 @@ public class Motoristas extends JPanel implements ActionListener {
 
     }
 
-    //========================================
+    /**
+     * Atualizar.
+     */
+//========================================
     //Metodo para atualizar tabela
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
@@ -227,6 +226,9 @@ public class Motoristas extends JPanel implements ActionListener {
 
     //=======================================================
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado() {
 
 

@@ -8,29 +8,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The type Alterar palavra chave cliente.
+ */
 public class AlterarPalavraChaveCliente extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton sairBotao;
-    JButton alterarPalavraChaveButton;
-    Utilizador utilizador;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    JLabel clienteNome;
-    JLabel emailPreenchido;
-    TextField palavraChaveAtualField;
-    TextField novaPalavraChaveField;
-    TextField confirmePalavraChaveField;
+    private final JLabel clienteNome;
+    private final JLabel emailPreenchido;
+    private final TextField palavraChaveAtualField;
+    private final TextField novaPalavraChaveField;
+    private final TextField confirmePalavraChaveField;
 
 
-
-    public AlterarPalavraChaveCliente(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
-        this.aor_autocarro=aor_autocarro;
+    /**
+     * Instantiates a new Alterar palavra chave cliente.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
+    public AlterarPalavraChaveCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -51,7 +51,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -64,11 +64,11 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Reserva programa.Autocarro");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva programa.Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -131,7 +131,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
         this.add(formularioPanel);
 
-        alterarPalavraChaveButton = new JButton("Alterar palavra chave");
+        JButton alterarPalavraChaveButton = new JButton("Alterar palavra chave");
         alterarPalavraChaveButton.setBounds(650, 225, 200, 30);
         this.add(alterarPalavraChaveButton);
 
@@ -146,6 +146,11 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
     }
 
+    /**
+     * Nome logado utilizador.
+     *
+     * @return the utilizador
+     */
     public Utilizador nomeLogado() {
         if (aor_autocarro.getUserLogado() == null) {
             clienteNome.setText("");
@@ -157,9 +162,13 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
     }
 
+    /**
+     * Sets cliente.
+     *
+     * @param utilizador the utilizador
+     */
     public void setCliente(Utilizador utilizador) {
-        if(!(utilizador==null)){
-            this.utilizador=utilizador;
+        if (!(utilizador == null)) {
             emailPreenchido.setText(utilizador.getEmail());
             clienteNome.setText(utilizador.getNome());
             revalidate();
@@ -174,12 +183,14 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
             painelFundo.mudaEcra("ReservaViagem");
         }
 
-        if (e.getActionCommand().equals("Histórico Reservas")) {
-            painelFundo.mudaEcra("HistoricoReservas");
+        if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            painelFundo.mudaEcra("ConsultarReservas");
         }
 
-        if (e.getActionCommand().equals("Consultar Reservas")) {
-            painelFundo.mudaEcra("ConsultarReservas");
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((CancelarReserva) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
+            painelFundo.mudaEcra("CancelarReserva");
         }
 
         if (e.getActionCommand().equals("Cancelar Reservas")) {
@@ -190,7 +201,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
             painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {

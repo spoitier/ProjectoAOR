@@ -2,31 +2,32 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Cliente;
-import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Cancelar reserva.
+ */
 public class CancelarReserva extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton cancelarButton;
-    Aor_Autocarro aor_autocarro;
-    JLabel clienteNome;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
+    private final JLabel clienteNome;
 
-    JTextField reservaField;
+    private final JTextField reservaField;
 
 
+    /**
+     * Instantiates a new Cancelar reserva.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public CancelarReserva(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
-        this.aor_autocarro=aor_autocarro;
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -48,7 +49,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
         // Botao para sair para o login
 
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -61,11 +62,11 @@ public class CancelarReserva extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Reserva Autocarro");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -86,7 +87,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
         JLabel reservaLabel = new JLabel("NºReserva");
         reservaField = new JTextField();
-        cancelarButton = new JButton("Cancelar");
+        JButton cancelarButton = new JButton("Cancelar");
         reservaPainel.add(reservaLabel);
         reservaPainel.add(reservaField);
         reservaPainel.add(cancelarButton);
@@ -103,6 +104,9 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado() {
 
         if (aor_autocarro.getUserLogado() == null) {
@@ -117,12 +121,12 @@ public class CancelarReserva extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String descrição;
-        Cliente logado = (Cliente) aor_autocarro.getUserLogado();
-        String idReserva= reservaField.getText();
+        Cliente logado;
+        logado = (Cliente) aor_autocarro.getUserLogado();
+        String id = reservaField.getText();
         if (e.getActionCommand().equals("Cancelar")) {
-            descrição= aor_autocarro.cancelarReservaCliente(logado,idReserva);
+            descrição = aor_autocarro.cancelarReservaCliente(logado, id);
             JOptionPane.showMessageDialog(null, descrição);
-            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
 
 
@@ -130,21 +134,27 @@ public class CancelarReserva extends JPanel implements ActionListener {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
+
         if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((CancelarReserva) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
+            painelFundo.mudaEcra("CancelarReserva");
+        }
         if (e.getActionCommand().equals("Dados Pessoais")) {
             ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 

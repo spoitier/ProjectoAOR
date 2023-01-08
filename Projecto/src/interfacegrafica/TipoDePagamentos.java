@@ -9,25 +9,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Tipo de pagamentos.
+ */
 public class TipoDePagamentos extends JPanel implements ActionListener {
     Aor_Autocarro aor_autocarro;
-    PainelFundo painelFundo;
-    Reserva reserva;
-    JLabel valorViagem;
-
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-
-    JButton paypalButton;
-    JButton cartaoCreditoButton;
-    JButton multibancoButton;
-    JLabel clienteNome;
-    JButton sairBotao;
+    private final PainelFundo painelFundo;
+    private   Reserva reserva;
+    private final JLabel valorViagem;
+    private final JLabel clienteNome;
 
 
+    /**
+     * Instantiates a new Tipo de pagamentos.
+     *
+     * @param painelFundo the painel fundo
+     */
     public TipoDePagamentos(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
@@ -50,7 +47,7 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-         sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -63,11 +60,11 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("ReservaViagem");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("ReservaViagem");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -102,9 +99,9 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         JPanel pagamentoPanel = new JPanel(new GridLayout(4, 1, 0, 30));
         pagamentoPanel.setBounds(200, 200, 400, 350);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-        paypalButton = new JButton("PayPAL");
-        cartaoCreditoButton = new JButton("Cartão de Crédito");
-        multibancoButton = new JButton("Multibanco");
+        JButton paypalButton = new JButton("PayPAL");
+        JButton cartaoCreditoButton = new JButton("Cartão de Crédito");
+        JButton multibancoButton = new JButton("Multibanco");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(paypalButton);
         pagamentoPanel.add(cartaoCreditoButton);
@@ -126,6 +123,12 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
 
 
     }
+
+    /**
+     * Custo autocarro.
+     *
+     * @param reserva the reserva
+     */
     public void custoAutocarro(Reserva reserva) {
         if (!(reserva == null)) {
             this.reserva = reserva;

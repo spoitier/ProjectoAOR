@@ -10,32 +10,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Clientes editar.
+ */
 public class ClientesEditar extends JPanel implements ActionListener {
 
-    Aor_Autocarro aor_autocarro;
-    PainelFundo painelFundo;
+   private final Aor_Autocarro aor_autocarro;
+    private final PainelFundo painelFundo;
 
-    Utilizador utilizador;
-    JButton sairButton;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton opcao6;
-    JButton editarButton;
-    JLabel nomeLabel;
-    JLabel nifLabel;
-    JLabel moradaLabel;
-    JLabel telefoneLabel;
-    JLabel emailLabel;
-    JTextField nameField;
-    JLabel nifLabelPreenchido;
-    JTextField moradaField;
-    JTextField telefoneField;
-    JTextField emailField;
+    private  Utilizador utilizador;
+    private final JTextField nameField;
+    private final JLabel nifLabelPreenchido;
+    private final JTextField moradaField;
+    private final JTextField telefoneField;
+    private final JTextField emailField;
 
 
+    /**
+     * Instantiates a new Clientes editar.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     ClientesEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
@@ -58,7 +54,7 @@ public class ClientesEditar extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairButton = new JButton("Sair");
+        JButton sairButton = new JButton("Sair");
         sairButton.setBounds(810, 1, 70, 28);
         cabecalho.add(sairButton);
         this.add(cabecalho);
@@ -71,12 +67,12 @@ public class ClientesEditar extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -103,15 +99,15 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
 
         //Labels
-        nomeLabel = new JLabel("Nome:");
+        JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        nifLabel = new JLabel("NIF:");
+        JLabel nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        moradaLabel = new JLabel("Morada:");
+        JLabel moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        telefoneLabel = new JLabel("Telefone:");
+        JLabel telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        emailLabel = new JLabel("Email:");
+        JLabel emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
 
 
@@ -141,7 +137,7 @@ public class ClientesEditar extends JPanel implements ActionListener {
         formulario.add(emailField);
         this.add(formulario);
 
-        editarButton = new JButton("Editar");
+        JButton editarButton = new JButton("Editar");
         editarButton.setBounds(350, 400, 100, 30);
         this.add(editarButton);
 
@@ -157,6 +153,11 @@ public class ClientesEditar extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Sets cliente.
+     *
+     * @param utilizador the utilizador
+     */
     public void setCliente(Utilizador utilizador) {
         if(!(utilizador==null)) {
             this.utilizador=utilizador;

@@ -12,30 +12,28 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * The type Registar utilizador.
+ */
 public class RegistarUtilizador extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
+  private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    Cliente cliente;
-    JButton prosseguirButton;
-    JButton retrocessoButton;
-    Aor_Autocarro aor_autocarro;
-    JLabel nomeLabel;
-    JLabel nifLabel;
-
-    JLabel moradaLabel;
-
-    JLabel telefoneLabel;
-    JLabel emailLabel;
-    JLabel palavraChaveLabel;
-    JTextField nomeField;
-    JTextField nifField;
-    JTextField moradaField;
-    JTextField telefoneField;
-    JTextField emailField;
-    JTextField palavraChaveField;
+    private final JTextField nomeField;
+    private final JTextField nifField;
+    private final JTextField moradaField;
+    private final JTextField telefoneField;
+    private final JTextField emailField;
+    private final JTextField palavraChaveField;
 
 
+    /**
+     * Instantiates a new Registar utilizador.
+     *
+     * @param painelfundo   the painelfundo
+     * @param aor_autocarro the aor autocarro
+     */
     public RegistarUtilizador(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelfundo;
@@ -52,7 +50,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
         JLabel tituloSecundario = new JLabel("Registar Novo Utilizador:\n");
         tituloSecundario.setBounds(0, 70, 300, 30);
 
-        retrocessoButton = new JButton("Retrocesso");
+        JButton retrocessoButton = new JButton("Retrocesso");
         retrocessoButton.setBounds(750, 65, 100, 30);
 
         cabecalho.add(tituloPrimario);
@@ -69,17 +67,17 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
 
 
         //Labels
-        nomeLabel = new JLabel("Nome:");
+        JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        nifLabel = new JLabel("NIF:");
+        JLabel nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        moradaLabel = new JLabel("Morada:");
+        JLabel moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        telefoneLabel = new JLabel("Telefone:");
+        JLabel telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        emailLabel = new JLabel("Email:");
+        JLabel emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
-        palavraChaveLabel = new JLabel("Palavra Chave:");
+        JLabel palavraChaveLabel = new JLabel("Palavra Chave:");
         palavraChaveLabel.setBounds(50, 250, 200, 30);
 
         //Fields
@@ -112,7 +110,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
 
 
         // Buttons
-        prosseguirButton = new JButton("Prosseguir");
+        JButton prosseguirButton = new JButton("Prosseguir");
         prosseguirButton.setBounds(340, 575, 200, 70);
 
         //Adicionar botoes ao actionListener

@@ -9,33 +9,32 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Autocarros editar.
+ */
 public class AutocarrosEditar extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    Autocarro autocarro;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
+    private Autocarro autocarro;
 
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton opcao6;
-    JButton editarButton;
+    private final JTextField matriculaField;
 
-    JButton sairBotao;
+    private final JTextField marcaField;
 
-    JTextField matriculaField;
+    private final JTextField modeloField;
 
-    JTextField marcaField;
+    private final JTextField lotacaoField;
 
-    JTextField modeloField;
-
-    JTextField lotacaoField;
-
-    JLabel matriculaPreenchida;
+    private final JLabel matriculaPreenchida;
 
 
+    /**
+     * Instantiates a new Autocarros editar.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public AutocarrosEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -58,7 +57,7 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -72,12 +71,12 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -141,7 +140,7 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
         formulario.add(lotacaoField);
         this.add(formulario);
 
-        editarButton = new JButton("Editar");
+        JButton editarButton = new JButton("Editar");
         editarButton.setBounds(275, 375, 100, 30);
         this.add(editarButton);
 
@@ -156,10 +155,14 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Sets autocarro.
+     *
+     * @param autocarro the autocarro
+     */
+    public void setAutocarro(Autocarro autocarro) {
 
-    public void setAutocarro(Autocarro autocarro){
-
-        if(!(autocarro==null)){
+        if (!(autocarro == null)) {
             this.autocarro = autocarro;
             matriculaPreenchida.setText(autocarro.getMatricula());
             matriculaField.setText(autocarro.getMatricula());
@@ -170,8 +173,6 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
             repaint();
         }
     }
-
-
 
 
     @Override
@@ -195,12 +196,12 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 
@@ -215,8 +216,8 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
             marcaField.setText("");
             modeloField.setText("");
             lotacaoField.setText("");
-            JOptionPane.showMessageDialog(null,"Editado com sucesso!");
-            ((Autocarros)(painelFundo.mapaPaineis.get("Autocarros"))).atualizar();
+            JOptionPane.showMessageDialog(null, "Editado com sucesso!");
+            ((Autocarros) (painelFundo.mapaPaineis.get("Autocarros"))).atualizar();
             painelFundo.mudaEcra("Autocarros");
         }
     }

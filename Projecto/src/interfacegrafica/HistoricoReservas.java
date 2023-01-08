@@ -1,28 +1,34 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Cliente;
+import programa.Reserva;
+import programa.Utilizador;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+/**
+ * The type Historico reservas.
+ */
 public class HistoricoReservas extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
+   private final PainelFundo painelFundo;
+    private JTable tabela;
+    private JScrollPane sp;
+    private final JLabel clienteNome;
+    private final Aor_Autocarro aor_autocarro;
+    private final JComboBox mesCombobox;
 
-    JTable tabela;
-    JScrollPane sp;
-    JLabel clienteNome;
-
-    Aor_Autocarro aor_autocarro;
-
+    /**
+     * Instantiates a new Historico reservas.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public HistoricoReservas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -46,7 +52,7 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -59,11 +65,11 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Reserva Autocarro");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -83,9 +89,8 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         JPanel botoesFiltro = new JPanel(new GridLayout(1, 4, 5, 5));
         botoesFiltro.setBounds(100, 150, 200, 30);
         JLabel mesLabel = new JLabel("Mes:");
-        String[] mes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-        JComboBox mesCombobox = new JComboBox(mes);
-
+        String[] mes = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        mesCombobox = new JComboBox(mes);
 
 
         botoesFiltro.add(mesLabel);
@@ -94,28 +99,18 @@ public class HistoricoReservas extends JPanel implements ActionListener {
 
         //========================================
         // Tabela
-
         String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
-                "Local Partida", "Local Destino", "Custo total Viagem", "Estado"};
-        String[][] data = new String[aor_autocarro.getReservas().size()][8];
-        for (int i = 0; i < aor_autocarro.getReservas().size(); i++) {
-            data[i][0] = aor_autocarro.getReservas().get(i).toString();
-            data[i][1] = String.valueOf(aor_autocarro.getReservas().get(i).getDataReserva());
-            data[i][2] = String.valueOf(aor_autocarro.getReservas().get(i).getNumeroDias());
-            data[i][3] = String.valueOf(aor_autocarro.getReservas().get(i).getNumeroPessoas());
-            data[i][4] = aor_autocarro.getReservas().get(i).getLocalPartida();
-            data[i][5] = aor_autocarro.getReservas().get(i).getLocalDestino();
-            data[i][6] = String.valueOf(aor_autocarro.getReservas().get(i).getCusto());
-            data[i][7] = aor_autocarro.getReservas().get(i).toString();
+                "Local Partida", "Local Destino", "Matricula", "Custo total Viagem"};
+        ArrayList<String[]> data = new ArrayList<>();
 
-        }
-
-
-        tabela = new JTable(data, colunas);
+        String[][] dataArray = data.toArray(new String[0][0]);
+        tabela = new JTable(dataArray, colunas);
         sp = new JScrollPane(tabela);
-
-        sp.setBounds(100, 200, 500, 400);
+        sp.setBounds(100, 200, 600, 400);
         this.add(sp);
+        revalidate();
+        repaint();
+
 
         opcao1.addActionListener(this);
         opcao2.addActionListener(this);
@@ -123,30 +118,86 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         opcao4.addActionListener(this);
         opcao5.addActionListener(this);
         sairBotao.addActionListener(this);
+        mesCombobox.addActionListener(this);
+
+
+
 
 
     }
 
-    public void nomeLogado() {
 
-        if (aor_autocarro.getUserLogado() == null) {
-            clienteNome.setText("");
-        } else
-            clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+    /**
+     * Listagem por mes.
+     *
+     * @param mes the mes
+     */
+    public void listagemPorMes(String mes) {
+        remove(sp);
+        String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Matricula", "Custo total Viagem"};
+
+        ArrayList<String[]> data = new ArrayList<>();
+        for (Reserva reserva : aor_autocarro.getReservas()) {
+            if (reserva.getCliente().getEmail().equals(aor_autocarro.getUserLogado().getEmail())) {
+                String[] reservaInfo = new String[8];
+                if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
+                    reservaInfo[0] = reserva.getId();
+                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfo[2] = reserva.getNumeroDias();
+                    reservaInfo[3] = reserva.getNumeroPessoas();
+                    reservaInfo[4] = reserva.getLocalPartida();
+                    reservaInfo[5] = reserva.getLocalDestino();
+                    reservaInfo[6] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[7] = String.valueOf(reserva.getCusto());
+                    data.add(reservaInfo);
+                } else if(mes.equals("0")){
+                    reservaInfo[0] = reserva.getId();
+                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfo[2] = reserva.getNumeroDias();
+                    reservaInfo[3] = reserva.getNumeroPessoas();
+                    reservaInfo[4] = reserva.getLocalPartida();
+                    reservaInfo[5] = reserva.getLocalDestino();
+                    reservaInfo[6] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[7] = String.valueOf(reserva.getCusto());
+                    data.add(reservaInfo);
+
+                }
+
+            }
+        }
+        String[][] dataArray = data.toArray(new String[0][0]);
+        tabela = new JTable(dataArray, colunas);
+        sp = new JScrollPane(tabela);
+        sp.setBounds(100, 200, 600, 400);
+        this.add(sp);
+        clienteNome.setText(aor_autocarro.getUserLogado().getNome());
         revalidate();
         repaint();
 
+
     }
+
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        String mes = (String) mesCombobox.getSelectedItem();
+        listagemPorMes(mes);
+
         if (e.getActionCommand().equals("Reserva Autocarro")) {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
 
+        if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
+            painelFundo.mudaEcra("HistoricoReservas");
+        }
+
         if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

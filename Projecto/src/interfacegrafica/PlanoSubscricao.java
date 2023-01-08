@@ -11,16 +11,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+/**
+ * The type Plano subscricao.
+ */
 public class PlanoSubscricao extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    JButton retrocessoButton;
+   private final PainelFundo painelFundo;
 
-    JCheckBox premiumCheck;
-    JCheckBox normalCheck;
+    private final JCheckBox premiumCheck;
+    private final JCheckBox normalCheck;
 
-    Aor_Autocarro aor_autocarro;
+    private final Aor_Autocarro aor_autocarro;
 
+    /**
+     * Instantiates a new Plano subscricao.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public PlanoSubscricao(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -42,7 +50,7 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         this.add(tituloSecundario);
         this.add(mainPanel);
 
-        retrocessoButton = new JButton("Retrocesso");
+        JButton retrocessoButton = new JButton("Retrocesso");
         retrocessoButton.setBounds(750, 100, 100, 30);
         this.add(retrocessoButton);
 

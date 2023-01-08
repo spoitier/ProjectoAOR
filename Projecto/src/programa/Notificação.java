@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Notificação implements Serializable {
-    String email;
-    String tipoNotificação;
-    String descrição;
-    LocalDate data;
-    Boolean lido;
+   private String email;
+    private  String tipoNotificação;
+    private String descrição;
+    private LocalDate data;
+    private Boolean lido;
 
     public Notificação(String email,String tipoNotificação, String descrição, LocalDate data, Boolean lido) {
         this.email = email;

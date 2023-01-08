@@ -1,40 +1,48 @@
 package interfacegrafica;
 
 import programa.Aor_Autocarro;
+import programa.Reserva;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+/**
+ * The type Estatistica.
+ */
 public class Estatistica extends JPanel implements ActionListener {
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    JButton sairButton;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton opcao6;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    JLabel clienteNome;
+    private final JLabel clienteNome;
 
-    JTable tabela;
-    JScrollPane sp;
+    private JTable tabela;
+    private JScrollPane sp;
 
-    JTable canceladasTable;
-    JScrollPane spCanceladas;
+    private JTable canceladasTable;
+    private JScrollPane spCanceladas;
 
-    JTable reservasTable;
-    JScrollPane spReservas;
+    private JTable esperaTabela;
+    private JScrollPane spEspera;
 
-    String[] colunasReservas ;
+    private String[] colunasEspera;
 
-    String[][] dataReservas;
-    JLabel totalRequisitadoLabel;
+    private final JComboBox mesCombobox1;
+    private final JPanel autocarrosReservados;
+    private final JComboBox mesCombobox2;
+    private final JPanel autocarrosCanceladas;
+    private final JPanel autocarrosEspera;
+    private final JComboBox mesCombobox3;
 
 
+    /**
+     * Instantiates a new Estatistica.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public Estatistica(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
         this.aor_autocarro = aor_autocarro;
@@ -57,7 +65,7 @@ public class Estatistica extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairButton = new JButton("Sair");
+        JButton sairButton = new JButton("Sair");
         sairButton.setBounds(810, 1, 70, 28);
         cabecalho.add(sairButton);
         this.add(cabecalho);
@@ -70,12 +78,12 @@ public class Estatistica extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -161,8 +169,8 @@ public class Estatistica extends JPanel implements ActionListener {
 
         JPanel totalRequisitado = new JPanel(new GridLayout(1, 2, 0, 0));
         totalRequisitado.setBounds(200, 350, 400, 15);
-        JLabel totalRequisitadoLabel = new JLabel();
-        JLabel totalRequisitadoPreenchidoLabel = new JLabel();
+        JLabel totalRequisitadoLabel = new JLabel("Autocarro mais Requisitado:");
+        JLabel totalRequisitadoPreenchidoLabel = new JLabel(aor_autocarro.matriculaMaisRequisitado());
         totalRequisitado.add(totalRequisitadoLabel);
         totalRequisitado.add(totalRequisitadoPreenchidoLabel);
 
@@ -182,24 +190,25 @@ public class Estatistica extends JPanel implements ActionListener {
         JPanel totalViagens = new JPanel(new GridLayout(1, 2, 0, 0));
         totalViagens.setBounds(150, 350, 400, 15);
         JLabel totalViagensLabel = new JLabel("Cliente com mais viagens");
-        JLabel totalViagensPreenchidoLabel = new JLabel("Preenchido");
+        JLabel totalViagensPreenchidoLabel = new JLabel(aor_autocarro.clienteComMaisReservas());
         totalViagens.add(totalViagensLabel);
         totalViagens.add(totalViagensPreenchidoLabel);
 
         totalViagensPanel.add(totalViagens);
         abasPanel.add("Cliente com mais viagens", totalViagensPanel);
 
+
         //==========================================================================
         //Autocarros Reservados
-        JPanel autocarrosReservados = new JPanel();
+        autocarrosReservados = new JPanel();
         autocarrosReservados.setLayout(null);
 
         //Botoes
         JPanel botoesFiltroReservados = new JPanel(new GridLayout(1, 2, 10, 5));
         botoesFiltroReservados.setBounds(225, 25, 200, 30);
         JLabel mesLabelReservados = new JLabel("Mes:");
-        String[] mes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-        JComboBox mesCombobox1 = new JComboBox(mes);
+        String[] mes = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        mesCombobox1 = new JComboBox(mes);
 
         botoesFiltroReservados.add(mesLabelReservados);
         botoesFiltroReservados.add(mesCombobox1);
@@ -209,7 +218,7 @@ public class Estatistica extends JPanel implements ActionListener {
 
         String[][] data = new String[aor_autocarro.getReservas().size()][3];
         for (int i = 0; i < aor_autocarro.getReservas().size(); i++) {
-            //data[i][0] = aor_autocarro.getReservas().get(i).getAutocarro().getMatricula();
+            data[i][0] = aor_autocarro.getReservas().get(i).getAutocarro().getMatricula();
             data[i][1] = String.valueOf(aor_autocarro.getReservas().get(i).getDataPartida());
             data[i][2] = String.valueOf(aor_autocarro.getReservas().get(i).getDataFim());
 
@@ -222,17 +231,20 @@ public class Estatistica extends JPanel implements ActionListener {
         autocarrosReservados.add(sp);
         abasPanel.add("Autocarros reservados", autocarrosReservados);
 
+
         //=======================================================
         //Requisições Canceladas
 
-        JPanel autocarrosCanceladas = new JPanel();
+        autocarrosCanceladas = new JPanel();
         autocarrosCanceladas.setLayout(null);
 
         //Botoes
         JPanel botoesFiltroCanceladas = new JPanel(new GridLayout(1, 2, 0, 5));
         botoesFiltroCanceladas.setBounds(225, 50, 200, 30);
         JLabel mesLabelCanceladas = new JLabel("Mes:");
-        JComboBox mesCombobox2 = new JComboBox(mes);
+        String[] mescanceladas = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        mesCombobox2 = new JComboBox(mescanceladas);
+
         botoesFiltroCanceladas.add(mesLabelCanceladas);
         botoesFiltroCanceladas.add(mesCombobox2);
 
@@ -260,43 +272,38 @@ public class Estatistica extends JPanel implements ActionListener {
         //========================================================================
         //Reservas em Espera
 
-        JPanel autocarrosReservas = new JPanel();
-        autocarrosReservas.setLayout(null);
+        autocarrosEspera = new JPanel();
+        autocarrosEspera.setLayout(null);
 
         //Botoes
         JPanel botoesFiltroReservas = new JPanel(new GridLayout(1, 4, 0, 5));
         botoesFiltroReservas.setBounds(225, 50, 200, 30);
         JLabel mesLabelReservas = new JLabel("Mes:");
-        JComboBox mesCombobox3 = new JComboBox(mes);
+        String[] mesemEspera = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        mesCombobox3 = new JComboBox(mesemEspera);
         botoesFiltroReservas.add(mesLabelReservas);
         botoesFiltroReservas.add(mesCombobox3);
 
         //Tabela
-        colunasReservas = new String[]{"Cliente", "Data Partida", "Data Chegada"};
+        colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
 
-        dataReservas = new String[aor_autocarro.getReservasemEspera().size()][3];
+        String[][] dataReservas = new String[aor_autocarro.getReservasemEspera().size()][5];
 
         for (int i = 0; i < aor_autocarro.getReservasemEspera().size(); i++) {
-            dataReservas[i][0] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
-            dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
-            dataReservas[i][2] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
-
+            dataReservas[i][0] = aor_autocarro.getReservasemEspera().get(i).getAutocarro().getMatricula();
+            dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
+            dataReservas[i][2] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
+            dataReservas[i][3] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
+            dataReservas[i][4] = aor_autocarro.getReservasemEspera().get(i).getMotorista().getNome();
         }
 
 
-
-
-
-
-
-
-
-        reservasTable = new JTable(dataReservas, colunasReservas);
-        spReservas = new JScrollPane(reservasTable);
-        spReservas.setBounds(100, 100, 500, 400);
-        autocarrosReservas.add(botoesFiltroReservas);
-        autocarrosReservas.add(spReservas);
-        abasPanel.add("Reservas em Espera", autocarrosReservas);
+        esperaTabela = new JTable(dataReservas, colunasEspera);
+        spEspera = new JScrollPane(esperaTabela);
+        spEspera.setBounds(100, 100, 500, 400);
+        autocarrosEspera.add(botoesFiltroReservas);
+        autocarrosEspera.add(spEspera);
+        abasPanel.add("Reservas em Espera", autocarrosEspera);
 
         //============================================
         //Volume de reservas
@@ -304,26 +311,23 @@ public class Estatistica extends JPanel implements ActionListener {
         JPanel volumeReservas = new JPanel();
         volumeReservas.setLayout(null);
 
-        //Botoes
-        JPanel botoesFiltroVolume = new JPanel(new GridLayout(1, 4, 0, 5));
-        botoesFiltroVolume.setBounds(225, 25, 200, 30);
-        JLabel anoLabelVolume = new JLabel("Ano:");
-        JTextField anoFieldVolume = new JTextField();
-        botoesFiltroVolume.add(anoLabelVolume);
-        botoesFiltroVolume.add(anoFieldVolume);
-        volumeReservas.add(botoesFiltroVolume);
 
         //Tabela
         String[] colunasVolume = {"Mês", "Volume"};
-        String[] meses = {"Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
 
+        String[] meses;
+        meses = new String[]{"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
+        int[] volume = contarReservasMes();
+        String[][] dataVolume = new String[12][2];
 
-        String[][] dataVolume = {{"", ""}
-                , {"", ""}};
+        for (int i = 0; i < meses.length; i++) {
+            dataVolume[i][0] = meses[i];
+            dataVolume[i][1] = String.valueOf(volume[i]);
+        }
 
         JTable volumeTable = new JTable(dataVolume, colunasVolume);
         JScrollPane spvolume = new JScrollPane(volumeTable);
-        spvolume.setBounds(100, 80, 500, 300);
+        spvolume.setBounds(100, 80, 500, 218);
         volumeReservas.add(spvolume);
 
         //Label
@@ -346,9 +350,16 @@ public class Estatistica extends JPanel implements ActionListener {
         opcao5.addActionListener(this);
         opcao6.addActionListener(this);
         sairButton.addActionListener(this);
+        mesCombobox1.addActionListener(this);
+        mesCombobox2.addActionListener(this);
+        mesCombobox3.addActionListener(this);
+
 
     }
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado() {
 
         if (aor_autocarro.getUserLogado() == null) {
@@ -361,8 +372,188 @@ public class Estatistica extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Contar reservas mes int [ ].
+     *
+     * @return the int [ ]
+     */
+    public int[] contarReservasMes() {
+        int[] volume = new int[12];
+        for (int i = 1; i <= 12; i++) {
+            int contador = 0;
+            for (Reserva reserva : aor_autocarro.getReservas()) {
+                if (reserva.getDataPartida().getMonthValue() == i) {
+                    contador++;
+                }
+            }
+            volume[i - 1] = contador;
+        }
+        return volume;
+    }
+
+    /**
+     * Listagem por mes reservas.
+     *
+     * @param mes the mes
+     */
+    public void listagemPorMesReservas(String mes) {
+        if (!mes.equals("0")) {
+            autocarrosReservados.remove(sp);
+            sp.removeAll();
+            String[] colunas = {"Matricula", "Data Partida", "Data Chegada"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservas()) {
+                String[] reservaInfo = new String[3];
+                if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
+                    reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                    data.add(reservaInfo);
+                }
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            tabela = new JTable(dataArray, colunas);
+            sp = new JScrollPane(tabela);
+            autocarrosReservados.add(sp);
+            sp.setBounds(200, 100, 300, 400);
+        } else {
+            autocarrosReservados.remove(sp);
+            sp.removeAll();
+            String[] colunas = {"Matricula", "Data Partida", "Data Chegada"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservas()) {
+                String[] reservaInfo = new String[3];
+                reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                data.add(reservaInfo);
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            tabela = new JTable(dataArray, colunas);
+            sp = new JScrollPane(tabela);
+            autocarrosReservados.add(sp);
+            sp.setBounds(200, 100, 300, 400);
+
+        }
+
+    }
+
+    /**
+     * Listagem por mes reservas canceladas.
+     *
+     * @param mes the mes
+     */
+    public void listagemPorMesReservasCanceladas(String mes) {
+        if (!mes.equals("0")) {
+            autocarrosCanceladas.remove(spCanceladas);
+            spCanceladas.removeAll();
+            String[] colunasCanceladas = {"Matricula", "Data Partida", "Data Chegada", "Cliente", "Motorista"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservasCanceladas()) {
+                String[] reservaInfo = new String[5];
+                if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
+                    reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                    reservaInfo[3] = reserva.getCliente().getNome();
+                    reservaInfo[4] = reserva.getMotorista().getNome();
+                    data.add(reservaInfo);
+                }
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            canceladasTable = new JTable(dataArray, colunasCanceladas);
+            spCanceladas = new JScrollPane(canceladasTable);
+            autocarrosCanceladas.add(spCanceladas);
+            spCanceladas.setBounds(100, 100, 500, 400);
+        } else {
+            autocarrosCanceladas.remove(spCanceladas);
+            spCanceladas.removeAll();
+            String[] colunasCanceladas = {"Matricula", "Data Partida", "Data Chegada", "Cliente", "Motorista"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservasCanceladas()) {
+                String[] reservaInfo = new String[5];
+                reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                reservaInfo[3] = reserva.getCliente().getNome();
+                reservaInfo[4] = reserva.getMotorista().getNome();
+                data.add(reservaInfo);
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            canceladasTable = new JTable(dataArray, colunasCanceladas);
+            spCanceladas = new JScrollPane(canceladasTable);
+            autocarrosCanceladas.add(spCanceladas);
+            spCanceladas.setBounds(100, 100, 500, 400);
+
+        }
+
+    }
+
+
+    /**
+     * Listagem por mes reservas espera.
+     *
+     * @param mes the mes
+     */
+    public void listagemPorMesReservasEspera(String mes) {
+        if (!mes.equals("0")) {
+            autocarrosEspera.remove(spEspera);
+            spEspera.removeAll();
+            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
+                String[] reservaInfo = new String[5];
+                if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
+                    reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                    reservaInfo[3] = reserva.getCliente().getNome();
+                    reservaInfo[4] = reserva.getMotorista().getNome();
+                    data.add(reservaInfo);
+                }
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            esperaTabela = new JTable(dataArray, colunasEspera);
+            spEspera = new JScrollPane(esperaTabela);
+            autocarrosEspera.add(spEspera);
+            spEspera.setBounds(100, 100, 500, 400);
+        } else {
+            autocarrosEspera.remove(spEspera);
+            spEspera.removeAll();
+            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+            ArrayList<String[]> data = new ArrayList<>();
+            for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
+                String[] reservaInfo = new String[5];
+                reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                reservaInfo[1] = String.valueOf(reserva.getDataPartida());
+                reservaInfo[2] = String.valueOf(reserva.getDataFim());
+                reservaInfo[3] = reserva.getCliente().getNome();
+                reservaInfo[4] = reserva.getMotorista().getNome();
+                data.add(reservaInfo);
+            }
+            String[][] dataArray = data.toArray(new String[0][0]);
+            esperaTabela = new JTable(dataArray, colunasEspera);
+            spEspera = new JScrollPane(esperaTabela);
+            autocarrosEspera.add(spEspera);
+            spEspera.setBounds(100, 100, 500, 400);
+
+        }
+
+    }
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        String mes = (String) mesCombobox1.getSelectedItem();
+        listagemPorMesReservas(mes);
+        String mesCanceladas = (String) mesCombobox2.getSelectedItem();
+        listagemPorMesReservasCanceladas(mesCanceladas);
+        String mesEspera = (String) mesCombobox3.getSelectedItem();
+        listagemPorMesReservasEspera(mesEspera);
+
+
         if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");
         }
@@ -383,12 +574,12 @@ public class Estatistica extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 

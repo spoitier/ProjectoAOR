@@ -9,34 +9,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * The type Registar novo administrador.
+ */
 public class RegistarNovoAdministrador  extends JPanel implements ActionListener {
-    Aor_Autocarro aor_autocarro;
-    Login login;
-    PainelFundo painelFundo;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2 ;
-    JButton opcao3 ;
-    JButton opcao4;
-    JButton opcao5;
-    JButton opcao6;
-    JButton adicionarButton;
+   private final Aor_Autocarro aor_autocarro;
+    private final PainelFundo painelFundo;
 
-    JLabel nomeLabel;
-    JLabel nifLabel;
-    JLabel moradaLabel;
-    JLabel telefoneLabel;
-    JLabel emailLabel;
+    private final JTextField nomeField;
+    private final JTextField nifField;
+    private final JTextField moradaField;
+    private final JTextField telefoneField;
+    private final JTextField emailField;
 
-    JTextField nomeField;
-    JTextField nifField;
-    JTextField moradaField;
-    JTextField telefoneField;
-    JTextField emailField;
-
-    JLabel clienteNome;
+    private final JLabel clienteNome;
 
 
+    /**
+     * Instantiates a new Registar novo administrador.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public RegistarNovoAdministrador(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo =  painelFundo;
@@ -59,7 +53,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -72,13 +66,12 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -106,15 +99,15 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
 
 
         //Labels
-        nomeLabel = new JLabel("Nome:");
+        JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        nifLabel = new JLabel("NIF:");
+        JLabel nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        moradaLabel = new JLabel("Morada:");
+        JLabel moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        telefoneLabel = new JLabel("Telefone:");
+        JLabel telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        emailLabel = new JLabel("Email:");
+        JLabel emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
 
         //Fields
@@ -143,7 +136,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         this.add(formulario);
 
         // Buttons
-        adicionarButton = new JButton("Adicionar");
+        JButton adicionarButton = new JButton("Adicionar");
         adicionarButton.setBounds(340, 575, 200, 70);
         this.add(adicionarButton);
 
@@ -158,6 +151,10 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
         sairBotao.addActionListener(this);
 
     }
+
+    /**
+     * Nome logado.
+     */
     public void nomeLogado(){
 
 

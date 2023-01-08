@@ -9,33 +9,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Dados pessoais cliente.
+ */
 public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    JButton alterarPalavraChave;
-    JButton alterarPlanoSubscricao;
+    private final JLabel nomeField;
 
-    JLabel nomeField;
+    private final JLabel nifField;
+    private final JLabel moradaField;
 
-    JLabel nifField;
-    JLabel moradaField;
+    private final JLabel telefoneField;
 
-    JLabel telefoneField;
+    private final JLabel emailField;
 
-    JLabel emailField;
+    private final JLabel palavraChaveField;
+    private final JLabel clienteNome;
+    private final JLabel tipoSubscricao;
 
-    JLabel palavraChaveField;
-    JLabel clienteNome;
-    JLabel tipoSubscricao;
-
+    /**
+     * Instantiates a new Dados pessoais cliente.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public DadosPessoaisCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -58,7 +58,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -71,11 +71,11 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Reserva Autocarro");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -153,8 +153,8 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         JPanel botoesPainel = new JPanel(new GridLayout(2, 1, 0, 10));
         botoesPainel.setBounds(450, 200, 200, 100);
 
-        alterarPalavraChave = new JButton("Alterar palavra chave");
-        alterarPlanoSubscricao = new JButton("Alterar plano subsrição");
+        JButton alterarPalavraChave = new JButton("Alterar palavra chave");
+        JButton alterarPlanoSubscricao = new JButton("Alterar plano subsrição");
         botoesPainel.add(alterarPalavraChave);
         botoesPainel.add(alterarPlanoSubscricao);
         this.add(botoesPainel);
@@ -172,6 +172,11 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Nome logado utilizador.
+     *
+     * @return the utilizador
+     */
     public Utilizador nomeLogado() {
         if (aor_autocarro.getUserLogado() == null) {
             nomeField.setText("");
@@ -197,27 +202,32 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
             painelFundo.mudaEcra("ReservaViagem");
         }
 
+
         if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
         if (e.getActionCommand().equals("Cancelar Reservas")) {
+            ((CancelarReserva) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
             painelFundo.mudaEcra("CancelarReserva");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+            ((DadosPessoaisCliente) (painelFundo.mapaPaineis.get("DadosPessoaisCliente"))).nomeLogado();
+            painelFundo.mudaEcra("DadosPessoaisCliente");
         }
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
             Utilizador cliente = aor_autocarro.getUserLogado();
-            ((AlterarPalavraChaveCliente)painelFundo.mapaPaineis.get("AlterarPalavraChave")).setCliente(cliente);
+            ((AlterarPalavraChaveCliente) painelFundo.mapaPaineis.get("AlterarPalavraChave")).setCliente(cliente);
             painelFundo.mudaEcra("AlterarPalavraChave");
         }
         if (e.getActionCommand().equals("Alterar plano subsrição")) {

@@ -9,44 +9,42 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Autocarros.
+ */
 public class Autocarros extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    JScrollPane sp;
-    Aor_Autocarro aor_autocarro;
+   private final PainelFundo painelFundo;
+    private JScrollPane sp;
+    private final Aor_Autocarro aor_autocarro;
 
-    JTable tabela;
+    private JTable tabela;
 
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-
-    JButton opcao5;
-
-    JButton opcao6;
-
-    JButton adicionarButton;
-    JButton removerButton;
-    JButton editarButton;
-
-    JLabel adminNome;
+    private final JLabel adminNome;
 
 
+    /**
+     * The Matricula field.
+     */
     public JTextField matriculaField;
 
-    private JTextField marcaField;
-    private JTextField modeloField;
+    private final JTextField marcaField;
+    private final JTextField modeloField;
 
-    private JTextField lotacaoField;
-
-
-    JTextField matriculaFieldRemover;
-
-    public JTextField matriculaFieldEditar;
+    private final JTextField lotacaoField;
 
 
+    private final JTextField matriculaFieldRemover;
+
+    private final JTextField matriculaFieldEditar;
+
+
+    /**
+     * Instantiates a new Autocarros.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public Autocarros(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -69,7 +67,7 @@ public class Autocarros extends JPanel implements ActionListener {
         cabecalho.add(adminNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -82,12 +80,12 @@ public class Autocarros extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -156,15 +154,15 @@ public class Autocarros extends JPanel implements ActionListener {
         formulario.add(matriculaFieldEditar);
         this.add(formulario);
 
-        adicionarButton = new JButton("Adicionar");
+        JButton adicionarButton = new JButton("Adicionar");
         adicionarButton.setBounds(400, 200, 100, 30);
 
 
-        removerButton = new JButton("Remover");
+        JButton removerButton = new JButton("Remover");
         removerButton.setBounds(400, 400, 100, 30);
 
 
-        editarButton = new JButton("Editar");
+        JButton editarButton = new JButton("Editar");
         editarButton.setBounds(400, 500, 100, 30);
 
         this.add(adicionarButton);
@@ -215,6 +213,9 @@ public class Autocarros extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Atualizar.
+     */
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         String[] colunas = {"Matricula", "Marca", "Modelo", "Lotação"};
@@ -238,6 +239,9 @@ public class Autocarros extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado(){
 
         if(aor_autocarro.getUserLogado()==null){

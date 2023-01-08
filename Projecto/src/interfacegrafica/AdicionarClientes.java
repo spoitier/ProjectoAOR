@@ -11,42 +11,34 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The type Adicionar clientes.
+ */
 public class AdicionarClientes extends JPanel implements ActionListener {
-    Aor_Autocarro aor_autocarro;
-    PainelFundo painelFundo;
-    JButton sairButton;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton opcao6;
-    JButton adicionarButton;
-    JButton removerButton;
-    JButton editarButton;
-    JLabel clienteNome;
-    JLabel nomeLabel;
-    JLabel nifLabel;
-    JLabel moradaLabel;
-    JLabel telefoneLabel;
-    JLabel emailLabel;
-    JLabel palavraChaveLabel;
-    JLabel idRemoverLabel;
-    JLabel nifEditarLabel;
-    JScrollPane sp;
 
-    JTextField nomeField;
-    JTextField nifField;
-    JTextField moradaField;
-    JTextField telefoneField;
-    JTextField emailField;
-    JLabel palavraChaveField;
-    JTextField idRemoverField;
-    JTextField nifEditarField;
+   private final Aor_Autocarro aor_autocarro;
+    private final PainelFundo painelFundo;
+    private final JLabel clienteNome;
+    private JScrollPane sp;
 
-    String nifEditavel;
-    JTable tabela;
+    private final JTextField nomeField;
+    private final JTextField nifField;
+    private final JTextField moradaField;
+    private final JTextField telefoneField;
+    private final JTextField emailField;
+    private final JLabel palavraChaveField;
+    private final JTextField nifRemoverField;
+    private final JTextField nifEditarField;
 
+    private  String nifEditavel;
+    private  JTable tabela;
+
+    /**
+     * Instantiates a new Adicionar clientes.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public AdicionarClientes(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
@@ -70,7 +62,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairButton = new JButton("Sair");
+        JButton sairButton = new JButton("Sair");
         sairButton.setBounds(810, 1, 70, 28);
         cabecalho.add(sairButton);
         this.add(cabecalho);
@@ -83,12 +75,12 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -115,21 +107,21 @@ public class AdicionarClientes extends JPanel implements ActionListener {
 
 
         //Labels
-        nomeLabel = new JLabel("Nome:");
+        JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(50, 50, 200, 30);
-        nifLabel = new JLabel("NIF:");
+        JLabel nifLabel = new JLabel("NIF:");
         nifLabel.setBounds(50, 90, 200, 30);
-        moradaLabel = new JLabel("Morada:");
+        JLabel moradaLabel = new JLabel("Morada:");
         moradaLabel.setBounds(50, 130, 200, 30);
-        telefoneLabel = new JLabel("Telefone:");
+        JLabel telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(50, 170, 200, 30);
-        emailLabel = new JLabel("Email:");
+        JLabel emailLabel = new JLabel("Email:");
         emailLabel.setBounds(50, 210, 200, 30);
-        palavraChaveLabel = new JLabel("Palavra-Chave");
+        JLabel palavraChaveLabel = new JLabel("Palavra-Chave");
         palavraChaveLabel.setBounds(50, 250, 200, 30);
-        idRemoverLabel = new JLabel("ID:");
-        idRemoverLabel.setBounds(50, 425, 200, 30);
-        nifEditarLabel = new JLabel("NIF:");
+        JLabel nifRemoverLabel = new JLabel("NIF:");
+        nifRemoverLabel.setBounds(50, 425, 200, 30);
+        JLabel nifEditarLabel = new JLabel("NIF:");
         nifEditarLabel.setBounds(50, 500, 200, 30);
 
 
@@ -146,8 +138,8 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         emailField.setBounds(150, 210, 200, 30);
         palavraChaveField = new JLabel("AOR2022");
         palavraChaveField.setBounds(150, 250, 200, 30);
-        idRemoverField = new JTextField();
-        idRemoverField.setBounds(150, 425, 200, 30);
+        nifRemoverField = new JTextField();
+        nifRemoverField.setBounds(150, 425, 200, 30);
         nifEditarField = new JTextField();
         nifEditarField.setBounds(150, 500, 200, 30);
 
@@ -158,7 +150,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         formulario.add(telefoneLabel);
         formulario.add(emailLabel);
         formulario.add(palavraChaveLabel);
-        formulario.add(idRemoverLabel);
+        formulario.add(nifRemoverLabel);
         formulario.add(nifEditarLabel);
         formulario.add(nomeField);
         formulario.add(nifField);
@@ -166,19 +158,19 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         formulario.add(telefoneField);
         formulario.add(emailField);
         formulario.add(palavraChaveField);
-        formulario.add(idRemoverField);
+        formulario.add(nifRemoverField);
         formulario.add(nifEditarField);
         this.add(formulario);
 
-        adicionarButton = new JButton("Adicionar");
+        JButton adicionarButton = new JButton("Adicionar");
         adicionarButton.setBounds(375, 150, 100, 30);
 
 
-        removerButton = new JButton("Remover");
+        JButton removerButton = new JButton("Remover");
         removerButton.setBounds(375, 525, 100, 30);
 
 
-        editarButton = new JButton("Editar");
+        JButton editarButton = new JButton("Editar");
         editarButton.setBounds(375, 600, 100, 30);
 
         this.add(adicionarButton);
@@ -226,6 +218,9 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Atualizar.
+     */
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         String[] colunas = {"Id", "Nome", "NIF", "Morada", "Telefone", "Email"};
@@ -251,7 +246,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
         String[][] dataArray = data.toArray(new String[0][0]);
         tabela = new JTable(dataArray, colunas);
         sp = new JScrollPane(tabela);
-        sp.setBounds(550, 150, 375, 400);
+        sp.setBounds(500, 150, 375, 400);
         this.add(sp);
         revalidate();
         repaint();
@@ -259,14 +254,27 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Gets nif editavel.
+     *
+     * @return the nif editavel
+     */
     public String getNifEditavel() {
         return nifEditavel;
     }
 
+    /**
+     * Sets nif editavel.
+     *
+     * @param nifEditavel the nif editavel
+     */
     public void setNifEditavel(String nifEditavel) {
         this.nifEditavel = nifEditavel;
     }
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado() {
         if (aor_autocarro.getUserLogado() == null) {
             clienteNome.setText("");
@@ -280,8 +288,6 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
-
-
         if (e.getActionCommand().equals("Adicionar")) {
             //verificar se todos os campos estão preenchidos
             if (nomeField.getText().equals("") || nifField.getText().equals("") ||
@@ -320,7 +326,8 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse email");
                 validar = false;
             }
-            if (validar) {
+            if (validar == false) {
+            } else {
                 String id = "cl".concat(String.valueOf(aor_autocarro.contarCliente()));
                 aor_autocarro.getUtilizadores().add(new Cliente(id, emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
                         moradaField.getText(), telefoneField.getText(), "Normal", LocalDate.now()));
@@ -337,16 +344,20 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             }
         }
         if (e.getActionCommand().equals("Remover")) {
-            if (!aor_autocarro.removerCliente(idRemoverField.getText())) {
+            if (!aor_autocarro.removerCliente(nifRemoverField.getText())) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum cliente " +
-                        "com esse id");
+                        "com esse nif");
             } else {
                 JOptionPane.showMessageDialog(null, "O cliente só irá ser removido da lista de clientes, " +
                         "após ter sido informado sobre encerramento da sua conta, ao efetuar login");
-                aor_autocarro.cancelarReservasdoClienteRemovido(idRemoverField.getText());
                 atualizar();
+                nifRemoverField.setText("");
+                if (aor_autocarro.getReservas().size() != 0) {
+                    aor_autocarro.cancelarReservasdoClienteRemovido(nifRemoverField.getText());
+                }
+
+
             }
-            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
         if (e.getActionCommand().equals("Editar")) {
             if (!(aor_autocarro.getCliente(nifEditarField.getText()) == null)) {
@@ -359,7 +370,6 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 nifEditarField.setText("");
                 JOptionPane.showMessageDialog(null, "Não existe nenhum cliente com esse nif");
             }
-            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
         if (e.getActionCommand().equals("Adminstradores")) {
             painelFundo.mudaEcra("RegistarNovoAdministrador");

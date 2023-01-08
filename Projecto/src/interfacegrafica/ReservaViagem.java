@@ -12,38 +12,30 @@ import java.time.format.DateTimeFormatter;
 
 import static javax.swing.JOptionPane.YES_OPTION;
 
+/**
+ * The type Reserva viagem.
+ */
 public class ReservaViagem extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
-    Reserva reservaNova;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    JButton prosseguirButton;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
-    JButton sairBotao;
-
-    JLabel dataAluguer;
-    JLabel numeroDias;
-    JLabel numeroPessoas;
-    JLabel partida;
-    JLabel destino;
-    JLabel numeroKmTotal;
-
-    JLabel valorViagem;
-    JTextField dataAluguerField;
-    JTextField numeroDiasField;
-    JTextField numeroPessoasField;
-    JTextField partidaField;
-    JTextField destinoField;
-    JTextField numeroKmTotalField;
-    JLabel clienteNome;
-    JButton atualizar;
+    private final JLabel valorViagem;
+    private final JTextField dataAluguerField;
+    private final JTextField numeroDiasField;
+    private final JTextField numeroPessoasField;
+    private final JTextField partidaField;
+    private final JTextField destinoField;
+    private final JTextField numeroKmTotalField;
+    private final JLabel clienteNome;
 
 
+    /**
+     * Instantiates a new Reserva viagem.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
         this.aor_autocarro = aor_autocarro;
@@ -67,7 +59,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -81,11 +73,11 @@ public class ReservaViagem extends JPanel implements ActionListener {
         opcaoPainel.setBounds(0, 35, 900, 50);
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        opcao1 = new JButton("ReservaViagem");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -110,17 +102,17 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
 
         //Labels
-        dataAluguer = new JLabel("Data do Aluguer (dd/mm/AAAA):");
+        JLabel dataAluguer = new JLabel("Data do Aluguer (dd/mm/AAAA):");
         dataAluguer.setBounds(20, 50, 200, 30);
-        numeroDias = new JLabel("Numero de dias:");
+        JLabel numeroDias = new JLabel("Numero de dias:");
         numeroDias.setBounds(20, 90, 200, 30);
-        numeroPessoas = new JLabel("Numero de Pessoas:");
+        JLabel numeroPessoas = new JLabel("Numero de Pessoas:");
         numeroPessoas.setBounds(20, 130, 200, 30);
-        partida = new JLabel("Local de Partida:");
+        JLabel partida = new JLabel("Local de Partida:");
         partida.setBounds(20, 170, 200, 30);
-        destino = new JLabel("Local de Destino:");
+        JLabel destino = new JLabel("Local de Destino:");
         destino.setBounds(20, 210, 200, 30);
-        numeroKmTotal = new JLabel("Numero Km total:");
+        JLabel numeroKmTotal = new JLabel("Numero Km total:");
         numeroKmTotal.setBounds(20, 250, 200, 30);
 
         //Fields
@@ -154,7 +146,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         //==========================================================
 
         //Botão para registar
-        prosseguirButton = new JButton("Prosseguir");
+        JButton prosseguirButton = new JButton("Prosseguir");
         prosseguirButton.setBounds(340, 575, 200, 70);
         this.add(prosseguirButton);
 
@@ -167,9 +159,9 @@ public class ReservaViagem extends JPanel implements ActionListener {
         tituloCusto.setBounds(45, 30, 200, 10);
 
 
-        valorViagem = new JLabel("custoViagem");
-        valorViagem.setBounds(75, 100, 200, 10);
-        atualizar = new JButton("Atualizar");
+        valorViagem = new JLabel("__________");
+        valorViagem.setBounds(80, 100, 200, 10);
+        JButton atualizar = new JButton("Atualizar");
         atualizar.setBounds(50,150,100,30);
         custoViagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         custoViagem.add(tituloCusto);
@@ -188,6 +180,9 @@ public class ReservaViagem extends JPanel implements ActionListener {
         atualizar.addActionListener(this);
     }
 
+    /**
+     * Nome logado.
+     */
     public void nomeLogado() {
 
         if (aor_autocarro.getUserLogado() == null) {
@@ -350,12 +345,12 @@ public class ReservaViagem extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).nomeLogado();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("HistoricoReservas");
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).nomeLogado();
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

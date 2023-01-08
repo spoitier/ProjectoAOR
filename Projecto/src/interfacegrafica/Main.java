@@ -27,92 +27,106 @@ public class Main {
             Utilizador gerente = new Administrador("Adm0", "admin@gmail.com", "ADMIN2022", "Rodrigo Ferreira",
                     "123456789", "Coimbra", "967895432");
             aor_autocarro.getUtilizadores().add(gerente);
+
+            Autocarro a1 =new Autocarro("AA-55-BB", "Ford", "Fiesta", "50");
+            Autocarro a2 =new Autocarro("AA-44-CC", "Ford", "Fiesta", "50");
+            Autocarro a3 =new Autocarro("AA-33-DD", "Ford", "Fiesta", "50");
+            Autocarro a4 =new Autocarro("AA-11-EE", "Ford", "Fiesta", "50");
+            Autocarro a5 =new Autocarro("AA-22-FF", "Ford", "Fiesta", "50");
+
+            aor_autocarro.getAutocarros().add(a1);
+            aor_autocarro.getAutocarros().add(a2);
+            aor_autocarro.getAutocarros().add(a3);
+            aor_autocarro.getAutocarros().add(a4);
+            aor_autocarro.getAutocarros().add(a5);
+
+            Motorista m1 = new Motorista("João", "Joao@gmail.com");
+            Motorista m2 = new Motorista("Ricardo", "Ricardo@gmail.com");
+            Motorista m3 = new Motorista("Pedro", "Pedro@gmail.com");
+            Motorista m4 = new Motorista("Andre", "Andre@gmail.com");
+            Motorista m5 = new Motorista("José", "José@gmail.com");
+
+
+            aor_autocarro.getMotoristas().add(m1);
+            aor_autocarro.getMotoristas().add(m2);
+            aor_autocarro.getMotoristas().add(m3);
+            aor_autocarro.getMotoristas().add(m4);
+            aor_autocarro.getMotoristas().add(m5);
+
+            Cliente cl1 = new Cliente("cli1","maria@gmail.com","123","Maria Ferreira",
+                    "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+            Cliente cl2 = new Cliente("cli2","rodrigo@gmail.com","123","rodrigo Ferreira",
+                    "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+            Cliente cl3 = new Cliente("cli3","joao@gmail.com","123","Joao Ferreira",
+                    "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+            Cliente cl4 = new Cliente("cli4","José@gmail.com","123","José Ferreira",
+                    "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+            Cliente cl5 = new Cliente("cli5","Mariana@gmail.com","123","Mariana Ferreira",
+                    "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+
+            aor_autocarro.getUtilizadores().add(cl1);
+            aor_autocarro.getUtilizadores().add(cl2);
+            aor_autocarro.getUtilizadores().add(cl3);
+            aor_autocarro.getUtilizadores().add(cl4);
+            aor_autocarro.getUtilizadores().add(cl5);
+
+
+
+
+            Reserva r1 = new Reserva(cl1,a2,m1,LocalDate.now(),LocalDate.of(2023,2,10), "10","30","Coimbra","Lisboa","100","1");
+            Reserva r2 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,9,10), "10","30","Faro","Lisboa","100","2");
+            Reserva r3 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,1,10), "10","30","Madrid","Lisboa","100","3");
+            Reserva r4 = new Reserva(cl1,a2,m1,LocalDate.now(),LocalDate.of(2023,2,10), "10","30","Coimbra","Lisboa","100","1");
+            Reserva r5 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,3,10), "10","30","Faro","Lisboa","100","2");
+            Reserva r6 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,4,10), "10","30","Madrid","Lisboa","100","3");
+            Reserva r7 = new Reserva(cl1,a2,m1,LocalDate.now(),LocalDate.of(2023,5,10), "10","30","Coimbra","Lisboa","100","1");
+            Reserva r8 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,6,10), "10","30","Faro","Lisboa","100","2");
+            Reserva r9 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,12,10), "10","30","Madrid","Lisboa","100","3");
+            Reserva r10 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,12,10), "10","30","Coimbra","China","100","4");
+            Reserva r11 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,4,10), "10","30","Madrid","Lisboa","100","3");
+            Reserva r12 = new Reserva(cl1,a2,m1,LocalDate.now(),LocalDate.of(2023,5,10), "10","30","Coimbra","Lisboa","100","1");
+            Reserva r13 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,6,10), "10","30","Faro","Lisboa","100","2");
+            Reserva r14 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,12,10), "10","30","Madrid","Lisboa","100","3");
+            Reserva r15 = new Reserva(cl1,a3,m3,LocalDate.now(),LocalDate.of(2023,12,10), "10","30","Coimbra","China","100","4");
+
+
+
+
+            aor_autocarro.getReservas().add(r1);
+            aor_autocarro.getReservas().add(r2);
+            aor_autocarro.getReservas().add(r3);
+            aor_autocarro.getReservas().add(r4);
+            aor_autocarro.getReservas().add(r5);
+            aor_autocarro.getReservasCanceladas().add(r6);
+            aor_autocarro.getReservasCanceladas().add(r7);
+            aor_autocarro.getReservasCanceladas().add(r8);
+            aor_autocarro.getReservasCanceladas().add(r9);
+            aor_autocarro.getReservasCanceladas().add(r10);
+            aor_autocarro.getReservasemEspera().add(r11);
+            aor_autocarro.getReservasemEspera().add(r12);
+            aor_autocarro.getReservasemEspera().add(r13);
+            aor_autocarro.getReservasemEspera().add(r14);
+            aor_autocarro.getReservasemEspera().add(r15);
+
+
+
+
+
+
         }
 
 
-        /*Autocarro a1 =new Autocarro("AA-55-BB", "Ford", "Fiesta", "50");
-        Autocarro a2 =new Autocarro("AA-44-CC", "Ford", "Fiesta", "50");
-        Autocarro a3 =new Autocarro("AA-33-DD", "Ford", "Fiesta", "50");
-        Autocarro a4 =new Autocarro("AA-11-EE", "Ford", "Fiesta", "50");
-        Autocarro a5 =new Autocarro("AA-22-FF", "Ford", "Fiesta", "50");
-
-        aor_autocarro.getAutocarros().add(a1);
-        aor_autocarro.getAutocarros().add(a2);
-        aor_autocarro.getAutocarros().add(a3);
-        aor_autocarro.getAutocarros().add(a4);
-        aor_autocarro.getAutocarros().add(a5);
-
-        Motorista m1 = new Motorista("João", "Joao@gmail.com");
-        Motorista m2 = new Motorista("Ricardo", "Ricardo@gmail.com");
-        Motorista m3 = new Motorista("Pedro", "Pedro@gmail.com");
-        Motorista m4 = new Motorista("Andre", "Andre@gmail.com");
-        Motorista m5 = new Motorista("José", "José@gmail.com");
 
 
-        aor_autocarro.getMotoristas().add(m1);
-        aor_autocarro.getMotoristas().add(m2);
-        aor_autocarro.getMotoristas().add(m3);
-        aor_autocarro.getMotoristas().add(m4);
-        aor_autocarro.getMotoristas().add(m5);
 
-        Cliente cl1 = new Cliente("cli1","maria@gmail.com","123","Maria Ferreira",
-                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
-        Cliente cl2 = new Cliente("cli2","rodrigo@gmail.com","123","rodrigo Ferreira",
-                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
-        Cliente cl3 = new Cliente("cli3","joao@gmail.com","123","Joao Ferreira",
-                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
-        Cliente cl4 = new Cliente("cli4","José@gmail.com","123","José Ferreira",
-                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
-        Cliente cl5 = new Cliente("cli5","Mariana@gmail.com","123","Mariana Ferreira",
-                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
-
-        aor_autocarro.getUtilizadores().add(cl1);
-        aor_autocarro.getUtilizadores().add(cl2);
-        aor_autocarro.getUtilizadores().add(cl3);
-        aor_autocarro.getUtilizadores().add(cl4);
-        aor_autocarro.getUtilizadores().add(cl5);
-
-
-        Reserva r1 = new Reserva(cl1,a1,m1,LocalDate.now(),LocalDate.of(2023,01,10),
-                "10","30","Coimbra","Lisboa","100","res1");
-        Reserva r2 = new Reserva(cl2,a2,m2,LocalDate.now(),LocalDate.of(2023,01,10),
-                "10","30","Faro","Lisboa","100","res2");
-        Reserva r3 = new Reserva(cl3,a3,m3,LocalDate.now(),LocalDate.of(2023,01,10),
-                "10","30","Madrid","Lisboa","100","res3");
-        Reserva r4 = new Reserva(cl4,a4,m4,LocalDate.now(),LocalDate.of(2023,01,10),
-                "10","30","Coimbra","China","100","res4");
-        Reserva r5 = new Reserva(cl5,a5,m5,LocalDate.now(),LocalDate.of(2023,01,10),
-                "10","30","Coimbra","Madeira","100","res5");
-
-        aor_autocarro.getReservas().add(r1);
-        aor_autocarro.getReservas().add(r2);
-        aor_autocarro.getReservas().add(r3);
-        aor_autocarro.getReservas().add(r4);
-        aor_autocarro.getReservas().add(r5);
-
-        Paypal p1 = new Paypal(r1,"maria@gmail.com","12345");
-        MB p2 = new MB(r2,12345,"342342389",r2.getCusto());
-        Cartaocredito p3 = new Cartaocredito(r3,"231231223456","joao","03/23","123");
-        Paypal p4 = new Paypal(r4,"jose@gmail.com","12345");
-        Cartaocredito p5 = new Cartaocredito(r5,"231231221234","mariana","04/23","123");
-
-        aor_autocarro.getListaPagamentos().add(p1);
-        aor_autocarro.getListaPagamentos().add(p2);
-        aor_autocarro.getListaPagamentos().add(p3);
-        aor_autocarro.getListaPagamentos().add(p4);
-        aor_autocarro.getListaPagamentos().add(p5);*/
-
-
-        //System.out.println(aor_autocarro.getUtilizadores());
-        System.out.println();
-        System.out.println(aor_autocarro.getReservasCanceladas());
-        System.out.println();
+        /*
+        System.out.println(aor_autocarro.getUtilizadores());
         System.out.println(aor_autocarro.getReservas());
-        //System.out.println(aor_autocarro.getListaPagamentos());
-
-        System.out.println(aor_autocarro.getReservasemEspera());
+        System.out.println(aor_autocarro.getListaPagamentos());
 
 
+
+         */
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
 

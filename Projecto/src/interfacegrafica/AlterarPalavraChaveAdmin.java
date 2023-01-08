@@ -9,32 +9,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Alterar palavra chave admin.
+ */
 public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
-    PainelFundo painelFundo;
-    Aor_Autocarro aor_autocarro;
+    private final PainelFundo painelFundo;
+    private final Aor_Autocarro aor_autocarro;
 
-    Utilizador utilizador;
-    JLabel clienteNome;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
+    private final JLabel clienteNome;
 
-    JButton opcao5;
-    JButton opcao6;
-    JButton alterarPalavraChaveButton;
-
-    TextField palavraChaveAtualField;
+    private final TextField palavraChaveAtualField;
 
 
-    TextField novaPalavraChaveField;
+    private final TextField novaPalavraChaveField;
 
-    JLabel emailPreenchido;
-    TextField confirmePalavraChaveField;
+    private final JLabel emailPreenchido;
+    private final TextField confirmePalavraChaveField;
 
 
+    /**
+     * Instantiates a new Alterar palavra chave admin.
+     *
+     * @param painelFundo   the painel fundo
+     * @param aor_autocarro the aor autocarro
+     */
     public AlterarPalavraChaveAdmin(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
         this.aor_autocarro = aor_autocarro;
@@ -57,7 +56,7 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -70,12 +69,12 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("Adminstradores");
-        opcao2 = new JButton("Motoristas");
-        opcao3 = new JButton("Autocarros");
-        opcao4 = new JButton("Clientes");
-        opcao5 = new JButton("Estatistica");
-        opcao6 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Adminstradores");
+        JButton opcao2 = new JButton("Motoristas");
+        JButton opcao3 = new JButton("Autocarros");
+        JButton opcao4 = new JButton("Clientes");
+        JButton opcao5 = new JButton("Estatistica");
+        JButton opcao6 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -138,7 +137,7 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
         this.add(formularioPanel);
 
-        alterarPalavraChaveButton = new JButton("Alterar palavra chave");
+        JButton alterarPalavraChaveButton = new JButton("Alterar palavra chave");
         alterarPalavraChaveButton.setBounds(650, 225, 200, 30);
         this.add(alterarPalavraChaveButton);
 
@@ -156,10 +155,13 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
     }
 
 
-
+    /**
+     * Sets administrador.
+     *
+     * @param utilizador the utilizador
+     */
     public void setAdministrador(Utilizador utilizador) {
         if(!(utilizador==null)){
-            this.utilizador=utilizador;
             emailPreenchido.setText(utilizador.getEmail());
             clienteNome.setText(utilizador.getNome());
             revalidate();
