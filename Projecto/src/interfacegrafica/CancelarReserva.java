@@ -2,6 +2,7 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Cliente;
+import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -127,6 +128,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Cancelar")) {
             descrição = aor_autocarro.cancelarReservaCliente(logado, id);
             JOptionPane.showMessageDialog(null, descrição);
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
 
 

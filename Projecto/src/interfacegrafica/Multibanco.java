@@ -155,8 +155,6 @@ public class Multibanco extends JPanel implements ActionListener {
 
         if(e.getActionCommand().equals("Confirmar")){
             reserva=aor_autocarro.identificarReservaPagamento(logado);
-            //Adicionado reserva à lista de Reservas da Empresa
-            aor_autocarro.addReserva(reserva);
             String referenciaMB= MB.gerarRefMultibanco();
             pagamento=new MB(reserva,12345,referenciaMB, reserva.getCusto());
             //Adicionado pagamento da reserva à lista de Reservas
