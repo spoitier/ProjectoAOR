@@ -1,7 +1,6 @@
 package programa;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -33,42 +32,6 @@ public class Aor_Autocarro implements Serializable {
     }
 
     /**
-     * Add reserva cancelada.
-     *
-     * @param reserva the reserva
-     */
-    public void addReservaCancelada(Reserva reserva) {
-        reservasCanceladas.add(reserva);
-    }
-
-    /**
-     * Add reservaem espera.
-     *
-     * @param reserva the reserva
-     */
-    public void addReservaemEspera(Reserva reserva) {
-        reservasemEspera.add(reserva);
-    }
-
-    /**
-     * Add motorista.
-     *
-     * @param motorista the motorista
-     */
-    public void addMotorista(Motorista motorista) {
-        motoristas.add(motorista);
-    }
-
-    /**
-     * Add autocarro.
-     *
-     * @param autocarro the autocarro
-     */
-    public void addAutocarro(Autocarro autocarro) {
-        autocarros.add(autocarro);
-    }
-
-    /**
      * Add pagamento.
      *
      * @param pagamento the pagamento
@@ -94,16 +57,6 @@ public class Aor_Autocarro implements Serializable {
     public ArrayList<Reserva> getReservas() {
         return reservas;
     }
-
-    /**
-     * Add utilizador.
-     *
-     * @param utilizador the utilizador
-     */
-    public void addUtilizador(Utilizador utilizador) {
-        utilizadores.add(utilizador);
-    }
-
 
     @Override
     public String toString() {
@@ -266,22 +219,20 @@ public class Aor_Autocarro implements Serializable {
     /**
      * Remover cliente boolean.
      *
-     * @param nif the nif
+     * @param id the id
      * @return the boolean
      */
-    public boolean removerCliente(String nif) {
+    public boolean removerCliente(String id) {
         LocalDate hoje = LocalDate.now();
-        Cliente removido = null;
-        //pesquisa cliente com base no nif solicitado
+        Cliente removido;
+        //pesquisa cliente com base no id solicitado
         for (Utilizador utilizador : utilizadores) {
-            if ((utilizador instanceof Cliente) && (utilizador.getNif().equals(nif))) {
+            if ((utilizador instanceof Cliente) && (utilizador.getId().equals(id))) {
                 removido = (Cliente) utilizador;
-                removido.setTipoCliente("");
-                removido.setNome("");
-                removido.setMorada("");
-                removido.setTelefone("");
-                removido.setId("");
-                removido.setNif("");
+                removido.setNome("inativo");
+                removido.setMorada("inativo");
+                removido.setTelefone("inativo");
+                removido.setNif("inativo");
 
                 //Criar e adicionar notificação de que o cliente foi removido,pelo que só terá acesso ao login
 
@@ -297,18 +248,17 @@ public class Aor_Autocarro implements Serializable {
 
 
     /**
-     * Cancelar reservasdo cliente removido int.
+     * Cancelar reservasdo cliente removido.
      *
-     * @param nifCliente the nif cliente
-     * @return the int
+     * @param id the id
      */
-    public int cancelarReservasdoClienteRemovido(String nifCliente) {//Cancelamento reservas, por cliente ter sido removido por um Administrador
-        int contaRservas = 0;
+    public void cancelarReservasdoClienteRemovido(String id) {//Cancelamento reservas, por cliente ter sido removido por um Administrador
+
         // Verificar se este cliente tinha reservas pendentes
         for (Reserva res : reservas) {
             //Identificar a reserva deste cliente, remover da lista de reservas e adicionar à lista de reservas canceladas
-            if (res.getCliente().getNif().equals(nifCliente)) {
-                contaRservas++;
+            if (res.getCliente().getId().equals(id)) {
+
                 reservas.remove(res);
                 reservasCanceladas.add(res);
                 //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
@@ -321,7 +271,6 @@ public class Aor_Autocarro implements Serializable {
 
             }
         }
-        return contaRservas;
     }
 
 
@@ -488,32 +437,6 @@ public class Aor_Autocarro implements Serializable {
         return reservaAutocarro;
     }*/
 
-    /*public Reserva verificarAutocarroSemReservas(Cliente cliente, LocalDate dataReq, String numeroDias, String numeroPessoas, String localPartida, String localDestino, String distancia) {
-
-        int nPessoas = Integer.parseInt(numeroPessoas);
-        Autocarro autocarro;
-        Motorista motorista;
-        LocalDate hoje = LocalDate.now(); //data de hoje
-        Reserva reserva = new Reserva();
-
-        //Ordenar Lista de autocarros por Lotação
-        autocarros.sort(Comparator.comparing(Autocarro::getLotacao));
-
-        for (Autocarro bus : autocarros) {
-            if (Integer.parseInt(bus.getLotacao()) >= nPessoas) {
-                if (reservas.size() == 0) {
-                    autocarro = bus;
-                    motorista = identificarMotoristaDisponível();
-                    reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, numeroDias, numeroPessoas,
-                            localPartida, localDestino, distancia);
-                    return reserva;
-
-                }
-            }
-        }
-        return reserva;
-    }*/
-
     /**
      * Efetuar reserva autocarro reserva.
      *
@@ -527,7 +450,7 @@ public class Aor_Autocarro implements Serializable {
      * @return the reserva
      */
     public Reserva efetuarReservaAutocarro(Cliente cliente, LocalDate dataReq, String nDias, String nPessoas, String partida, String destino, String distancia) {
-        String resultadoReserva = null;
+
         ArrayList<Autocarro> autDisponiveis = new ArrayList<>();
         ArrayList<Reserva> reservasAlvo = new ArrayList<>();//lista de reservas com potencial para serem canceladas
         ArrayList<Motorista> motoristasDisponíveis = new ArrayList<>(motoristas);
@@ -549,19 +472,13 @@ public class Aor_Autocarro implements Serializable {
                 autDisponiveis.add(bus);
                 if (reservas.size() == 0) {
                     autocarro = bus;
-                    motorista = identificarMotoristaDisponível();
+                    motorista = motoristasDisponíveis.get(0);
                     reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
                             partida, destino, distancia, "res" + contarReservas());
                     return reserva;
                 } else {
                     for (Reserva res : reservas) {
-                        if (!res.getAutocarro().equals(bus)) {
-                            autocarro = bus;
-                            motorista = identificarMotoristaDisponível();
-                            reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                                    partida, destino, distancia, "res" + contarReservas());
-                            return reserva;
-                        } else {
+                        if (res.getAutocarro().equals(bus)) {
                             //Verificar se existe(para cada autocarro) alguma reserva com data (início ou fim) compreendida para o periodo pretendido
                             if ((res.getDataPartida().isEqual(dataReq) || res.getDataPartida().isEqual(datafim)
                                     || res.getDataPartida().isAfter(dataReq) && res.getDataPartida().isBefore(datafim))
@@ -570,19 +487,25 @@ public class Aor_Autocarro implements Serializable {
                                 //Verificar tipo Cliente que quer reservar autocarro:
                                 //Se for cliente "Normal"
                                 if (cliente.getTipoCliente().equals("Normal")) {
-                                    resultadoReserva = "indisponível";
+                                    reserva = new Reserva(cliente, null, null, hoje, dataReq, nDias, nPessoas,
+                                            partida, destino, distancia, "res" + contarReservas());
+                                    return reserva;
                                 }
                                 //Cliente Premium tem prioridade na reserva apenas sob clientes "normais"
                                 else if (cliente.getTipoCliente().equals("Premium")) {
                                     //Verificar qual o tipo cliente da reserva já efetuada
                                     if (res.getCliente().getTipoCliente().equals("Premium")) {
-                                        resultadoReserva = "indisponível";
+                                        reserva = new Reserva(cliente, null, null, hoje, dataReq, nDias, nPessoas,
+                                                partida, destino, distancia, "res" + contarReservas());
+                                        return reserva;
 
                                     } else if (res.getCliente().getTipoCliente().equals("Normal")) {
                                         difDias = ChronoUnit.DAYS.between(hoje, res.getDataPartida());
                                         //As reservas dos clientes "normais" só podem ser canceladas se:
                                         if (difDias <= 2) {
-                                            resultadoReserva = "indisponível";
+                                            reserva = new Reserva(cliente, null, null, hoje, dataReq, nDias, nPessoas,
+                                                    partida, destino, distancia, "res" + contarReservas());
+                                            return reserva;
                                         } else {
                                             //elimina autocarros reservados, para ficarmos no final apenas com os disponíveis
                                             autDisponiveis.remove(res.getAutocarro());
@@ -593,18 +516,21 @@ public class Aor_Autocarro implements Serializable {
                                         }
                                     }
                                 }
-                            } else {
-                                autocarro = bus;
-                                motorista = identificarMotoristaDisponível();
-                                reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                                        partida, destino, distancia, "res" + contarReservas());
-                                return reserva;
                             }
                         }
-
                     }
                 }
             }
+        }
+        //Verificar qual(caso exista) o autocarro disponível ,atendendo ao requisito de minimizar lugares vazios
+        if (autDisponiveis.size() >= 1) {
+            //Ordenar autocarros disponíveis por ordem crescente relativamente à sua capacidade
+            autocarro = autDisponiveis.get(0);
+            motorista = motoristasDisponíveis.get(0);
+            //Criar e adicionar reserva à lista de reservas da Empresa
+            reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
+                    partida, destino, distancia, "res" + contarReservas());
+            return reserva;
         }
 
         //Verificar se existem reservas que podem ser canceladas
@@ -629,52 +555,9 @@ public class Aor_Autocarro implements Serializable {
                     partida, destino, distancia, "res" + contarReservas());
             return reserva;
 
-        } else if (resultadoReserva == "indisponível") {
-            autocarro = null;
-            motorista = null;
-            //Criar e adicionar reserva à lista de reservas em Espera
-            reserva = new Reserva(cliente, autocarro, motorista, hoje, dataReq, nDias, nPessoas,
-                    partida, destino, distancia, "res" + contarReservas());
         }
 
         return reserva;
-    }
-
-    /**
-     * Identificar autocarro reservado autocarro.
-     *
-     * @param reserva the reserva
-     * @return the autocarro
-     */
-//Identificar o Autocarro que foi atribuido à reserva
-    public Autocarro identificarAutocarroReservado(Reserva reserva) {
-        return reserva.getAutocarro();
-    }
-
-    /**
-     * Identificar motorista disponível motorista.
-     *
-     * @return the motorista
-     */
-    public Motorista identificarMotoristaDisponível() {
-
-        Motorista motorista = new Motorista();
-
-        for (Motorista disponivel : motoristas) {
-            if (reservas.size() == 0) {
-                motorista = disponivel;
-                return disponivel;
-            } else {
-                for (Reserva res : reservas) {
-                    if (!res.getMotorista().equals(disponivel)) {
-                        motorista = disponivel;
-                        return motorista;
-
-                    }
-                }
-            }
-        }
-        return motorista;
     }
 
 
@@ -733,6 +616,7 @@ public class Aor_Autocarro implements Serializable {
         for (Reserva res : reservas) {
             if (res.getCliente().equals(cliente) && res.getDataReserva().isEqual(hoje)) {
                 resPagamento = res;
+                return resPagamento;
             }
         }
         return resPagamento;
@@ -753,10 +637,10 @@ public class Aor_Autocarro implements Serializable {
             if (p.getReserva().equals(reserva)) {
                 if (p instanceof Paypal) {
                     tipoPagamento = "conta paypal com email: " + ((Paypal) p).getEmail();
-                } else if (p instanceof Multibanco) {
+                } else if (p instanceof MB) {
                     tipoPagamento = "multibanco.Foi enviado um pedido do IBAN para o email " + p.getReserva().getCliente().getEmail();
-                } else if (p instanceof CartaoCredito) {
-                    tipoPagamento = " Cartão de Crédito nº" + ((CartaoCredito) p).getNumeroCartao() + " em nome de " + ((CartaoCredito) p).getNomeClienteCartao();
+                } else if (p instanceof Cartaocredito) {
+                    tipoPagamento = " Cartão de Crédito nº" + ((Cartaocredito) p).getNumeroCartao() + " em nome de " + ((Cartaocredito) p).getNomeClienteCartao();
                 }
             }
         }
@@ -780,7 +664,7 @@ public class Aor_Autocarro implements Serializable {
      * @param id      the id
      * @return the string
      */
-//Cancela reserva pelo cliente, e verifica clientes em lista espera
+//Cancelar reserva pelo cliente, e verifica clientes em lista espera
     public String cancelarReservaCliente(Cliente cliente, String id) {
 
         double reembolso;
@@ -804,24 +688,25 @@ public class Aor_Autocarro implements Serializable {
                 //Cliente "normal" tem direito a reembolso com penalização 50% se diferençaDias>7
                 if (diferençaDias > 7 && res.getCliente().getTipoCliente().equals("Normal")) {
                     reembolso = (res.getCusto() / 2.0);
-                    descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso. " +
+                    descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso.\n " +
                             "Irá ser reembolsado pelo valor de " + reembolso + "€, através de" + identificarTipoPagamento(res);
-
+                    return descrição;
                     //Cliente "premium" tem direito a reembolso na sua totalidade se diferençaDias>2
                 } else if (diferençaDias > 2 && res.getCliente().getTipoCliente().equals("Premium")) {
                     reembolso = res.getCusto();
                     descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso. " +
                             "Irá ser reembolsado pelo valor de " + reembolso + "€, através de" + identificarTipoPagamento(res);
-
+                    return descrição;
                     //Caso não se verifiquem nenhuma das condições anteriores, o cliente não tem direito a reembolso
                 } else {
-                    descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso. De acordo, com o seu pacote de subscrição, não irá ter direito a reembolso.";
+                    descrição = "A sua reserva do dia " + data_aluguer + " foi cancelada com sucesso.\n De acordo, com o seu pacote de subscrição, não irá ter direito a reembolso.";
+                    return descrição;
                 }
-            } else {
-                descrição = "Não existe nenhuma reserva com esse id em nome de " + res.getCliente().getNome() + "\n " +
-                        "Sugerimos que proceda à consulta das suas reservas para confirmar id da reserva.";
             }
         }
+        descrição = "Não existe nenhuma reserva com esse id em seu nome \n " +
+                "Sugerimos que proceda à consulta das suas reservas para confirmar id da reserva.";
+
         return descrição;
     }
 
@@ -838,6 +723,7 @@ public class Aor_Autocarro implements Serializable {
         LocalDate hoje = LocalDate.now(); //data de hoje
         Autocarro autocarro = reserva.getAutocarro();//autocarro da reserva cancelada
         Motorista motorista = reserva.getMotorista();//motorista da reserva cancelada
+
 
         for (Reserva resEspera : reservasemEspera) {
             //verifica se o autocarro da reserva cancelada tem capacidade para o nº pessoas e período das reservas em espera
@@ -902,13 +788,37 @@ public class Aor_Autocarro implements Serializable {
     }
 
     /**
-     * Atribuir reserva lista espera string.
+     * Cancelar reservaspor motorista.
      *
      * @param email the email
-     * @return the string
+     */
+//Cancelamento reservas de clientes, por motorista ter sido removido por um Administrador
+    public void cancelarReservasporMotorista(String email) {
+        LocalDate hoje = LocalDate.now(); //data de hoje
+
+        for (Reserva res : reservas) {
+            if (res.getMotorista().getEmail().equals(email)) {
+                reservas.remove(res);
+                reservasCanceladas.add(res);
+                //Criar e adicionar notificação de que o autocarro foi removido
+                Notificação motoristaRemovido = new Notificação(res.getCliente().getEmail(), "Cancelamento",
+                        "Pedimos imensa desculpa pelo transtorno, mas o motorista associado à sua reserva encontra-se indisponível.",
+                        hoje, false);
+                res.getCliente().getNotificações().add(motoristaRemovido);
+                //Adicionar notificação de cancelamento de reserva à lista de notificações do cliente
+                adicionarNotificaçãoCancelamento(res);
+            }
+        }
+    }
+
+    /**
+     * Atribuir reserva lista espera reserva.
+     *
+     * @param email the email
+     * @return the reserva
      */
 //Atribuir reserva efetiva a cliente em lista de espera, quando faz login
-    public String atribuirReservaListaEspera(String email) {
+    public Reserva atribuirReservaListaEspera(String email) {
 
         Cliente logado = (Cliente) utilizadorLogado(email);//identificar cliente através do email
         Reserva novaReserva = null;
@@ -920,12 +830,10 @@ public class Aor_Autocarro implements Serializable {
             if (reserva.getCliente().equals(logado)) {
                 novaReserva = reserva;
                 reservado = reserva.getAutocarro();
+                return novaReserva;
             }
         }
-        // Caso o valor atribuido ao autocarro seja "null", o cliente volta para a lista de espera
-        if (reservado.equals(null)) {
-            descrição = "Lamentamos o incómodo,mas a sua reserva continua em lista de espera";
-        }
+
         //Caso tenha sido atribuido um autocarro ao cliente, verificamos se é o único cliente que tem esse autocarro atribuido,
         // ou se há mais clientes em lista de espera com o mesmo autocarro atribuido
         for (Reserva reservas : reservasemEspera) {
@@ -938,21 +846,28 @@ public class Aor_Autocarro implements Serializable {
         if (contador == 1) {
             //Remover reserva deste cliente da lista de espera e colocar na lista de reservas da empresa
             reservasemEspera.remove(novaReserva);
-            reservas.add(novaReserva);
+
         } else {
             //Caso seja maior que 1, consideramos que este foi o primeiro cliente a ler a notificação, ficando a reserva
             //deste autocarro para si. Nos restantes clientes iremos voltar a atribuir um valor "null" nos campos
             //relativos ao autocarro e motorista.
             reservasemEspera.remove(novaReserva);
-            reservas.add(novaReserva);
+
             for (Reserva reservas : reservasemEspera) {
                 if (reservas.getAutocarro().equals(reservado)) {
                     reservas.setAutocarro(null);
                     reservas.setMotorista(null);
+                    //Removemos a notificação da lista de notificações dos rsetantes clietes que estavam
+                    //em lista de espera para esta reserva
+                    for (Notificação le : reservas.getCliente().getNotificações()) {
+                        if (le.getTipoNotificação().equals("listaEspera")) {
+                            reservas.getCliente().getNotificações().remove(le);
+                        }
+                    }
                 }
             }
         }
-        return descrição;
+        return novaReserva;
     }
 
 
@@ -975,15 +890,6 @@ public class Aor_Autocarro implements Serializable {
     }
 
     /**
-     * Sets reservas canceladas.
-     *
-     * @param reservasCanceladas the reservas canceladas
-     */
-    public void setReservasCanceladas(ArrayList<Reserva> reservasCanceladas) {
-        this.reservasCanceladas = reservasCanceladas;
-    }
-
-    /**
      * Gets reservasem espera.
      *
      * @return the reservasem espera
@@ -992,14 +898,6 @@ public class Aor_Autocarro implements Serializable {
         return reservasemEspera;
     }
 
-    /**
-     * Sets reservasem espera.
-     *
-     * @param reservasemEspera the reservasem espera
-     */
-    public void setReservasemEspera(ArrayList<Reserva> reservasemEspera) {
-        this.reservasemEspera = reservasemEspera;
-    }
 
     /**
      * Gets motoristas.
@@ -1037,14 +935,6 @@ public class Aor_Autocarro implements Serializable {
         this.autocarros = autocarros;
     }
 
-    /**
-     * Sets lista pagamentos.
-     *
-     * @param listaPagamentos the lista pagamentos
-     */
-    public void setListaPagamentos(ArrayList<Pagamento> listaPagamentos) {
-        this.listaPagamentos = listaPagamentos;
-    }
 
     /**
      * Gets utilizadores.
@@ -1055,14 +945,6 @@ public class Aor_Autocarro implements Serializable {
         return utilizadores;
     }
 
-    /**
-     * Sets utilizadores.
-     *
-     * @param utilizadores the utilizadores
-     */
-    public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
-        this.utilizadores = utilizadores;
-    }
 
     /**
      * Remover motorista motorista.
@@ -1117,20 +999,11 @@ public class Aor_Autocarro implements Serializable {
     }
 
     /**
-     * Remover autocarro autocarro.
+     * Gets cliente.
      *
-     * @param matricula the matricula
-     * @return the autocarro
+     * @param nif the nif
+     * @return the cliente
      */
-    public Autocarro removerAutocarro(String matricula) {
-        for (Autocarro autocarro : autocarros) {
-            if ((autocarro.getMatricula().equals(matricula))) {
-                return autocarro;
-            }
-        }
-        return null;
-    }
-
     public Utilizador getCliente(String nif) {
         for (Utilizador cliente : utilizadores) {
             if (cliente instanceof Cliente) {
@@ -1143,6 +1016,11 @@ public class Aor_Autocarro implements Serializable {
         return null;
     }
 
+    /**
+     * Contar motorista int.
+     *
+     * @return the int
+     */
     public int contarMotorista() {
         int motorista = 0;
         for (Motorista moto : motoristas) {
@@ -1151,6 +1029,11 @@ public class Aor_Autocarro implements Serializable {
         return motorista;
     }
 
+    /**
+     * Contar autocarro int.
+     *
+     * @return the int
+     */
     public int contarAutocarro() {
         int autocarro = 0;
         for (Autocarro auto : autocarros) {
@@ -1159,6 +1042,12 @@ public class Aor_Autocarro implements Serializable {
         return autocarro;
     }
 
+    /**
+     * Gets administrador.
+     *
+     * @param email the email
+     * @return the administrador
+     */
     public Utilizador getAdministrador(String email) {
         for (Utilizador administrador : utilizadores) {
             if ((administrador.getEmail().equals(email))) {
@@ -1168,6 +1057,14 @@ public class Aor_Autocarro implements Serializable {
         return null;
     }
 
+    /**
+     * Alterar palavra chave.
+     *
+     * @param email                the email
+     * @param palavraChaveAtual    the palavra chave atual
+     * @param novaPalavraChave     the nova palavra chave
+     * @param confirmePalavraChave the confirme palavra chave
+     */
     public void alterarPalavraChave(String email, String palavraChaveAtual,
                                     String novaPalavraChave, String confirmePalavraChave) {
         if (validarRegisto(email, palavraChaveAtual)) {
@@ -1187,6 +1084,12 @@ public class Aor_Autocarro implements Serializable {
     }
 
 
+    /**
+     * Gets autocarro.
+     *
+     * @param matricula the matricula
+     * @return the autocarro
+     */
     public Autocarro getAutocarro(String matricula) {
         for (Autocarro autocarro : autocarros) {
             if ((autocarro.getMatricula().equals(matricula))) {
@@ -1196,6 +1099,12 @@ public class Aor_Autocarro implements Serializable {
         return null;
     }
 
+    /**
+     * Gets motorista.
+     *
+     * @param email the email
+     * @return the motorista
+     */
     public Motorista getMotorista(String email) {
         for (Motorista motorista : motoristas) {
             if ((motorista.getEmail().equals(email))) {
@@ -1205,6 +1114,11 @@ public class Aor_Autocarro implements Serializable {
         return null;
     }
 
+    /**
+     * Matricula mais requisitado string.
+     *
+     * @return the string
+     */
     public String matriculaMaisRequisitado() {
         String elementoMaisFrequente = "";
         int contador = 0;
@@ -1223,6 +1137,12 @@ public class Aor_Autocarro implements Serializable {
         return elementoMaisFrequente;
     }
 
+
+    /**
+     * Cliente com mais reservas string.
+     *
+     * @return the string
+     */
     public String clienteComMaisReservas() {
         String elementoMaisFrequenteCliente = "";
         int contadorCliente = 0;

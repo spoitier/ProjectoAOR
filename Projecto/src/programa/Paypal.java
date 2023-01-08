@@ -22,14 +22,6 @@ public class Paypal extends Pagamento implements Serializable
         this.email = email;
     }
 
-    public String getPalavraChave() {
-        return palavraChave;
-    }
-
-    public void setPalavraChave(String palavraChave) {
-        this.palavraChave = palavraChave;
-    }
-
     @Override
     public String toString() {
         return "Paypal{" +

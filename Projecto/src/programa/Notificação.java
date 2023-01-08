@@ -30,16 +30,8 @@ public class Notificação implements Serializable {
         return tipoNotificação;
     }
 
-    public void setTipoNotificação(String tipoNotificação) {
-        this.tipoNotificação = tipoNotificação;
-    }
-
     public String getDescrição() {
         return descrição;
-    }
-
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
     }
 
     public LocalDate getData() {
@@ -48,14 +40,6 @@ public class Notificação implements Serializable {
 
     public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public Boolean getLido() {
-        return lido;
-    }
-
-    public void setLido(Boolean lido) {
-        this.lido = lido;
     }
 
     @Override

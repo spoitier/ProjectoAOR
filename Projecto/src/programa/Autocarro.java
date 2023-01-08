@@ -48,7 +48,6 @@ public class Autocarro implements Serializable {
         return modelo;
     }
 
-
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }

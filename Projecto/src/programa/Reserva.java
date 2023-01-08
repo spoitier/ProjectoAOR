@@ -40,10 +40,6 @@ public Reserva(){
         this.id=id;
     }
 
-
-
-
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -76,9 +72,6 @@ public Reserva(){
     public LocalDate getDataFim() {
         return dataFim;
     }
-
-
-
     public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
@@ -87,48 +80,19 @@ public Reserva(){
         return dataPartida;
     }
 
-    public void setDataPartida(LocalDate dataPartida) {
-        this.dataPartida = dataPartida;
-    }
-
     public String getLocalPartida() {
         return localPartida;
-    }
-
-    public void setLocalPartida(String localPartida) {
-        this.localPartida = localPartida;
     }
 
     public String getLocalDestino() {
         return localDestino;
     }
 
-    public void setLocalDestino(String localDestino) {
-        this.localDestino = localDestino;
-    }
-
-    public String getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(String distancia) {
-        this.distancia = distancia;
-    }
-
     public String getNumeroPessoas() {
         return numeroPessoas;
     }
-
-    public void setNumeroPessoas(String numeroPessoas) {
-        this.numeroPessoas = numeroPessoas;
-    }
-
     public String getNumeroDias() {
         return numeroDias;
-    }
-
-    public void setNumeroDias(String numeroDias) {
-        this.numeroDias = numeroDias;
     }
 
     public String getId() {
@@ -205,9 +169,9 @@ public Reserva(){
         int mes = Integer.parseInt(dataSemEspaços.substring(2, 4));
 
 
-       if(dia<0&&dia>31&&mes<0&&mes>12){
+       /*if(dia<0&&dia>31&&mes<0&&mes>12){
             validar=false;
-        }
+        }*/
 
         if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8||mes==10||mes==12) && (dia <= 31)) {
             validar = true;

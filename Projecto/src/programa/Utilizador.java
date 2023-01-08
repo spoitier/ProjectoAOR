@@ -71,32 +71,6 @@ public class Utilizador implements Serializable {
         return validar;
     }
 
-    //====================================================
-    //Alterar palavra chave
-    public  void alterarPalavraChave(String email, String palavraChaveAtual,
-                                           String novaPalavraChave, String confirmePalavraChave) {
-        if (aor_autocarro.validarRegisto(email, palavraChaveAtual)) {
-            if (novaPalavraChave.equals(confirmePalavraChave)) {
-                for (Utilizador cliente : aor_autocarro.getUtilizadores()) {
-                    if (cliente.getEmail() == email) {
-                        cliente.setPalavraChave(novaPalavraChave);
-                    }
-                }
-            } else {
-                System.out.println("As palavras passes não coincidem");
-            }
-        } else {
-            System.out.println("Password Errada");
-        }
-    }
-
-
-
-
-
-
-
-
     public String getEmail() {
         return email;
     }
@@ -148,11 +122,5 @@ public class Utilizador implements Serializable {
     public String getId() {
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
 
 }

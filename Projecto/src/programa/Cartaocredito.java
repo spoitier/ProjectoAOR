@@ -23,26 +23,9 @@ public class Cartaocredito extends Pagamento implements Serializable {
         return numeroCartao;
     }
 
-    public void setNumeroCartao(String numeroCartao) {
-        this.numeroCartao = numeroCartao;
-    }
-
-    public String getCodigoSeguranca() {
-        return codigoSeguranca;
-    }
-
-    public void setCodigoSeguranca(String codigoSeguranca) {
-        this.codigoSeguranca = codigoSeguranca;
-    }
-
     public String getNomeClienteCartao() {
         return nomeClienteCartao;
     }
-
-    public void setNomeClienteCartao(String nomeClienteCartao) {
-        this.nomeClienteCartao = nomeClienteCartao;
-    }
-
 
     @Override
     public String toString() {

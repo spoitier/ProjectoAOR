@@ -25,8 +25,6 @@ public Cliente (){
 
     }
 
-
-
     public String getPalavraChave() {
         return palavraChave;
     }
@@ -65,13 +63,4 @@ public Cliente (){
         return id;
     }
 
-    public  void alterarSubscricao(String email) {
-        for (Utilizador utilizador : aor_autocarro.getUtilizadores()) {
-            if (((Cliente) utilizador).getTipoCliente().equals("Normal")) {
-                ((Cliente) utilizador).setTipoCliente("Premium");
-            } else if (((Cliente) utilizador).getTipoCliente().equals("Premium")) {
-                ((Cliente) utilizador).setTipoCliente("Normal");
-            }
-        }
-    }
 }

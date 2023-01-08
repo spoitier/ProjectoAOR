@@ -285,16 +285,17 @@ public class Estatistica extends JPanel implements ActionListener {
         botoesFiltroReservas.add(mesCombobox3);
 
         //Tabela
-        colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+        colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada"};
 
-        String[][] dataReservas = new String[aor_autocarro.getReservasemEspera().size()][5];
+        String[][] dataReservas = new String[aor_autocarro.getReservasemEspera().size()][3];
 
         for (int i = 0; i < aor_autocarro.getReservasemEspera().size(); i++) {
-            dataReservas[i][0] = aor_autocarro.getReservasemEspera().get(i).getAutocarro().getMatricula();
+
+            dataReservas[i][0] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
             dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
             dataReservas[i][2] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
-            dataReservas[i][3] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
-            dataReservas[i][4] = aor_autocarro.getReservasemEspera().get(i).getMotorista().getNome();
+
+
         }
 
 
@@ -499,16 +500,14 @@ public class Estatistica extends JPanel implements ActionListener {
         if (!mes.equals("0")) {
             autocarrosEspera.remove(spEspera);
             spEspera.removeAll();
-            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada"};
             ArrayList<String[]> data = new ArrayList<>();
             for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
-                String[] reservaInfo = new String[5];
+                String[] reservaInfo = new String[3];
                 if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
-                    reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                    reservaInfo[0] = reserva.getCliente().getNome();
                     reservaInfo[1] = String.valueOf(reserva.getDataPartida());
                     reservaInfo[2] = String.valueOf(reserva.getDataFim());
-                    reservaInfo[3] = reserva.getCliente().getNome();
-                    reservaInfo[4] = reserva.getMotorista().getNome();
                     data.add(reservaInfo);
                 }
             }
@@ -520,15 +519,14 @@ public class Estatistica extends JPanel implements ActionListener {
         } else {
             autocarrosEspera.remove(spEspera);
             spEspera.removeAll();
-            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+            colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada"};
             ArrayList<String[]> data = new ArrayList<>();
             for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
-                String[] reservaInfo = new String[5];
-                reservaInfo[0] = reserva.getAutocarro().getMatricula();
+                String[] reservaInfo = new String[3];
+                reservaInfo[0] = reserva.getCliente().getNome();
                 reservaInfo[1] = String.valueOf(reserva.getDataPartida());
                 reservaInfo[2] = String.valueOf(reserva.getDataFim());
-                reservaInfo[3] = reserva.getCliente().getNome();
-                reservaInfo[4] = reserva.getMotorista().getNome();
+
                 data.add(reservaInfo);
             }
             String[][] dataArray = data.toArray(new String[0][0]);
