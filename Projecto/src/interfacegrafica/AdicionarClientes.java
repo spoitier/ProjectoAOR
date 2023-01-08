@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class AdicionarClientes extends JPanel implements ActionListener {
 
-   private final Aor_Autocarro aor_autocarro;
+    private final Aor_Autocarro aor_autocarro;
     private final PainelFundo painelFundo;
     private final JLabel clienteNome;
     private JScrollPane sp;
@@ -30,8 +30,8 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     private final JTextField nifRemoverField;
     private final JTextField nifEditarField;
 
-    private  String nifEditavel;
-    private  JTable tabela;
+    private String nifEditavel;
+    private JTable tabela;
 
     /**
      * Instantiates a new Adicionar clientes.
@@ -391,11 +391,11 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
 
             painelFundo.mudaEcra("Login");
         }

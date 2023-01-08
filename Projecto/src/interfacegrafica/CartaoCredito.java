@@ -9,35 +9,21 @@ import java.awt.event.ActionListener;
 
 public class CartaoCredito extends JPanel implements ActionListener {
 
-    private Aor_Autocarro aor_autocarro;
+    private final Aor_Autocarro aor_autocarro;
 
-    private CartaoCredito cartão;
-    private PainelFundo painelFundo;
-    private JButton sairBotao;
-    private JButton opcao1;
-    private JButton opcao2;
-    private JButton opcao3;
-    private JButton opcao4;
-    private JButton opcao5;
+    private final PainelFundo painelFundo;
 
-    private JButton cartaocreditoButton;
-    private JButton botaoConfirmar;
-    private JButton mudarPagamentoButton;
-    private JLabel numeroCartao;
-    private JLabel nomeCliente;
-    private JLabel dataExpiracao;
-    private JLabel codigoSeguranca;
-    private TextField numeroCartaoField;
-    private TextField nomeClienteField;
-    private TextField dataExpiracaoField;
-    private TextField codigoSegurancaField;
-    private JLabel clienteNome;
-    private JLabel valorViagem;
+    private final TextField numeroCartaoField;
+    private final TextField nomeClienteField;
+    private final TextField dataExpiracaoField;
+    private final TextField codigoSegurancaField;
+    private final JLabel clienteNome;
+    private final JLabel valorViagem;
     private Reserva reserva;
 
 
-    public CartaoCredito(PainelFundo painelfundo,Aor_Autocarro aor_autocarro) {
-this.aor_autocarro=aor_autocarro;
+    public CartaoCredito(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelfundo;
         this.setLayout(null);
 
@@ -58,7 +44,7 @@ this.aor_autocarro=aor_autocarro;
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -71,11 +57,11 @@ this.aor_autocarro=aor_autocarro;
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("programa.Reserva Autocarro");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("Reserva Autocarro");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -111,7 +97,7 @@ this.aor_autocarro=aor_autocarro;
         JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
         pagamentoPanel.setBounds(200, 150, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-        cartaocreditoButton = new JButton("CARTÃO CREDITO");
+        JButton cartaocreditoButton = new JButton("CARTÃO CREDITO");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(cartaocreditoButton);
         this.add(pagamentoPanel);
@@ -123,19 +109,19 @@ this.aor_autocarro=aor_autocarro;
         cartaoCreditoPanel.setBounds(170, 275, 425, 225);
 
         //Label do numerocartao
-        numeroCartao = new JLabel("Nº Cartão:");
+        JLabel numeroCartao = new JLabel("Nº Cartão:");
         numeroCartao.setBounds(0, 25, 80, 30);
 
         //Label do nome cliente
-        nomeCliente = new JLabel("Nome do Cliente do cartão:\n");
+        JLabel nomeCliente = new JLabel("Nome do Cliente do cartão:\n");
         nomeCliente.setBounds(0, 75, 200, 30);
 
         //Label do nome cliente
-        dataExpiracao = new JLabel("Data expiração: ");
+        JLabel dataExpiracao = new JLabel("Data expiração: ");
         dataExpiracao.setBounds(0, 125, 200, 30);
 
         //Label do nome cliente
-        codigoSeguranca = new JLabel("Codigo de Segurança:");
+        JLabel codigoSeguranca = new JLabel("Codigo de Segurança:");
         codigoSeguranca.setBounds(0, 175, 200, 30);
 
 
@@ -168,10 +154,10 @@ this.aor_autocarro=aor_autocarro;
 
 
         //Botão de auntenticar
-        botaoConfirmar = new JButton("Confirmar");
+        JButton botaoConfirmar = new JButton("Confirmar");
         botaoConfirmar.setBounds(225, 500, 300, 50);
         this.add(botaoConfirmar);
-        mudarPagamentoButton = new JButton("Mudar Pagamento");
+        JButton mudarPagamentoButton = new JButton("Mudar Pagamento");
         mudarPagamentoButton.setBounds(225, 600, 300, 50);
         this.add(mudarPagamentoButton);
 
@@ -184,18 +170,16 @@ this.aor_autocarro=aor_autocarro;
         mudarPagamentoButton.addActionListener(this);
         sairBotao.addActionListener(this);
     }
+
     public void custoAutocarro(Reserva reserva) {
         if (!(reserva == null)) {
             this.reserva = reserva;
             clienteNome.setText(reserva.getCliente().getNome());
-            valorViagem.setText(String.valueOf(reserva.getCusto()));
+            double custoReservaFormatado=Math.round(reserva.getCusto()*100.00)/100.00;
+            valorViagem.setText(String.valueOf(custoReservaFormatado));
 
         }
     }
-
-
-
-
 
 
     @Override
@@ -245,74 +229,80 @@ this.aor_autocarro=aor_autocarro;
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº" + reserva.getId() + " no valor de " + reserva.getCusto() + "€");
+                        " nº" + reserva.getId() + " no valor de " + valorViagem.getText() + "€");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                painelFundo.mudaEcra("ConsultarReservas");
+
+                numeroCartaoField.setText("");
+                nomeClienteField.setText("");
+                dataExpiracaoField.setText("");
+                codigoSegurancaField.setText("");
+                valorViagem.setText("");
+                painelFundo.mudaEcra("ReservaViagem");
             }
         }
 
         int resultado;
-        if(e.getActionCommand().equals("ReservaViagem")) {
+        if (e.getActionCommand().equals("ReservaViagem")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 painelFundo.mudaEcra("ReservaViagem");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 painelFundo.mudaEcra("HistoricoReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
+        if (e.getActionCommand().equals("Consultar Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 painelFundo.mudaEcra("ConsultarReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 painelFundo.mudaEcra("CancelarReserva");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 painelFundo.mudaEcra("DadosPessoaisClientes");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }
-        if(e.getActionCommand().equals("Sair")) {
+        if (e.getActionCommand().equals("Sair")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+                ((Login) painelFundo.mapaPaineis.get("Login")).sair();
                 painelFundo.mudaEcra("Login");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+            } else {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
             }
         }

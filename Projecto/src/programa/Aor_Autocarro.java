@@ -615,7 +615,8 @@ public class Aor_Autocarro implements Serializable {
 
         for (Reserva res : reservas) {
             if (res.getCliente().equals(cliente) && res.getDataReserva().isEqual(hoje)) {
-                resPagamento = res;
+                int tamanho = reservas.size()-1;
+                resPagamento = reservas.get(tamanho);
                 return resPagamento;
             }
         }

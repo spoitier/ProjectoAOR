@@ -204,7 +204,8 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasEfetuadas();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasCanceladas();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 

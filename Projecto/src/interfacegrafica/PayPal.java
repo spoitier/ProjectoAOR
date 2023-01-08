@@ -9,28 +9,14 @@ import java.awt.event.ActionListener;
 
 public class PayPal extends JPanel implements ActionListener {
 
-    private Aor_Autocarro aor_autocarro;
-    private PainelFundo painelFundo;
-    private JLabel valorViagem;
-    private Reserva reserva;
-    private JLabel clienteNome;
+    private final Aor_Autocarro aor_autocarro;
+    private final PainelFundo painelFundo;
+    private final JLabel valorViagem;
+    public Reserva reserva;
+    private final JLabel clienteNome;
 
-    private JButton opcao1;
-    private JButton opcao2;
-    private JButton opcao3;
-    private JButton opcao4;
-    private JButton opcao5;
-
-    private JButton botaoConfirmar;
-    private JButton paypalButton;
-
-    private JButton mudarPagamentoButton;
-    private JButton sairBotao;
-    private JLabel login;
-    private JLabel email;
-    private JLabel palavraChave;
-    private TextField emailField;
-    private JPasswordField palavraChaveField;
+    private final TextField emailField;
+    private final JPasswordField palavraChaveField;
 
     public PayPal(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
@@ -55,7 +41,7 @@ public class PayPal extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -68,11 +54,11 @@ public class PayPal extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        opcao1 = new JButton("ReservaViagem");
-        opcao2 = new JButton("Histórico Reservas");
-        opcao3 = new JButton("Consultar Reservas");
-        opcao4 = new JButton("Cancelar Reservas");
-        opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("ReservaViagem");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -108,7 +94,7 @@ public class PayPal extends JPanel implements ActionListener {
         JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
         pagamentoPanel.setBounds(200, 200, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-        paypalButton = new JButton("PayPAL");
+        JButton paypalButton = new JButton("PayPAL");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(paypalButton);
         this.add(pagamentoPanel);
@@ -120,15 +106,15 @@ public class PayPal extends JPanel implements ActionListener {
         loginPanel.setBounds(200, 300, 350, 200);
 
         //Label do login
-        login = new JLabel("Login:");
+        JLabel login = new JLabel("Login:");
         login.setBounds(10, 0, 50, 30);
 
         //Label do email
-        email = new JLabel("Email");
+        JLabel email = new JLabel("Email");
         email.setBounds(30, 50, 80, 30);
 
         //Label da palavra chave
-        palavraChave = new JLabel("Palavra-Chave");
+        JLabel palavraChave = new JLabel("Palavra-Chave");
         palavraChave.setBounds(30, 100, 100, 30);
 
         // Textofield do email
@@ -145,10 +131,10 @@ public class PayPal extends JPanel implements ActionListener {
         this.add(loginPanel);
 
         //Botão de auntenticar
-        botaoConfirmar = new JButton("Confirmar");
+        JButton botaoConfirmar = new JButton("Confirmar");
         botaoConfirmar.setBounds(225, 500, 300, 50);
         this.add(botaoConfirmar);
-        mudarPagamentoButton = new JButton("Mudar Pagamento");
+        JButton mudarPagamentoButton = new JButton("Mudar Pagamento");
         mudarPagamentoButton.setBounds(225, 600, 300, 50);
         this.add(mudarPagamentoButton);
 
@@ -167,7 +153,8 @@ public class PayPal extends JPanel implements ActionListener {
         if (!(reserva == null)) {
             this.reserva = reserva;
             clienteNome.setText(reserva.getCliente().getNome());
-            valorViagem.setText(String.valueOf(reserva.getCusto()));
+            double custoReservaFormatado=Math.round(reserva.getCusto()*100.00)/100.00;
+            valorViagem.setText(String.valueOf(custoReservaFormatado));
 
         }
     }
@@ -199,7 +186,7 @@ public class PayPal extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "A sua reserva" +
                         " nº"+reserva.getId()+" está confirmada");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-                painelFundo.mudaEcra("ConsultarReservas");
+                painelFundo.mudaEcra("ReservaViagem");
             }
         }
 
@@ -262,6 +249,7 @@ public class PayPal extends JPanel implements ActionListener {
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+                valorViagem.setText("");
                 painelFundo.mudaEcra("Login");
             }else{
                 reserva=aor_autocarro.identificarReservaPagamento(logado);

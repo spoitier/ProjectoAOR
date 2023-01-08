@@ -3,6 +3,7 @@ package interfacegrafica;
 import programa.Aor_Autocarro;
 import programa.Cliente;
 import programa.FicheiroDeObjectos;
+import programa.MB;
 
 import javax.swing.*;
 import java.awt.*;

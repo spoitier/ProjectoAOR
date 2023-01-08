@@ -11,29 +11,15 @@ public class Multibanco extends JPanel implements ActionListener {
 
     private Aor_Autocarro aor_autocarro;
 
-
-    private Multibanco multibanco1;
-    private Reserva reserva;
-    private PainelFundo painelFundo;
-
-    private JButton opcao1;
-    private JButton opcao2 ;
-    private JButton opcao3 ;
-    private JButton opcao4 ;
-    private JButton opcao5 ;
-    private JButton multibanco;
-    private JButton botaoConfirmar;
-    private JButton mudarPagamentoButton;
-    private JButton sairBotao;
-
-    private JLabel entidade;
-    private JLabel referencia;
-    private JLabel valor;
-    private JLabel entidadeInfo;
-    private JLabel referenciaInfo;
-    private JLabel valorInfo;
-    private JLabel valorViagem;
-    private JLabel clienteNome;
+    public Reserva reserva;
+    private final PainelFundo painelFundo;
+    private final JLabel valorViagem;
+    private final JLabel clienteNome;
+    JLabel entidade ;
+    JLabel referencia;
+    JLabel valor ;
+    JLabel entidadeInfo;
+    JLabel referenciaInfo;
 
     public  Multibanco (PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
@@ -57,7 +43,7 @@ public class Multibanco extends JPanel implements ActionListener {
         cabecalho.add(clienteNome);
 
         // Botao para sair para o login
-        sairBotao = new JButton("Sair");
+        JButton sairBotao = new JButton("Sair");
         sairBotao.setBounds(810, 1, 70, 28);
         cabecalho.add(sairBotao);
         this.add(cabecalho);
@@ -70,11 +56,11 @@ public class Multibanco extends JPanel implements ActionListener {
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-         opcao1 = new JButton("ReservaViagem");
-         opcao2 = new JButton("Histórico Reservas");
-         opcao3 = new JButton("Consultar Reservas");
-         opcao4 = new JButton("Cancelar Reservas");
-         opcao5 = new JButton("Dados Pessoais");
+        JButton opcao1 = new JButton("ReservaViagem");
+        JButton opcao2 = new JButton("Histórico Reservas");
+        JButton opcao3 = new JButton("Consultar Reservas");
+        JButton opcao4 = new JButton("Cancelar Reservas");
+        JButton opcao5 = new JButton("Dados Pessoais");
 
         opcaoPainel.add(opcao1);
         opcaoPainel.add(opcao2);
@@ -110,7 +96,7 @@ public class Multibanco extends JPanel implements ActionListener {
         JPanel pagamentoPanel = new JPanel(new GridLayout(2, 1, 0, 15));
         pagamentoPanel.setBounds(200, 200, 350, 100);
         JLabel tipoPagamento = new JLabel("TIPO DE PAGAMENTO");
-        multibanco = new JButton("Multibanco");
+        JButton multibanco = new JButton("Multibanco");
         pagamentoPanel.add(tipoPagamento);
         pagamentoPanel.add(multibanco);
         this.add(pagamentoPanel);
@@ -118,30 +104,25 @@ public class Multibanco extends JPanel implements ActionListener {
         //================================================================
         //Painel de referencia multibanco
 
-        /*
+
         JPanel referenciaMultibanco = new JPanel(new GridLayout(3, 2, 0, 0));
         referenciaMultibanco.setBounds(200, 300, 300, 200);
         entidade = new JLabel("Entidade:");
         referencia = new JLabel("Referencia:");
-        valor = new JLabel("Valor");
         entidadeInfo = new JLabel("12345");
-        referenciaInfo = new JLabel(programa.Multibanco.gerarRefMultibanco());;
+        referenciaInfo = new JLabel(MB.gerarRefMultibanco());
         referenciaMultibanco.add(entidade);
         referenciaMultibanco.add(entidadeInfo);
         referenciaMultibanco.add(referencia);
         referenciaMultibanco.add(referenciaInfo);
-        referenciaMultibanco.add(valor);
         this.add(referenciaMultibanco);
 
 
-         */
-
-
         //Botão de auntenticar
-        botaoConfirmar = new JButton("Confirmar");
+        JButton botaoConfirmar = new JButton("Confirmar");
         botaoConfirmar.setBounds(200, 500, 350, 50);
         this.add(botaoConfirmar);
-        mudarPagamentoButton = new JButton("Mudar Pagamento");
+        JButton mudarPagamentoButton = new JButton("Mudar Pagamento");
         mudarPagamentoButton.setBounds(225, 600, 300, 50);
         this.add(mudarPagamentoButton);
 
@@ -160,7 +141,8 @@ public class Multibanco extends JPanel implements ActionListener {
         if (!(reserva == null)) {
             this.reserva = reserva;
             clienteNome.setText(reserva.getCliente().getNome());
-            valorViagem.setText(String.valueOf(reserva.getCusto()));
+            double custoReservaFormatado=Math.round(reserva.getCusto()*100.00)/100.00;
+            valorViagem.setText(String.valueOf(custoReservaFormatado));
 
         }
     }
@@ -180,10 +162,9 @@ public class Multibanco extends JPanel implements ActionListener {
             //Adicionado pagamento da reserva à lista de Reservas
             aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº"+reserva.getId()+" deverá ser efetuada por Multibanco:\n" +
-                        "Entidade: 12345\nReferência:"+referenciaMB+"\nValor:"+reserva.getCusto()+"€");
+                        " nº"+reserva.getId()+" deverá ser efetuada por Multibanco:\n");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-            painelFundo.mudaEcra("ConsultarReservas");
+            painelFundo.mudaEcra("ReservaViagem");
             }
 
         int resultado;

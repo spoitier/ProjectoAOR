@@ -6,11 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import static javax.swing.JOptionPane.YES_OPTION;
 
 /**
  * The type Reserva viagem.
@@ -159,7 +156,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         tituloCusto.setBounds(45, 30, 200, 10);
 
 
-        valorViagem = new JLabel("__________");
+        valorViagem = new JLabel();
         valorViagem.setBounds(80, 100, 200, 10);
         JButton atualizar = new JButton("Atualizar");
         atualizar.setBounds(50,150,100,30);
@@ -255,7 +252,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
             if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoas)) {
                 JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
-                        "Empresa autocarros com capacidade para " + numeroPessoas);
+                        "Empresa autocarros com capacidade para " + numeroPessoas + " pessoas.");
                 validar = false;
                 dataAluguerField.setText("");
                 numeroDiasField.setText("");
@@ -263,6 +260,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 partidaField.setText("");
                 destinoField.setText("");
                 numeroKmTotalField.setText("");
+                valorViagem.setText("");
 
             }
             if (validar) {
@@ -284,6 +282,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                     partidaField.setText("");
                     destinoField.setText("");
                     numeroKmTotalField.setText("");
+                    valorViagem.setText("");
 
                     painelFundo.mudaEcra("Pagamentos");
 
@@ -302,6 +301,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                         partidaField.setText("");
                         destinoField.setText("");
                         numeroKmTotalField.setText("");
+                        valorViagem.setText("");
 
                         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
@@ -314,6 +314,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
                         partidaField.setText("");
                         destinoField.setText("");
                         numeroKmTotalField.setText("");
+                        valorViagem.setText("");
 
                         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                     }
@@ -323,6 +324,11 @@ public class ReservaViagem extends JPanel implements ActionListener {
         }
         if(e.getActionCommand().equals("Atualizar")) {
             boolean validarAtualizar= true;
+            if(numeroDiasField.getText().isBlank()||numeroPessoasField.getText().isBlank()||
+            numeroKmTotalField.getText().isBlank()) {
+                validarAtualizar=false;
+                JOptionPane.showMessageDialog(null, "Campos em branco");
+            }
             //Verificar se é constituído só por números
             if (!Reserva.validarNumeros(numeroDiasField.getText())) {
                 JOptionPane.showMessageDialog(null, "Número de dias inválido");
@@ -337,7 +343,8 @@ public class ReservaViagem extends JPanel implements ActionListener {
 
                 double custoReserva =0;
                 custoReserva=0.55*Integer.parseInt(distancia)+1.2*Integer.parseInt(numeroPessoas);
-                valorViagem.setText(String.valueOf(custoReserva));
+                double custoReservaFormatado=Math.round(custoReserva*100.00)/100.00;
+                valorViagem.setText(String.valueOf(custoReservaFormatado));
             }
 
 
@@ -345,7 +352,8 @@ public class ReservaViagem extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasEfetuadas();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasCanceladas();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 

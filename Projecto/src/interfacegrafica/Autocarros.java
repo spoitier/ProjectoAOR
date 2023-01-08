@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  */
 public class Autocarros extends JPanel implements ActionListener {
 
-   private final PainelFundo painelFundo;
+    private final PainelFundo painelFundo;
     private JScrollPane sp;
     private final Aor_Autocarro aor_autocarro;
 
@@ -242,11 +242,11 @@ public class Autocarros extends JPanel implements ActionListener {
     /**
      * Nome logado.
      */
-    public void nomeLogado(){
+    public void nomeLogado() {
 
-        if(aor_autocarro.getUserLogado()==null){
+        if (aor_autocarro.getUserLogado() == null) {
             adminNome.setText("");
-        }else
+        } else
             adminNome.setText(aor_autocarro.getUserLogado().getNome());
         revalidate();
         repaint();
@@ -261,26 +261,26 @@ public class Autocarros extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Motoristas")) {
-            ((Motoristas)(painelFundo.mapaPaineis.get("Motoristas"))).nomeLogado();
+            ((Motoristas) (painelFundo.mapaPaineis.get("Motoristas"))).nomeLogado();
             painelFundo.mudaEcra("Motoristas");
         }
 
 
         if (e.getActionCommand().equals("Clientes")) {
-            ((AdicionarClientes)(painelFundo.mapaPaineis.get("AdicionarClientes"))).nomeLogado();
+            ((AdicionarClientes) (painelFundo.mapaPaineis.get("AdicionarClientes"))).nomeLogado();
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if (e.getActionCommand().equals("Estatistica")) {
-            ((Estatistica)(painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
+            ((Estatistica) (painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 
@@ -322,7 +322,7 @@ public class Autocarros extends JPanel implements ActionListener {
 
         }
         if (e.getActionCommand().equals("Remover")) {
-            String matricula=matriculaFieldRemover.getText();
+            String matricula = matriculaFieldRemover.getText();
             if (matriculaFieldRemover.getText() == null) {
                 JOptionPane.showMessageDialog(null, "Falta preencher");
             } else if ((aor_autocarro.getAutocarro(matriculaFieldRemover.getText())) == null) {

@@ -2,7 +2,6 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Reserva;
-import programa.Utilizador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -184,7 +183,8 @@ public class ConsultarReservas extends JPanel implements ActionListener {
 
 
         if (e.getActionCommand().equals("Histórico Reservas")) {
-            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMes("0");
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasEfetuadas();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasCanceladas();
             painelFundo.mudaEcra("HistoricoReservas");
         }
 

@@ -161,7 +161,7 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
      * @param utilizador the utilizador
      */
     public void setAdministrador(Utilizador utilizador) {
-        if(!(utilizador==null)){
+        if (!(utilizador == null)) {
             emailPreenchido.setText(utilizador.getEmail());
             clienteNome.setText(utilizador.getNome());
             revalidate();
@@ -189,12 +189,12 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Estatistica")) {
             painelFundo.mudaEcra("Estatistica");
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
@@ -203,6 +203,9 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
             FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
         }
+        palavraChaveAtualField.setText("");
+        novaPalavraChaveField.setText("");
+        confirmePalavraChaveField.setText("");
 
 
     }

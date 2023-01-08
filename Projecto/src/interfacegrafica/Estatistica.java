@@ -290,11 +290,9 @@ public class Estatistica extends JPanel implements ActionListener {
         String[][] dataReservas = new String[aor_autocarro.getReservasemEspera().size()][3];
 
         for (int i = 0; i < aor_autocarro.getReservasemEspera().size(); i++) {
-
             dataReservas[i][0] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
             dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
             dataReservas[i][2] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
-
 
         }
 
@@ -503,7 +501,7 @@ public class Estatistica extends JPanel implements ActionListener {
             colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada"};
             ArrayList<String[]> data = new ArrayList<>();
             for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
-                String[] reservaInfo = new String[3];
+                String[] reservaInfo = new String[5];
                 if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
                     reservaInfo[0] = reserva.getCliente().getNome();
                     reservaInfo[1] = String.valueOf(reserva.getDataPartida());
@@ -522,11 +520,10 @@ public class Estatistica extends JPanel implements ActionListener {
             colunasEspera = new String[]{"Cliente", "Data Partida", "Data Chegada"};
             ArrayList<String[]> data = new ArrayList<>();
             for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
-                String[] reservaInfo = new String[3];
+                String[] reservaInfo = new String[5];
                 reservaInfo[0] = reserva.getCliente().getNome();
                 reservaInfo[1] = String.valueOf(reserva.getDataPartida());
                 reservaInfo[2] = String.valueOf(reserva.getDataFim());
-
                 data.add(reservaInfo);
             }
             String[][] dataArray = data.toArray(new String[0][0]);

@@ -64,7 +64,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         opcaoPainel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
-        JButton opcao1 = new JButton("Reserva programa.Autocarro");
+        JButton opcao1 = new JButton("Reserva Autocarro");
         JButton opcao2 = new JButton("Histórico Reservas");
         JButton opcao3 = new JButton("Consultar Reservas");
         JButton opcao4 = new JButton("Cancelar Reservas");
@@ -191,6 +191,11 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         if (e.getActionCommand().equals("Cancelar Reservas")) {
             ((CancelarReserva) (painelFundo.mapaPaineis.get("CancelarReserva"))).nomeLogado();
             painelFundo.mudaEcra("CancelarReserva");
+        }
+        if (e.getActionCommand().equals("Histórico Reservas")) {
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasEfetuadas();
+            ((HistoricoReservas) (painelFundo.mapaPaineis.get("HistoricoReservas"))).listagemPorMesReservasCanceladas();
+            painelFundo.mudaEcra("HistoricoReservas");
         }
 
         if (e.getActionCommand().equals("Cancelar Reservas")) {
