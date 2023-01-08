@@ -9,33 +9,31 @@ import java.awt.event.ActionListener;
 
 public class Multibanco extends JPanel implements ActionListener {
 
-    Aor_Autocarro aor_autocarro;
+    private Aor_Autocarro aor_autocarro;
 
 
-    Multibanco multibanco1;
-    Reserva reserva;
-    PainelFundo painelFundo;
+    private Multibanco multibanco1;
+    private Reserva reserva;
+    private PainelFundo painelFundo;
 
-    JButton opcao1;
-    JButton opcao2 ;
-    JButton opcao3 ;
-    JButton opcao4 ;
-    JButton opcao5 ;
-    JButton multibanco;
-    JButton botaoConfirmar;
-    JButton mudarPagamentoButton;
-    JButton sairBotao;
+    private JButton opcao1;
+    private JButton opcao2 ;
+    private JButton opcao3 ;
+    private JButton opcao4 ;
+    private JButton opcao5 ;
+    private JButton multibanco;
+    private JButton botaoConfirmar;
+    private JButton mudarPagamentoButton;
+    private JButton sairBotao;
 
-    JLabel entidade;
-    JLabel referencia;
-    JLabel valor;
-    JLabel entidadeInfo;
-    JLabel referenciaInfo;
-    JLabel valorInfo;
-    JLabel valorViagem;
-    JLabel clienteNome;
-
-
+    private JLabel entidade;
+    private JLabel referencia;
+    private JLabel valor;
+    private JLabel entidadeInfo;
+    private JLabel referenciaInfo;
+    private JLabel valorInfo;
+    private JLabel valorViagem;
+    private JLabel clienteNome;
 
     public  Multibanco (PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;

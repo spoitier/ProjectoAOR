@@ -9,31 +9,31 @@ import java.awt.event.ActionListener;
 
 public class CartaoCredito extends JPanel implements ActionListener {
 
-    Aor_Autocarro aor_autocarro;
+    private Aor_Autocarro aor_autocarro;
 
-    CartaoCredito cartão;
-    PainelFundo painelFundo;
-    JButton sairBotao;
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
+    private CartaoCredito cartão;
+    private PainelFundo painelFundo;
+    private JButton sairBotao;
+    private JButton opcao1;
+    private JButton opcao2;
+    private JButton opcao3;
+    private JButton opcao4;
+    private JButton opcao5;
 
-    JButton cartaocreditoButton;
-    JButton botaoConfirmar;
-    JButton mudarPagamentoButton;
-    JLabel numeroCartao;
-    JLabel nomeCliente;
-    JLabel dataExpiracao;
-    JLabel codigoSeguranca;
-    TextField numeroCartaoField;
-    TextField nomeClienteField;
-    TextField dataExpiracaoField;
-    TextField codigoSegurancaField;
-    JLabel clienteNome;
-    JLabel valorViagem;
-    Reserva reserva;
+    private JButton cartaocreditoButton;
+    private JButton botaoConfirmar;
+    private JButton mudarPagamentoButton;
+    private JLabel numeroCartao;
+    private JLabel nomeCliente;
+    private JLabel dataExpiracao;
+    private JLabel codigoSeguranca;
+    private TextField numeroCartaoField;
+    private TextField nomeClienteField;
+    private TextField dataExpiracaoField;
+    private TextField codigoSegurancaField;
+    private JLabel clienteNome;
+    private JLabel valorViagem;
+    private Reserva reserva;
 
 
     public CartaoCredito(PainelFundo painelfundo,Aor_Autocarro aor_autocarro) {

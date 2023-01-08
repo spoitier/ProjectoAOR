@@ -9,28 +9,28 @@ import java.awt.event.ActionListener;
 
 public class PayPal extends JPanel implements ActionListener {
 
-    Aor_Autocarro aor_autocarro;
-    PainelFundo painelFundo;
-    JLabel valorViagem;
-    Reserva reserva;
-    JLabel clienteNome;
+    private Aor_Autocarro aor_autocarro;
+    private PainelFundo painelFundo;
+    private JLabel valorViagem;
+    private Reserva reserva;
+    private JLabel clienteNome;
 
-    JButton opcao1;
-    JButton opcao2;
-    JButton opcao3;
-    JButton opcao4;
-    JButton opcao5;
+    private JButton opcao1;
+    private JButton opcao2;
+    private JButton opcao3;
+    private JButton opcao4;
+    private JButton opcao5;
 
-    JButton botaoConfirmar;
-    JButton paypalButton;
+    private JButton botaoConfirmar;
+    private JButton paypalButton;
 
-    JButton mudarPagamentoButton;
-    JButton sairBotao;
-    JLabel login;
-    JLabel email;
-    JLabel palavraChave;
-    TextField emailField;
-    JPasswordField palavraChaveField;
+    private JButton mudarPagamentoButton;
+    private JButton sairBotao;
+    private JLabel login;
+    private JLabel email;
+    private JLabel palavraChave;
+    private TextField emailField;
+    private JPasswordField palavraChaveField;
 
     public PayPal(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;

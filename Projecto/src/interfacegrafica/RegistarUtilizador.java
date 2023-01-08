@@ -167,7 +167,6 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
             if (validar == false) {
             } else {
                 String id="cl".concat(String.valueOf(aor_autocarro.contarCliente()));
-                System.out.println("cl"+aor_autocarro.contarCliente());
                 Cliente novo=new Cliente(id,emailField.getText(), palavraChaveField.getText(), nomeField.getText(), nifField.getText(),
                         moradaField.getText(), telefoneField.getText(),"Normal",LocalDate.now());
                 aor_autocarro.getUtilizadores().add(novo);
@@ -175,7 +174,10 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
 
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
-                painelFundo.mudaEcra("PlanoSubscrição");
+                JOptionPane.showMessageDialog(null, "Os seus dados foram guardados com sucesso.\n Faça Login e vá" +
+                        "aos seus Dados Pessoais verificar opções do plano Subscrição");
+                painelFundo.mudaEcra("Login");
+
             }
         }
         if (e.getActionCommand().equals("Retroceder")) {

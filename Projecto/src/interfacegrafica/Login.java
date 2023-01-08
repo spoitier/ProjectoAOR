@@ -15,14 +15,14 @@ import java.util.ConcurrentModificationException;
 
 public class Login extends JPanel implements ActionListener {
 
-    Aor_Autocarro aor_autocarro;
+    private Aor_Autocarro aor_autocarro;
 
-    public String loginEmail;
-    PainelFundo painelFundo;
-    TextField emailField;
-    JPasswordField palavraChaveField;
-    JButton botaoautenticar;
-    JButton botaoregistar;
+    private String loginEmail;
+    private PainelFundo painelFundo;
+    private TextField emailField;
+    private JPasswordField palavraChaveField;
+    private JButton botaoautenticar;
+    private JButton botaoregistar;
 
 
     public Login(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {

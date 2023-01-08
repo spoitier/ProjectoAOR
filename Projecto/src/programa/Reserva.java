@@ -190,7 +190,6 @@ public Reserva(){
             if (dataAluguer.isAfter(LocalDate.now())) {
                 validar = true;
             }
-            System.out.println(dataAluguer+" "+LocalDate.now());
             return validar;
         }
 
