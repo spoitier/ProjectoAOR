@@ -209,7 +209,7 @@ public class Estatistica extends JPanel implements ActionListener {
 
         String[][] data = new String[aor_autocarro.getReservas().size()][3];
         for (int i = 0; i < aor_autocarro.getReservas().size(); i++) {
-            data[i][0] = aor_autocarro.getReservas().get(i).getAutocarro().getMatricula();
+            //data[i][0] = aor_autocarro.getReservas().get(i).getAutocarro().getMatricula();
             data[i][1] = String.valueOf(aor_autocarro.getReservas().get(i).getDataPartida());
             data[i][2] = String.valueOf(aor_autocarro.getReservas().get(i).getDataFim());
 
@@ -272,16 +272,15 @@ public class Estatistica extends JPanel implements ActionListener {
         botoesFiltroReservas.add(mesCombobox3);
 
         //Tabela
-        colunasReservas = new String[]{"Cliente", "Data Partida", "Data Chegada", "Passageiros", "Autocarro"};
+        colunasReservas = new String[]{"Cliente", "Data Partida", "Data Chegada"};
 
-        dataReservas = new String[aor_autocarro.getReservasemEspera().size()][5];
+        dataReservas = new String[aor_autocarro.getReservasemEspera().size()][3];
 
         for (int i = 0; i < aor_autocarro.getReservasemEspera().size(); i++) {
-            dataReservas[i][0] = aor_autocarro.getReservasemEspera().get(i).getAutocarro().getMatricula();
-            dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
-            dataReservas[i][2] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
-            dataReservas[i][3] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
-            dataReservas[i][4] = aor_autocarro.getReservasemEspera().get(i).getMotorista().getNome();
+            dataReservas[i][0] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataPartida());
+            dataReservas[i][1] = String.valueOf(aor_autocarro.getReservasemEspera().get(i).getDataFim());
+            dataReservas[i][2] = aor_autocarro.getReservasemEspera().get(i).getCliente().getNome();
+
         }
 
 

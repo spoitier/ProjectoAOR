@@ -153,9 +153,6 @@ public class Utilizador implements Serializable {
         this.id = id;
     }
 
-    public void esqueceuPalavraPasse(String email) {
-        System.out.println("Foi enviado para seu email" + email + " uma nova palavra-passe");
-        System.out.println("Volte a fazer o login com a nova palavra-passe");
-    }
+
 
 }

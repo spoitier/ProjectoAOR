@@ -1,10 +1,6 @@
 package interfacegrafica;
 
-import programa.Aor_Autocarro;
-import programa.Cliente;
-import programa.FicheiroDeObjectos;
-import programa.Utilizador;
-import programa.Notificação;
+import programa.*;
 
 
 import javax.swing.*;
@@ -13,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.time.LocalDate;
 import java.util.ConcurrentModificationException;
 
 
@@ -26,7 +23,6 @@ public class Login extends JPanel implements ActionListener {
     JPasswordField palavraChaveField;
     JButton botaoautenticar;
     JButton botaoregistar;
-
 
 
     public Login(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
@@ -128,6 +124,7 @@ public class Login extends JPanel implements ActionListener {
         String password = new String(palavraChaveField.getPassword());//para transformar em string
         Utilizador utilizadorLogado;
         Cliente logado;
+        boolean existe = false;
 
         if (ae.getActionCommand().equals("Autenticar")) {
             if ((Utilizador.validarEmail(email)) && (aor_autocarro.validarRegisto(email, password))) {
@@ -136,30 +133,81 @@ public class Login extends JPanel implements ActionListener {
 
                 if (aor_autocarro.verificarTipoUtilizador(email, password).equals("cliente")) {
                     logado = (Cliente) aor_autocarro.getUserLogado();
-                    ((ReservaViagem)(painelFundo.mapaPaineis.get("ReservaViagem"))).nomeLogado();
+                    ((ReservaViagem) (painelFundo.mapaPaineis.get("ReservaViagem"))).nomeLogado();
                     if (logado.getNotificações().size() == 0) {
                         painelFundo.mudaEcra("ReservaViagem");
                     } else {
                         for (Notificação rc : logado.getNotificações()) {
+                            if (rc.getTipoNotificação().equals("Cancelamento")) {
+                                JOptionPane.showMessageDialog(null, rc.getDescrição());
+                                logado.getNotificações().remove(rc);
+                                existe = true;
+
+                            }
+                            if (logado.getTipoCliente().equals("Premium")) {
+                                if (rc.getTipoNotificação().equals("Subscrição")) {
+                                    if (rc.getData().isBefore(LocalDate.now())) {
+                                        logado.getNotificações().remove(rc);
+                                        int resultado = JOptionPane.showConfirmDialog(null, rc.getDescrição() +
+                                                ".Pretende manter plano Subscrição Premium?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+                                        if (resultado == JOptionPane.YES_OPTION) {
+                                            LocalDate dataExpiração = rc.getData().plusDays(35);
+                                            LocalDate dataPreAvisoNotificação = rc.getData().plusDays(30);
+                                            Notificação subscrição = new Notificação(logado.getEmail(), "Subscrição", "O pagamento da" +
+                                                    "sua mensalidade expira em " + dataExpiração + ".Caso não proceda ao seu pagamento, deixará de" +
+                                                    " aceder às vantagens da subscrição Premium.", dataPreAvisoNotificação, false);
+                                            //Adiciona notificação à lista das notificaçóes do cliente
+                                            logado.getNotificações().add(subscrição);
+                                            existe = true;
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "A partir desta data ficou abrangido pelo plano normal");
+                                            logado.setTipoCliente("Normal");
+                                            existe = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (rc.getTipoNotificação().equals("listaEspera")) {
+                                logado.getNotificações().remove(rc);
+                                int resultado = JOptionPane.showConfirmDialog(null, rc.getDescrição() +
+                                        ".Pretende prosseguir?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+                                if (resultado == JOptionPane.YES_OPTION) {
+                                    Reserva reservaAtribuida = aor_autocarro.atribuirReservaListaEspera(email);
+                                    reservaAtribuida.setDataReserva(LocalDate.now());
+                                    painelFundo.mudaEcra("TipoDePagamentos");
+                                } else {
+                                    for (Reserva emEspera : aor_autocarro.getReservasemEspera()) {
+                                        if (emEspera.getCliente().equals(logado)) {
+                                            aor_autocarro.getReservasemEspera().remove(emEspera);
+                                            aor_autocarro.getReservasCanceladas().add(emEspera);
+                                        } else if (emEspera.getDataPartida().isBefore(LocalDate.now())) {
+                                            aor_autocarro.getReservasemEspera().remove(emEspera);
+                                            aor_autocarro.getReservasCanceladas().add(emEspera);
+                                        }
+                                    }
+                                    existe = true;
+                                }
+                            }
                             if (rc.getTipoNotificação().equals("ClienteRemovido")) {
                                 JOptionPane.showMessageDialog(null, rc.getDescrição());
-                                rc.setLido(true);
-                                aor_autocarro.removerCliente(logado.getNif());
-                                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
-
-                            } else {
-                                painelFundo.mudaEcra("ReservaViagem");
+                                logado.getNotificações().remove(rc);
+                                painelFundo.mudaEcra("Login");
                             }
+
+                        }
+                        if (existe == true) {
+                            painelFundo.mudaEcra("ReservaViagem");
                         }
                     }
                 } else if (aor_autocarro.verificarTipoUtilizador(email, password).equals("administrador")) {
-                    ((RegistarNovoAdministrador)(painelFundo.mapaPaineis.get("RegistarNovoAdministrador"))).nomeLogado();
+                    ((RegistarNovoAdministrador) (painelFundo.mapaPaineis.get("RegistarNovoAdministrador"))).nomeLogado();
                     painelFundo.mudaEcra("RegistarNovoAdministrador");
 
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Login Invalido!");
             }
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
 
         if (ae.getActionCommand().equals("Registar Novo Utilizador")) {

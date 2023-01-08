@@ -236,27 +236,27 @@ public class ReservaViagem extends JPanel implements ActionListener {
             //Verificar se é constituído só por números
             if (!Reserva.validarNumeros(numeroDiasField.getText())) {
                 JOptionPane.showMessageDialog(null, "Número de dias inválido");
-                validar = false;
+                validar = false;}
 
             //Verificar se é constituído só por números
             if (!Reserva.validarNumeros(numeroPessoasField.getText())) {
                 JOptionPane.showMessageDialog(null, "Número de Pessoas inválido");
-                validar = false;
+                validar = false;}
 
             //Verificar se é constituído só por letras
             if (!Reserva.validarLocal(partidaField.getText())) {
                 JOptionPane.showMessageDialog(null, "Uso de carateres inválidos no local Partida");
-                validar = false;
+                validar = false;}
 
             //Verificar se é constituído só por letras
             if (!Reserva.validarLocal(destinoField.getText())) {
                 JOptionPane.showMessageDialog(null, "Uso de carateres inválidos no local Destino");
-                validar = false;
+                validar = false;}
 
             //Verificar se é constituído só por números
             if (!Reserva.validarNumeros(numeroKmTotalField.getText())) {
                 JOptionPane.showMessageDialog(null, "Número de km inválido");
-                validar = false;
+                validar = false;}
 
             if (!aor_autocarro.verificarAutocarroLotaçao(numeroPessoas)) {
                 JOptionPane.showMessageDialog(null, "Lamentamos, mas não existem disponíveis na nossa " +
@@ -269,33 +269,56 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 destinoField.setText("");
                 numeroKmTotalField.setText("");
 
-            }}}}}}
+            }
             if (validar) {
                 LocalDate dataAluguer = LocalDate.parse(dataAluguerField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 reservaNova = aor_autocarro.efetuarReservaAutocarro(logado, dataAluguer, numeroDias,
                         numeroPessoas, localPartida, localDestino, distancia);
 
-                if (reservaNova != null) {
-                    aor_autocarro.addReserva(reservaNova);
+                if (reservaNova.getAutocarro() != null) {
+                 //Adicionado reserva à lista de Reservas da Empresa
+                    aor_autocarro.getReservas().add(reservaNova);
+                    FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                     //Autocarro autocarro = aor_autocarro.identificarAutocarroReservado(reservaNova);
                     JOptionPane.showMessageDialog(null, "A sua reserva nº" + reservaNova.getId() + " está disponível para pagamento.");
                     ((TipoDePagamentos)painelFundo.mapaPaineis.get("Pagamentos")).custoAutocarro(reservaNova);
+
+                    dataAluguerField.setText("");
+                    numeroDiasField.setText("");
+                    numeroPessoasField.setText("");
+                    partidaField.setText("");
+                    destinoField.setText("");
+                    numeroKmTotalField.setText("");
+
                     painelFundo.mudaEcra("Pagamentos");
 
-                } else if(reservaNova.getAutocarro()==null) {
-                    reservaNova = aor_autocarro.efetuarReservaAutocarro(logado, dataAluguer, numeroDias,
-                            numeroPessoas, localPartida, localDestino, distancia);
+                } else {
                     int resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ficou em lista de espera" +
                             ".Pretende prosseguir?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
                     if (resultado == JOptionPane.YES_OPTION) {
                         //Adiciona reserva à lista de Espera
-                        aor_autocarro.addReservaemEspera(reservaNova);
+                        aor_autocarro.getReservasemEspera().add(reservaNova);
+                        JOptionPane.showMessageDialog(null, "A sua reserva ficou em lista de espera.\nCaso surja " +
+                                        "um autocarro disponível, receberá uma notificação ao efetuar o seu login.");
+
+                        dataAluguerField.setText("");
+                        numeroDiasField.setText("");
+                        numeroPessoasField.setText("");
+                        partidaField.setText("");
+                        destinoField.setText("");
+                        numeroKmTotalField.setText("");
 
                         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
                     } else {
                         //Cancela reserva na lista de espera
                         aor_autocarro.cancelarReservaemEspera(reservaNova);
+                        dataAluguerField.setText("");
+                        numeroDiasField.setText("");
+                        numeroPessoasField.setText("");
+                        partidaField.setText("");
+                        destinoField.setText("");
+                        numeroKmTotalField.setText("");
 
                         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                     }
@@ -315,9 +338,8 @@ public class ReservaViagem extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Número de Pessoas inválido");
                 validarAtualizar = false;
             }
-            if(validarAtualizar==false) {
+            if(validarAtualizar) {
 
-            } else {
                 double custoReserva =0;
                 custoReserva=0.55*Integer.parseInt(distancia)+1.2*Integer.parseInt(numeroPessoas);
                 valorViagem.setText(String.valueOf(custoReserva));

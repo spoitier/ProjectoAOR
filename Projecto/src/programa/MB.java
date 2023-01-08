@@ -1,16 +1,15 @@
 package programa;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
-public class Multibanco extends Pagamento implements Serializable {
+public class MB extends Pagamento implements Serializable {
 
 
     private int entidade;
     private String referencia;
     private double montante;
 
-    public Multibanco(Reserva reserva, int entidade, String referencia, double montante) {
+    public MB(Reserva reserva, int entidade, String referencia, double montante) {
         super(reserva);
         this.entidade = 12345;
         this.referencia = referencia;
@@ -49,9 +48,9 @@ public class Multibanco extends Pagamento implements Serializable {
                 ",montante=" + montante;
     }
     public static String gerarRefMultibanco(){
-        String referenciaMB= String.valueOf(Math.round((Math.random()*999)*100)/100+" "+
-                String.valueOf(Math.round((Math.random()*999)*100)/100)+" "+
-                String.valueOf(Math.round((Math.random()*999)*100)/100));
+        String referenciaMB= String.valueOf(100+(Math.round((Math.random()*899)*100)/100))+" "+
+                String.valueOf(100+(Math.round((Math.random()*899)*100)/100))+" "+
+                String.valueOf(100+(Math.round((Math.random()*899)*100)/100));
         return referenciaMB;
     }
 

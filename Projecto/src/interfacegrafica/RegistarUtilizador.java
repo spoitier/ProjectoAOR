@@ -180,7 +180,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 painelFundo.mudaEcra("PlanoSubscrição");
             }
         }
-        if (e.getActionCommand().equals("Retrocesso")) {
+        if (e.getActionCommand().equals("Retroceder")) {
             painelFundo.mudaEcra("Login");
         }
     }

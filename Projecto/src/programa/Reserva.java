@@ -1,5 +1,6 @@
 package programa;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -135,8 +136,20 @@ public Reserva(){
     }
 
     public double getCusto() {
-    int distancia1=Integer.parseInt(distancia);
-    int nPessoas=Integer.parseInt(numeroPessoas);
+        int distancia1=0;
+        int nPessoas=0;
+    try {
+        distancia1 = Integer.parseInt(distancia);
+    }
+    catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Preencha número Km");
+        }
+        try {
+    nPessoas=Integer.parseInt(numeroPessoas);
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Preencha número pessoas");
+        }
         return custo = 0.55 * distancia1 + 1.2 * nPessoas;
     }
 
@@ -196,7 +209,7 @@ public Reserva(){
             validar=false;
         }
 
-        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8||mes==10) && (dia <= 31)) {
+        if ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8||mes==10||mes==12) && (dia <= 31)) {
             validar = true;
         } else if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && (dia <= 30)) {
             validar = true;

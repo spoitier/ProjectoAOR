@@ -59,7 +59,7 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
         JLabel normalLabel1 = new JLabel("Penalização de 50% até 7 dias");
         normalLabel1.setBounds(0,40,200,20);
         normalLabel1.setHorizontalAlignment(JLabel.CENTER);
-        JLabel normalLabel2 = new JLabel("Sem prioridade na reserva\n (reserva pode ser cancelada até 2 dias");
+        JLabel normalLabel2 = new JLabel("Sem prioridade na reserva");
         normalLabel2.setBounds(0,70,200,20);
         normalLabel2.setHorizontalAlignment(JLabel.CENTER);
         JLabel normalLabel3 = new JLabel("Mensalidade: gratuito");
@@ -141,9 +141,11 @@ public class PlanoSubscricao extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Subscreveu o plano premium.\n" +
                         "Para manter as vantagens deste pacote, deverá proceder ao pagamento mensal de 10 euros.\n" +
                         "O prazo da sua subscrição atual é de 30 dias.\n Data expiração: "+dataExpiração);
+
+                LocalDate dataPreAvisoNotificação=hoje.plusDays(25);
                 Notificação subscrição=new Notificação(logado.getEmail(),"Subscrição","O pagamento da" +
                         "sua mensalidade expira em "+dataExpiração+".Caso não proceda ao seu pagamento, deixará de" +
-                        " aceder às vantagens da subscrição.",dataExpiração,false);
+                        " aceder às vantagens da subscrição Premium.",dataPreAvisoNotificação,false);
                 //Adiciona notificação à lista das notificaçóes do cliente
                 logado.getNotificações().add(subscrição);
 

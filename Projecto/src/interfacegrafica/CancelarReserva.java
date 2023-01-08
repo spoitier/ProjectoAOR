@@ -2,6 +2,7 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Cliente;
+import programa.FicheiroDeObjectos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,12 +117,12 @@ public class CancelarReserva extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String descrição;
-        Cliente logado;
-        logado = (Cliente) aor_autocarro.getUserLogado();
-        String id= reservaField.getText();
+        Cliente logado = (Cliente) aor_autocarro.getUserLogado();
+        String idReserva= reservaField.getText();
         if (e.getActionCommand().equals("Cancelar")) {
-            descrição= aor_autocarro.cancelarReservaCliente(logado,id);
+            descrição= aor_autocarro.cancelarReservaCliente(logado,idReserva);
             JOptionPane.showMessageDialog(null, descrição);
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
         }
 
 

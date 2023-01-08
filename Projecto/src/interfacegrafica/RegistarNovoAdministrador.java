@@ -212,9 +212,8 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
                 JOptionPane.showMessageDialog(null, "Já existe um administrador registado com esse email");
                 validar = false;
             }
-            if (validar == false) {
-            }
-            else {
+            if (validar) {
+
                 String id = "adm".concat(String.valueOf(aor_autocarro.contarAdministrador()));
                 aor_autocarro.getUtilizadores().add(new Administrador(id, emailField.getText(), null, nomeField.getText(), nifField.getText(),
                         moradaField.getText(), telefoneField.getText()));

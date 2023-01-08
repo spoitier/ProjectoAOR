@@ -23,9 +23,7 @@ public class Pagamento implements Serializable
 
     @Override
     public String toString() {
-        return "Pagamento{" +
-                "reserva=" + reserva +
-                '}';
+        return "reserva=" + reserva + "Pagamento:";
     }
 }
 

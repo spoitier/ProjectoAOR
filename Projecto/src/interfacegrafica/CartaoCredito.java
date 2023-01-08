@@ -6,9 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.channels.ScatteringByteChannel;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class CartaoCredito extends JPanel implements ActionListener {
 
@@ -204,7 +201,7 @@ this.aor_autocarro=aor_autocarro;
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean validar = true;
-        Cliente logado;
+        Cliente logado = (Cliente) aor_autocarro.getUserLogado();
         Pagamento pagamento;
         Reserva reserva;
 
@@ -216,64 +213,108 @@ this.aor_autocarro=aor_autocarro;
                 validar = false;
             }
             //Verificar se o número do cartão crédito é constituído por 14-16 números
-            if (!programa.CartaoCredito.validarnumCartaoCredito(numeroCartaoField.getText())) {
+            if (!Cartaocredito.validarnumCartaoCredito(numeroCartaoField.getText())) {
                 JOptionPane.showMessageDialog(null, "Número Cartão Crédito inválido");
                 validar = false;
             }
 
             //Verificar se o nome é constituído só por letras
-            if (!programa.CartaoCredito.validarNome(nomeClienteField.getText())) {
+            if (!Cartaocredito.validarNome(nomeClienteField.getText())) {
                 JOptionPane.showMessageDialog(null, "Nome com carateres inválidos");
                 validar = false;
             }
             //Verificar se data Aluguer é válida
-            if (!programa.CartaoCredito.validarDataFormato(dataExpiracaoField.getText())) {
+            if (!Cartaocredito.validarDataFormato(dataExpiracaoField.getText())) {
                 JOptionPane.showMessageDialog(null, "Por favor,preencha a data com o formato mm/AA");
                 validar = false;
-            } else if (!programa.CartaoCredito.validarDataExpiração(dataExpiracaoField.getText())) {
+            } else if (!Cartaocredito.validarDataExpiração(dataExpiracaoField.getText())) {
                 JOptionPane.showMessageDialog(null, "Data de Expiração inválida");
                 validar = false;
             }
             //Verificar se o pin de segurança do cartão crédito é constituído por 3 números
-            if (!programa.CartaoCredito.validarPinCartaoCredito(codigoSegurancaField.getText())) {
+            if (!Cartaocredito.validarPinCartaoCredito(codigoSegurancaField.getText())) {
                 JOptionPane.showMessageDialog(null, "Pin inválido");
                 validar = false;
             }
             if (validar) {
-                logado = (Cliente) aor_autocarro.getUserLogado();
                 reserva = aor_autocarro.identificarReservaPagamento(logado);
+                //Adicionado reserva à lista de Reservas da Empresa
                 aor_autocarro.addReserva(reserva);
-                pagamento = new programa.CartaoCredito(reserva, numeroCartaoField.getText(), nomeClienteField.getText(),
+                pagamento = new Cartaocredito(reserva, numeroCartaoField.getText(), nomeClienteField.getText(),
                         dataExpiracaoField.getText(), codigoSegurancaField.getText());
                 //Adicionado pagamento da reserva à lista de Reservas
                 aor_autocarro.addPagamento(pagamento);
                 JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
                         " nº" + reserva.getId() + " no valor de " + reserva.getCusto() + "€");
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                painelFundo.mudaEcra("ConsultarReservas");
             }
         }
 
-        if (e.getActionCommand().equals("ReservaViagem")) {
-            painelFundo.mudaEcra("ReservaViagem");
+        int resultado;
+        if(e.getActionCommand().equals("ReservaViagem")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("ReservaViagem");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
 
-        if (e.getActionCommand().equals("Histórico Reservas")) {
-            painelFundo.mudaEcra("HistoricoReservas");
+        if(e.getActionCommand().equals("Histórico Reservas")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("HistoricoReservas");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
 
-        if (e.getActionCommand().equals("Consultar Reservas")) {
-            painelFundo.mudaEcra("ConsultarReservas");
+        if(e.getActionCommand().equals("Consultar Reservas")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("ConsultarReservas");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
 
-        if (e.getActionCommand().equals("Cancelar Reservas")) {
-            painelFundo.mudaEcra("CancelarReserva");
+        if(e.getActionCommand().equals("Cancelar Reservas")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("CancelarReserva");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
-        if (e.getActionCommand().equals("Dados Pessoais")) {
-            painelFundo.mudaEcra("DadosPessoaisClientes");
+        if(e.getActionCommand().equals("Dados Pessoais")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                painelFundo.mudaEcra("DadosPessoaisClientes");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
-        if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
-            painelFundo.mudaEcra("Login");
+        if(e.getActionCommand().equals("Sair")) {
+            resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
+                    "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
+            if (resultado == JOptionPane.YES_OPTION) {
+                ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+                painelFundo.mudaEcra("Login");
+            }else{
+                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+            }
         }
         if (e.getActionCommand().equals("Mudar Pagamento")) {
             painelFundo.mudaEcra("Pagamentos");

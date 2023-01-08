@@ -298,6 +298,7 @@ public class Motoristas extends JPanel implements ActionListener {
                     Motorista removido = aor_autocarro.removerMotorista(removerField.getText());
                     JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                     aor_autocarro.getMotoristas().remove(removido);
+                    aor_autocarro.cancelarReservasporMotorista(emailField.getText());
                     atualizar();
                     emailField.setText("");
                 } catch (NullPointerException n) {

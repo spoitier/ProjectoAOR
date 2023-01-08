@@ -2,17 +2,16 @@ package programa;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
-public class CartaoCredito extends Pagamento implements Serializable {
+public class Cartaocredito extends Pagamento implements Serializable {
 
     private String numeroCartao;
     private String nomeClienteCartao;
     private String dataExpiracao;
     private String codigoSeguranca;
 
-    public CartaoCredito(Reserva reserva, String numeroCartao, String nomeClienteCartao, String dataExpiracao, String codigoSeguranca) {
+    public Cartaocredito(Reserva reserva, String numeroCartao, String nomeClienteCartao, String dataExpiracao, String codigoSeguranca) {
         super(reserva);
         this.numeroCartao = numeroCartao;
         this.nomeClienteCartao = nomeClienteCartao;

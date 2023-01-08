@@ -48,7 +48,7 @@ public class PainelFundo {
   painelPrincipal.add(mapaPaineis.get("PlanoSubscrição"),"PlanoSubscrição");
   mapaPaineis.put("ReservaViagem",new ReservaViagem(this,aor_autocarro));
   painelPrincipal.add(mapaPaineis.get("ReservaViagem"),"ReservaViagem");
-  mapaPaineis.put("Pagamentos",new TipoDePagamentos(this));
+  mapaPaineis.put("Pagamentos",new TipoDePagamentos(this,aor_autocarro));
   painelPrincipal.add(mapaPaineis.get("Pagamentos"),"Pagamentos");
   mapaPaineis.put("PayPal",new PayPal(this,aor_autocarro));
   painelPrincipal.add(mapaPaineis.get("PayPal"),"PayPal");
