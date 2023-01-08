@@ -238,8 +238,6 @@ this.aor_autocarro=aor_autocarro;
             }
             if (validar) {
                 reserva = aor_autocarro.identificarReservaPagamento(logado);
-                //Adicionado reserva à lista de Reservas da Empresa
-                aor_autocarro.addReserva(reserva);
                 pagamento = new Cartaocredito(reserva, numeroCartaoField.getText(), nomeClienteField.getText(),
                         dataExpiracaoField.getText(), codigoSegurancaField.getText());
                 //Adicionado pagamento da reserva à lista de Reservas

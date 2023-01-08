@@ -142,6 +142,7 @@ public class Login extends JPanel implements ActionListener {
                                 JOptionPane.showMessageDialog(null, rc.getDescrição());
                                 logado.getNotificações().remove(rc);
                                 existe = true;
+                                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
 
                             }
                             if (logado.getTipoCliente().equals("Premium")) {
@@ -164,6 +165,7 @@ public class Login extends JPanel implements ActionListener {
                                             logado.setTipoCliente("Normal");
                                             existe = true;
                                         }
+                                        FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                                     }
                                 }
                             }
@@ -187,11 +189,13 @@ public class Login extends JPanel implements ActionListener {
                                     }
                                     existe = true;
                                 }
+                                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                             }
                             if (rc.getTipoNotificação().equals("ClienteRemovido")) {
                                 JOptionPane.showMessageDialog(null, rc.getDescrição());
                                 logado.getNotificações().remove(rc);
                                 painelFundo.mudaEcra("Login");
+                                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                             }
 
                         }

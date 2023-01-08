@@ -108,9 +108,12 @@ public class Main {
         //System.out.println();
         //System.out.println(aor_autocarro.getReservasCanceladas());
         //System.out.println();
-        System.out.println(aor_autocarro.getReservas());
+        //System.out.println(aor_autocarro.getReservas());
         //System.out.println(aor_autocarro.getListaPagamentos());
-        //System.out.println(aor_autocarro.getReservasemEspera());
+        System.out.println(aor_autocarro.getReservasemEspera());
+        Cliente cl2 = new Cliente("cli2","rodrigo@gmail.com","123","rodrigo Ferreira",
+                "123456789","rua","123456789","Premium",LocalDate.of(2023,01,05));
+        System.out.println(cl2.getNotificações());
 
         ficheiroDeObjectos.escreveObjeto(aor_autocarro);
 
