@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Dados pessoais cliente.
+ * Classe Interface grafica, para consultar os dados pessoais do Cliente
  */
 public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
@@ -30,11 +30,10 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
     private final JLabel clienteNome;
     private final JLabel tipoSubscricao;
 
-    /**
-     * Instantiates a new Dados pessoais cliente.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public DadosPessoaisCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -172,8 +171,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Nome logado utilizador.
+    /** Metodo para atualizar o JTextField da interface relativa aos dados do Cliente logado
      *
      * @return the utilizador
      */
@@ -210,7 +208,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 
@@ -227,8 +225,7 @@ public class DadosPessoaisCliente extends JPanel implements ActionListener {
             painelFundo.mudaEcra("Login");
         }
         if (e.getActionCommand().equals("Alterar palavra chave")) {
-            Utilizador cliente = aor_autocarro.getUserLogado();
-            ((AlterarPalavraChaveCliente) painelFundo.mapaPaineis.get("AlterarPalavraChave")).setCliente(cliente);
+            ((AlterarPalavraChaveCliente) painelFundo.mapaPaineis.get("AlterarPalavraChave")).nomeLogado();
             painelFundo.mudaEcra("AlterarPalavraChave");
         }
         if (e.getActionCommand().equals("Alterar plano subsrição")) {

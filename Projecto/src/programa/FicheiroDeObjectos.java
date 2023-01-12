@@ -3,6 +3,9 @@ package programa;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Classe Ficheiros de Objectos serve para escrever e ler no Ficheiro
+ */
 public class FicheiroDeObjectos {
 
     private  static ObjectInputStream iS;
@@ -18,7 +21,12 @@ public class FicheiroDeObjectos {
         oS = new ObjectOutputStream(new FileOutputStream(nomeDoFicheiro));
     }
 
-    //metodo para ler um objeto do ficheiro
+    /** Metodo para ler um objeto do ficheiro
+     *
+     *
+     * @return  aor autocarro
+     */
+//metodo para ler um objeto do ficheiro
     public static Aor_Autocarro leObjeto() {
         try {
             abreLeitura("AOR");
@@ -32,7 +40,13 @@ public class FicheiroDeObjectos {
         }
 
     }
-    //metodo para escrever um objecto
+
+    /**metodo para escrever um objecto
+     *
+     *
+     * @param aor_autocarro
+     */
+
     public static void escreveObjeto(Aor_Autocarro aor_autocarro){
         try {
             abreEscrita("AOR");

@@ -6,13 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Adicionar clientes.
+ *  Classe da Interface grafica para proceder adesao, remocao e edicao de Clientes
  */
 public class AdicionarClientes extends JPanel implements ActionListener {
 
@@ -33,11 +31,10 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     private String nifEditavel;
     private JTable tabela;
 
-    /**
-     * Instantiates a new Adicionar clientes.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public AdicionarClientes(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -218,8 +215,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Atualizar.
+    /**Metodo atualiza a tabela dos clientes, em cada alteracao feita pelo utilizador
      */
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
@@ -254,26 +250,15 @@ public class AdicionarClientes extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Gets nif editavel.
-     *
-     * @return the nif editavel
-     */
-    public String getNifEditavel() {
-        return nifEditavel;
-    }
-
-    /**
-     * Sets nif editavel.
-     *
-     * @param nifEditavel the nif editavel
+    /** Metodo altera o nif.
+     * @param nifEditavel para alterar
      */
     public void setNifEditavel(String nifEditavel) {
         this.nifEditavel = nifEditavel;
     }
 
-    /**
-     * Nome logado.
+    /**Metodo Identifica utilizador logado no aplicacao e altera o JtextField
+     *
      */
     public void nomeLogado() {
         if (aor_autocarro.getUserLogado() == null) {
@@ -317,7 +302,7 @@ public class AdicionarClientes extends JPanel implements ActionListener {
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
-            if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+            if (aor_autocarro.verificarDuplicacaoNif(nifField.getText())) {
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
                 validar = false;
             }
@@ -347,14 +332,16 @@ public class AdicionarClientes extends JPanel implements ActionListener {
             if (!aor_autocarro.removerCliente(nifRemoverField.getText())) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum cliente " +
                         "com esse nif");
+                nifRemoverField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "O cliente só irá ser removido da lista de clientes, " +
                         "após ter sido informado sobre encerramento da sua conta, ao efetuar login");
-                atualizar();
-                nifRemoverField.setText("");
                 if (aor_autocarro.getReservas().size() != 0) {
                     aor_autocarro.cancelarReservasdoClienteRemovido(nifRemoverField.getText());
                 }
+                atualizar();
+                nifRemoverField.setText("");
+
 
 
             }

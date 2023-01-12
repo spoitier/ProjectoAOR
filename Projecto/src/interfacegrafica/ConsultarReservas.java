@@ -7,26 +7,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Consultar reservas.
+ * Classe Interface grafica, para proceder a consulta de reservas agendadas, canceladas e em espera
  */
 public class ConsultarReservas extends JPanel implements ActionListener {
 
     private final PainelFundo painelFundo;
-    private final JComboBox mesCombobox;
     private final Aor_Autocarro aor_autocarro;
 
-    private JTable tabela;
-    private JScrollPane sp;
-    private JLabel clienteNome;
+    private JTable tabelaAtivas;
+    private JScrollPane spAtivas;
+    private final JLabel clienteNome;
 
-    /**
-     * Instantiates a new Consultar reservas.
+    private JTable tabelaEspera;
+    private JScrollPane spEspera;
+
+    private JTable tabelaCanceladas;
+    private JScrollPane spCanceladas;
+
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public ConsultarReservas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -84,28 +89,56 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         segundoTitulo.setBounds(50, 100, 900, 30);
         this.add(segundoTitulo);
 
-        // Botoes de filtragem
-        JPanel botoesFiltro = new JPanel(new GridLayout(1, 4, 5, 5));
-        botoesFiltro.setBounds(100, 150, 200, 30);
-        JLabel mesLabel = new JLabel("Mes:");
-        String[] mes = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-        mesCombobox = new JComboBox(mes);
-        botoesFiltro.add(mesLabel);
-        botoesFiltro.add(mesCombobox);
-        this.add(botoesFiltro);
+        //=====================================================================
+        //Terceiro titulo
+        JLabel terceiroTitulo = new JLabel("Reservas agendadas");
+        terceiroTitulo.setBounds(350, 150, 900, 30);
+        this.add(terceiroTitulo);
+
+        //Quarto titulo
+        JLabel quatroTitulo = new JLabel("Reservas em Espera");
+        quatroTitulo.setBounds(350, 360, 900, 30);
+        this.add(quatroTitulo);
+
+        //Quinto titulo
+        JLabel quintoTitulo = new JLabel("Reservas Canceladas");
+        quintoTitulo.setBounds(350, 475, 900, 30);
+        this.add(quintoTitulo);
 
 
         //========================================
-        // Tabela
+        // Tabela Reservas Ativas
 
-        //Acrescentar Motorista e matricula
-        String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
-                "Local Partida", "Local Destino", "Custo total Viagem", "Estado"};
-        String[][] data = new String[aor_autocarro.getReservasemEspera().size()][8];
-        tabela = new JTable(data, colunas);
-        sp = new JScrollPane(tabela);
-        sp.setBounds(100, 200, 500, 400);
-        this.add(sp);
+        String[] colunasAtivas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem"};
+        String[][] dataAtivas = new String[aor_autocarro.getReservasemEspera().size()][8];
+        tabelaAtivas = new JTable(dataAtivas, colunasAtivas);
+        spAtivas = new JScrollPane(tabelaAtivas);
+        spAtivas.setBounds(100, 200, 700, 150);
+        this.add(spAtivas);
+
+        //========================================
+        // Tabela Reservas Em Espera
+
+        String[] colunasEspera = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem"};
+        String[][] dataEspera = new String[aor_autocarro.getReservasemEspera().size()][8];
+        tabelaEspera = new JTable(dataEspera, colunasEspera);
+        spEspera = new JScrollPane(tabelaEspera);
+        spEspera.setBounds(100, 400, 700, 75);
+        this.add(spEspera);
+
+
+        //========================================
+        // Tabela Reservas Canceladas
+
+        String[] colunasCanceladas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem"};
+        String[][] dataCanceladas = new String[aor_autocarro.getReservasCanceladas().size()][8];
+        tabelaCanceladas = new JTable(dataCanceladas, colunasCanceladas);
+        spCanceladas = new JScrollPane(tabelaCanceladas);
+        spCanceladas.setBounds(100, 510, 700, 100);
+        this.add(spCanceladas);
 
 
         opcao1.addActionListener(this);
@@ -114,68 +147,112 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         opcao4.addActionListener(this);
         opcao5.addActionListener(this);
         sairBotao.addActionListener(this);
-        mesCombobox.addActionListener(this);
 
 
     }
 
-    /**
-     * Listagem por mes.
+
+    /**Metodo atualiza as tabelas da interface
      *
-     * @param mes the mes
      */
-    public void listagemPorMes(String mes) {
-        remove(sp);
-        String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+    public void listagemPorMes() {
+        remove(spAtivas);
+        String[] colunasAtivas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
                 "Local Partida", "Local Destino", "Matricula", "Custo total Viagem"};
 
-        ArrayList<String[]> data = new ArrayList<>();
+        ArrayList<String[]> dataAtivas = new ArrayList<>();
         for (Reserva reserva : aor_autocarro.getReservas()) {
             if (reserva.getCliente().getEmail().equals(aor_autocarro.getUserLogado().getEmail())) {
-                String[] reservaInfo = new String[8];
-                if (String.valueOf(reserva.getDataPartida().getMonthValue()).equals(mes)) {
-                    reservaInfo[0] = reserva.getId();
-                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
-                    reservaInfo[2] = reserva.getNumeroDias();
-                    reservaInfo[3] = reserva.getNumeroPessoas();
-                    reservaInfo[4] = reserva.getLocalPartida();
-                    reservaInfo[5] = reserva.getLocalDestino();
-                    reservaInfo[6] = reserva.getAutocarro().getMatricula();
-                    reservaInfo[7] = String.valueOf(reserva.getCusto());
-                    data.add(reservaInfo);
-                } else if (mes.equals("0")) {
-                    reservaInfo[0] = reserva.getId();
-                    reservaInfo[1] = String.valueOf(reserva.getDataPartida());
-                    reservaInfo[2] = reserva.getNumeroDias();
-                    reservaInfo[3] = reserva.getNumeroPessoas();
-                    reservaInfo[4] = reserva.getLocalPartida();
-                    reservaInfo[5] = reserva.getLocalDestino();
-                    reservaInfo[6] = reserva.getAutocarro().getMatricula();
-                    reservaInfo[7] = String.valueOf(reserva.getCusto());
-                    data.add(reservaInfo);
-
+                String[] reservaInfoAtivas = new String[8];
+                if (reserva.getDataPartida().isAfter(LocalDate.now())) {
+                    reservaInfoAtivas[0] = reserva.getId();
+                    reservaInfoAtivas[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfoAtivas[2] = reserva.getNumeroDias();
+                    reservaInfoAtivas[3] = reserva.getNumeroPessoas();
+                    reservaInfoAtivas[4] = reserva.getLocalPartida();
+                    reservaInfoAtivas[5] = reserva.getLocalDestino();
+                    reservaInfoAtivas[6] = reserva.getAutocarro().getMatricula();
+                    reservaInfoAtivas[7] = String.valueOf(reserva.getCusto());
+                    dataAtivas.add(reservaInfoAtivas);
                 }
-
             }
         }
-        String[][] dataArray = data.toArray(new String[0][0]);
-        tabela = new JTable(dataArray, colunas);
-        sp = new JScrollPane(tabela);
-        sp.setBounds(100, 200, 600, 400);
-        this.add(sp);
+        String[][] dataArrayAtivas = dataAtivas.toArray(new String[0][0]);
+        tabelaAtivas = new JTable(dataArrayAtivas, colunasAtivas);
+        spAtivas = new JScrollPane(tabelaAtivas);
+        spAtivas.setBounds(100, 200, 700, 150);
+        this.add(spAtivas);
         clienteNome.setText(aor_autocarro.getUserLogado().getNome());
         revalidate();
         repaint();
 
 
+
+        remove(spEspera);
+        String[] colunasEspera = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem"};
+
+        ArrayList<String[]> dataEspera = new ArrayList<>();
+        for (Reserva reserva : aor_autocarro.getReservasemEspera()) {
+            if (reserva.getCliente().getEmail().equals(aor_autocarro.getUserLogado().getEmail())) {
+                String[] reservaInfoEspera = new String[8];
+                if (reserva.getDataPartida().isAfter(LocalDate.now())) {
+                    reservaInfoEspera[0] = reserva.getId();
+                    reservaInfoEspera[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfoEspera[2] = reserva.getNumeroDias();
+                    reservaInfoEspera[3] = reserva.getNumeroPessoas();
+                    reservaInfoEspera[4] = reserva.getLocalPartida();
+                    reservaInfoEspera[5] = reserva.getLocalDestino();
+                    reservaInfoEspera[7] = String.valueOf(reserva.getCusto());
+                    dataEspera.add(reservaInfoEspera);
+                }
+            }
+        }
+        String[][] dataArrayEspera = dataEspera.toArray(new String[0][0]);
+        tabelaEspera = new JTable(dataArrayEspera, colunasEspera);
+        spEspera = new JScrollPane( tabelaEspera);
+        spEspera.setBounds(100, 400, 700, 75);
+        this.add(spEspera);
+        clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
+
+
+
+        remove(spCanceladas);
+        String[] colunasCanceladas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
+                "Local Partida", "Local Destino", "Custo total Viagem"};
+
+        ArrayList<String[]> dataCanceladas = new ArrayList<>();
+        for (Reserva reserva : aor_autocarro.getReservasCanceladas()) {
+            if (reserva.getCliente().getEmail().equals(aor_autocarro.getUserLogado().getEmail())) {
+                String[] reservaInfoCanceladas = new String[8];
+                if (reserva.getDataPartida().isAfter(LocalDate.now())) {
+                    reservaInfoCanceladas[0] = reserva.getId();
+                    reservaInfoCanceladas[1] = String.valueOf(reserva.getDataPartida());
+                    reservaInfoCanceladas[2] = reserva.getNumeroDias();
+                    reservaInfoCanceladas[3] = reserva.getNumeroPessoas();
+                    reservaInfoCanceladas[4] = reserva.getLocalPartida();
+                    reservaInfoCanceladas[5] = reserva.getLocalDestino();
+                    reservaInfoCanceladas[6] = reserva.getAutocarro().getMatricula();
+                    reservaInfoCanceladas[7] = String.valueOf(reserva.getCusto());
+                    dataCanceladas.add(reservaInfoCanceladas);
+                }
+            }
+        }
+        String[][] dataArrayCanceladas = dataCanceladas.toArray(new String[0][0]);
+        tabelaCanceladas = new JTable(dataArrayCanceladas, colunasCanceladas);
+        spCanceladas = new JScrollPane( tabelaCanceladas);
+        spCanceladas.setBounds(100, 510, 700, 100);
+        this.add(spCanceladas);
+        clienteNome.setText(aor_autocarro.getUserLogado().getNome());
+        revalidate();
+        repaint();
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        String mes = (String) mesCombobox.getSelectedItem();
-        listagemPorMes(mes);
 
         if (e.getActionCommand().equals("Reserva Autocarro")) {
             painelFundo.mudaEcra("ReservaViagem");
@@ -189,7 +266,7 @@ public class ConsultarReservas extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

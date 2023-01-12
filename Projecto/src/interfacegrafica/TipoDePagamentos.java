@@ -2,6 +2,7 @@ package interfacegrafica;
 
 import programa.Aor_Autocarro;
 import programa.Cliente;
+import programa.FicheiroDeObjectos;
 import programa.Reserva;
 
 import javax.swing.*;
@@ -10,20 +11,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Tipo de pagamentos.
+ * Classe Interface grafica, para escolher qual o metodo de pagamento da reserva
  */
 public class TipoDePagamentos extends JPanel implements ActionListener {
-   private final Aor_Autocarro aor_autocarro;
+    private final Aor_Autocarro aor_autocarro;
     private final PainelFundo painelFundo;
     private   Reserva reserva;
     private final JLabel valorViagem;
     private final JLabel clienteNome;
 
 
-    /**
-     * Instantiates a new Tipo de pagamentos.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo the painel fundo
      */
     public TipoDePagamentos(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
@@ -42,7 +43,7 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-         clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -124,10 +125,10 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Custo autocarro.
+    /** Metodo atualiza o custo na interface grafica
      *
-     * @param reserva the reserva
+     *
+     * @param reserva Reserva - serve para retirar metodo do custo
      */
     public void custoAutocarro(Reserva reserva) {
         if (!(reserva == null)) {
@@ -135,7 +136,6 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             clienteNome.setText(reserva.getCliente().getNome());
             double custoReservaFormatado=Math.round(reserva.getCusto()*100.00)/100.00;
             valorViagem.setText(String.valueOf(custoReservaFormatado));
-            //valorViagem.setText(String.valueOf(reserva.getCusto()));
 
         }
 
@@ -150,11 +150,11 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                 painelFundo.mudaEcra("ReservaViagem");
                 valorViagem.setText("");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
             }
         }
 
@@ -162,12 +162,10 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                valorViagem.setText("");
-                painelFundo.mudaEcra("HistoricoReservas");
-
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("HistoricoReservas");
+                valorViagem.setText("");
             }
         }
 
@@ -175,11 +173,10 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                valorViagem.setText("");
-                painelFundo.mudaEcra("ConsultarReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("ConsultarReservas");
+                valorViagem.setText("");
             }
         }
 
@@ -187,22 +184,20 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                valorViagem.setText("");
-                painelFundo.mudaEcra("CancelarReserva");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("CancelarReserva");
+                valorViagem.setText("");
             }
         }
         if(e.getActionCommand().equals("Dados Pessoais")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                valorViagem.setText("");
-                painelFundo.mudaEcra("DadosPessoaisClientes");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("DadosPessoaisCliente");
+                valorViagem.setText("");
             }
         }
         if(e.getActionCommand().equals("Sair")) {
@@ -210,12 +205,10 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 ((Login)painelFundo.mapaPaineis.get("Login")).sair();
-                valorViagem.setText("");
-                painelFundo.mudaEcra("Login");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
-            }
+                painelFundo.mudaEcra("Login");
+                valorViagem.setText("");}
         }
         if(e.getActionCommand().equals("PayPAL")){
             ((PayPal)(painelFundo.mapaPaineis.get("PayPal"))).custoAutocarro(this.reserva);
@@ -232,3 +225,4 @@ public class TipoDePagamentos extends JPanel implements ActionListener {
 
     }
 }
+

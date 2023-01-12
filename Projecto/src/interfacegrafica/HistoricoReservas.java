@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- * The type Historico reservas.
+/**Classe Interface grafica, para consultar o historico das reservas efetuadas e canceladas, com data inferior a data atual
+ *
  */
 public class HistoricoReservas extends JPanel implements ActionListener {
 
@@ -24,11 +24,10 @@ public class HistoricoReservas extends JPanel implements ActionListener {
     private  JTable tabelaCanceladas;
     private  JScrollPane spCanceladas;
 
-    /**
-     * Instantiates a new Historico reservas.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public HistoricoReservas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -137,6 +136,9 @@ public class HistoricoReservas extends JPanel implements ActionListener {
 
     }
 
+    /**Metodo para atualizar as tabela das reservas efetuadas
+     *
+     */
     public void listagemPorMesReservasEfetuadas() {
         remove(spReservas);
         String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
@@ -170,6 +172,9 @@ public class HistoricoReservas extends JPanel implements ActionListener {
 
     }
 
+    /**Metodo para atualizar as tabela das reservas canceladas
+     *
+     */
     public void listagemPorMesReservasCanceladas() {
         remove(spCanceladas);
         String[] colunas = {"Nº Reserva", "Data Aluguer", "NºDias", "NºPessoas",
@@ -220,7 +225,7 @@ public class HistoricoReservas extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

@@ -7,10 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Estatistica.
+ * Classe Interface grafica para visualizar estatisticas da empresa por parte do Administrador
  */
 public class Estatistica extends JPanel implements ActionListener {
     private final PainelFundo painelFundo;
@@ -35,13 +36,15 @@ public class Estatistica extends JPanel implements ActionListener {
     private final JPanel autocarrosCanceladas;
     private final JPanel autocarrosEspera;
     private final JComboBox mesCombobox3;
+    private final JLabel totalClientesPreenchidoLabel;
+    private final JLabel totalMotoristasPreenchidoLabel;
+    private final JLabel totalAutocarrosPreenchidoLabel;
 
 
-    /**
-     * Instantiates a new Estatistica.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public Estatistica(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
@@ -119,7 +122,7 @@ public class Estatistica extends JPanel implements ActionListener {
         JPanel totalClientes = new JPanel(new GridLayout(1, 2, 0, 0));
         totalClientes.setBounds(200, 350, 250, 15);
         JLabel totalClientesLabel = new JLabel("Total Clientes:");
-        JLabel totalClientesPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarCliente() - 1));
+        totalClientesPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarCliente() - 1));
         totalClientes.add(totalClientesLabel);
         totalClientes.add(totalClientesPreenchidoLabel);
 
@@ -137,7 +140,7 @@ public class Estatistica extends JPanel implements ActionListener {
         JPanel totalMotoristas = new JPanel(new GridLayout(1, 2, 0, 0));
         totalMotoristas.setBounds(200, 350, 250, 15);
         JLabel totalMotoristasLabel = new JLabel("Total Motoristas:");
-        JLabel totalMotoristasPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarMotorista()));
+        totalMotoristasPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarMotorista()));
         totalMotoristas.add(totalMotoristasLabel);
         totalMotoristas.add(totalMotoristasPreenchidoLabel);
 
@@ -153,7 +156,7 @@ public class Estatistica extends JPanel implements ActionListener {
         JPanel totalAutocarros = new JPanel(new GridLayout(1, 2, 0, 0));
         totalAutocarros.setBounds(200, 350, 250, 15);
         JLabel totalAutocarrosLabel = new JLabel("Total Autocarros:");
-        JLabel totalAutocarrosPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarAutocarro()));
+        totalAutocarrosPreenchidoLabel = new JLabel(String.valueOf(aor_autocarro.contarAutocarro()));
         totalAutocarros.add(totalAutocarrosLabel);
         totalAutocarros.add(totalAutocarrosPreenchidoLabel);
 
@@ -332,8 +335,8 @@ public class Estatistica extends JPanel implements ActionListener {
         //Label
         JPanel volumePreenchidoPanel = new JPanel(new GridLayout(1, 2, 40, 5));
         volumePreenchidoPanel.setBounds(150, 300, 400, 300);
-        JLabel volumePreenchido = new JLabel("Dias com mais reservas:");
-        JLabel volumePreenchidoLabel = new JLabel("Preenchido automaticamente");
+        JLabel volumePreenchido = new JLabel("Dia com mais reservas:");
+        JLabel volumePreenchidoLabel = new JLabel(dataMaisOcorrencias());
         volumePreenchidoPanel.add(volumePreenchido);
         volumePreenchidoPanel.add(volumePreenchidoLabel);
         volumeReservas.add(volumePreenchidoPanel);
@@ -356,23 +359,28 @@ public class Estatistica extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Nome logado.
+    /** Metodo para atualizar o JTextField da interface associada a estatistica
+     *
      */
     public void nomeLogado() {
 
         if (aor_autocarro.getUserLogado() == null) {
             clienteNome.setText("");
-        } else
+        } else{
             clienteNome.setText(aor_autocarro.getUserLogado().getNome());
-        revalidate();
-        repaint();
+            totalClientesPreenchidoLabel.setText(String.valueOf(aor_autocarro.contarCliente() - 1));
+            totalMotoristasPreenchidoLabel.setText(String.valueOf(aor_autocarro.contarMotorista()));
+            totalAutocarrosPreenchidoLabel.setText(String.valueOf(aor_autocarro.contarAutocarro()));
+            revalidate();
+            repaint();
+        }
+
 
     }
 
 
-    /**
-     * Contar reservas mes int [ ].
+    /** Metodo contar as reserva por mes
+     *
      *
      * @return the int [ ]
      */
@@ -390,10 +398,10 @@ public class Estatistica extends JPanel implements ActionListener {
         return volume;
     }
 
-    /**
-     * Listagem por mes reservas.
+    /**Metodo para filtrar as tabela das reservas ativas pelo mes escolhido
      *
-     * @param mes the mes
+     *
+     * @param mes String - mes pretendido para filtrar a tabela na lista de reservas ativas
      */
     public void listagemPorMesReservas(String mes) {
         if (!mes.equals("0")) {
@@ -437,10 +445,10 @@ public class Estatistica extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Listagem por mes reservas canceladas.
+    /**Metodo para filtrar as tabela das reservas canceladas pelo mes escolhido
      *
-     * @param mes the mes
+     *
+     * @param mes String - mes pretendido para filtrar a tabela na lista de reservas canceladas
      */
     public void listagemPorMesReservasCanceladas(String mes) {
         if (!mes.equals("0")) {
@@ -489,10 +497,10 @@ public class Estatistica extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Listagem por mes reservas espera.
+    /**Metodo para filtrar as tabela das reservas espera pelo mes escolhido
      *
-     * @param mes the mes
+     *
+     * @param  mes String - mes pretendido para filtrar a tabela na lista de reservas espera
      */
     public void listagemPorMesReservasEspera(String mes) {
         if (!mes.equals("0")) {
@@ -535,6 +543,34 @@ public class Estatistica extends JPanel implements ActionListener {
         }
 
     }
+
+    /** Metodo para identificar a data com mais reservas
+     *
+     *
+     * @return String - data com mais reserva
+     */
+    public String dataMaisOcorrencias() {
+        String dataMaisFrequente = "";
+        int contadorMax = 0;
+        for (Reserva reserva : aor_autocarro.getReservas()) {
+            if ((reserva.getDataPartida().getYear() == LocalDate.now().getYear())) {
+                for (int i = 0; i < aor_autocarro.getReservas().size(); i++) {
+                    int contador = 0;
+                    for (int j = 0; j < aor_autocarro.getReservas().size(); j++) {
+                        if ((aor_autocarro.getReservas().get(i).getDataPartida()).isEqual(aor_autocarro.getReservas().get(j).getDataPartida())) {
+                            contador++;
+                        }
+                    }
+                    if (contador > contadorMax) {
+                        contadorMax = contador;
+                        dataMaisFrequente = String.valueOf(aor_autocarro.getReservas().get(i).getDataPartida());
+                    }
+                }
+            }
+        }
+        return dataMaisFrequente;
+    }
+
 
 
 

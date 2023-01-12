@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Autocarros editar.
+ *Classe Interface grafica para editar Autocarros
+
  */
 public class AutocarrosEditar extends JPanel implements ActionListener {
 
@@ -29,11 +30,10 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
     private final JLabel matriculaPreenchida;
 
 
-    /**
-     * Instantiates a new Autocarros editar.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public AutocarrosEditar(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -155,8 +155,8 @@ public class AutocarrosEditar extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Sets autocarro.
+    /**Metodo atualiza os dados do painel referentes ao Autocarro
+     *
      *
      * @param autocarro the autocarro
      */

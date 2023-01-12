@@ -1,16 +1,14 @@
 package interfacegrafica;
 
-import org.w3c.dom.ls.LSOutput;
 import programa.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
- * The type Registar novo administrador.
+ * Classe Interface grafica, para proceder ao registo de um novo administrador, por um Administrador
  */
 public class RegistarNovoAdministrador  extends JPanel implements ActionListener {
    private final Aor_Autocarro aor_autocarro;
@@ -25,11 +23,10 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
     private final JLabel clienteNome;
 
 
-    /**
-     * Instantiates a new Registar novo administrador.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public RegistarNovoAdministrador(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -152,8 +149,8 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
 
     }
 
-    /**
-     * Nome logado.
+    /**Metodo para atualizar o  clienteNome = new JLabel("") da interface, que se refere a um administrador e,por lapso,foi definida como cliente
+     *
      */
     public void nomeLogado(){
 
@@ -200,7 +197,7 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
                 validar = false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
-            if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+            if (aor_autocarro.verificarDuplicacaoNif(nifField.getText())) {
                 JOptionPane.showMessageDialog(null, "Já existe um administrador registado com esse nif");
                 validar = false;
             }
@@ -219,6 +216,11 @@ public class RegistarNovoAdministrador  extends JPanel implements ActionListener
                         "ser alterada." );
 
                 FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                nomeField.setText("");
+                nifField.setText("");
+                moradaField.setText("");
+                telefoneField.setText("");
+                emailField.setText("");
 
 
             }

@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe Interface grafica, para proceder pagamento da reserva por Paypal
+ */
 public class PayPal extends JPanel implements ActionListener {
 
     private final Aor_Autocarro aor_autocarro;
@@ -18,6 +21,11 @@ public class PayPal extends JPanel implements ActionListener {
     private final TextField emailField;
     private final JPasswordField palavraChaveField;
 
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
+     *
+     */
     public PayPal(PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
         this.aor_autocarro=aor_autocarro;
         this.painelFundo = painelFundo;
@@ -36,7 +44,7 @@ public class PayPal extends JPanel implements ActionListener {
         cabecalho.add(empresaNome);
 
         // Nome do cliente
-         clienteNome = new JLabel("Nome do Cliente");
+        clienteNome = new JLabel("Nome do Cliente");
         clienteNome.setBounds(700, 0, 100, 30);
         cabecalho.add(clienteNome);
 
@@ -118,11 +126,11 @@ public class PayPal extends JPanel implements ActionListener {
         palavraChave.setBounds(30, 100, 100, 30);
 
         // Textofield do email
-        emailField = new TextField("Escreve aqui o seu email");
+        emailField = new TextField();
         emailField.setBounds(150, 50, 170, 30);
 
         // Textofield da palavrachave
-        palavraChaveField = new JPasswordField("Escreve aqui a sua Palavra-Chave");
+        palavraChaveField = new JPasswordField();
         palavraChaveField.setBounds(150, 100, 170, 30);
         loginPanel.add(email);
         loginPanel.add(palavraChave);
@@ -149,6 +157,12 @@ public class PayPal extends JPanel implements ActionListener {
 
 
     }
+
+    /**Metodo calcula o custo da viagem, formata em duas casas decimais e atualiza a informacao na interface
+     *
+     *
+     * @param reserva Reserva - receber o custo da reserva
+     */
     public void custoAutocarro(Reserva reserva) {
         if (!(reserva == null)) {
             this.reserva = reserva;
@@ -172,11 +186,11 @@ public class PayPal extends JPanel implements ActionListener {
         if(e.getActionCommand().equals("Confirmar")){
             if (emailField.getText().equals("") || password.equals("")) {
                 JOptionPane.showMessageDialog(null, "Há campos de preenchimento obrigatório que não foram preenchidos");
-            validar=false;
+                validar=false;
             }
             if(!Paypal.validarEmail(email)){
                 JOptionPane.showMessageDialog(null, "Email inválido");
-            validar=false;
+                validar=false;
             }
             if(validar){
                 reserva=aor_autocarro.identificarReservaPagamento(logado);
@@ -195,10 +209,11 @@ public class PayPal extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("ReservaViagem");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+                painelFundo.mudaEcra("ReservaViagem");
+                valorViagem.setText("");
             }
         }
 
@@ -206,10 +221,10 @@ public class PayPal extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("HistoricoReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("HistoricoReservas");
+                valorViagem.setText("");
             }
         }
 
@@ -217,10 +232,10 @@ public class PayPal extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("ConsultarReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("ConsultarReservas");
+                valorViagem.setText("");
             }
         }
 
@@ -228,20 +243,20 @@ public class PayPal extends JPanel implements ActionListener {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("CancelarReserva");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("CancelarReserva");
+                valorViagem.setText("");
             }
         }
         if(e.getActionCommand().equals("Dados Pessoais")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("DadosPessoaisClientes");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("DadosPessoaisCliente");
+                valorViagem.setText("");
             }
         }
         if(e.getActionCommand().equals("Sair")) {
@@ -249,19 +264,15 @@ public class PayPal extends JPanel implements ActionListener {
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
                 ((Login)painelFundo.mapaPaineis.get("Login")).sair();
-                valorViagem.setText("");
-                painelFundo.mudaEcra("Login");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
-            }
+                painelFundo.mudaEcra("Login");
+                valorViagem.setText("");}
         }
         if(e.getActionCommand().equals("Mudar Pagamento")){
             painelFundo.mudaEcra("Pagamentos");
 
         }
-
-
-
     }
 }
+

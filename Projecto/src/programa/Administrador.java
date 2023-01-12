@@ -3,7 +3,7 @@ package programa;
 import java.io.Serializable;
 
 /**
- * The type Administrador.
+ * Classe para objetos do tipo Administrador, onde serao contidos, valores e metodos para o mesmo.
  */
 public class Administrador extends Utilizador implements Serializable {
 
@@ -11,25 +11,21 @@ public class Administrador extends Utilizador implements Serializable {
 
 
     /**
-     * Instantiates a new Administrador.
+     * Construtor receber os atributos do Administrador
      *
-     * @param id           the id
-     * @param email        the email
-     * @param palavraChave the palavra chave
-     * @param nome         the nome
-     * @param nif          the nif
-     * @param morada       the morada
-     * @param telefone     the telefone
+     * @param id           String  id - id do administrador
+     * @param email        String  email - email do admnistrador
+     * @param palavraChave String  palavra chave -palavra chave do admnistrador
+     * @param nome         String nome - nome do administrador
+     * @param nif          String nif - nif do administrador
+     * @param morada       String morada - morada do administrador
+     * @param telefone     String telefone - telefone do administrador
      */
-    public Administrador(String id,String email, String palavraChave, String nome, String nif, String morada, String telefone) {
-        super(id,email, palavraChave, nome, nif, morada, telefone);
-        this.id=id;
+    public Administrador(String id, String email, String palavraChave, String nome, String nif, String morada, String telefone) {
+        super(id, email, palavraChave, nome, nif, morada, telefone);
+        this.id = id;
         this.palavraChave = "ADMIN2022";
     }
-
-    //Metodo para gerar chave inicial
-
-
 
     @Override
     public String toString() {
@@ -37,11 +33,13 @@ public class Administrador extends Utilizador implements Serializable {
                 "id=" + id +
                 ",nome=" + nome +
                 ",nif=" + nif +
-                ",morada=" + morada  +
+                ",morada=" + morada +
                 ",telefone=" + telefone +
                 ",email=" + email +
-                ",palavraChave=" + palavraChave+"\n";
+                ",palavraChave=" + palavraChave + "\n";
     }
+
+
 
     public String getId() {
         return id;

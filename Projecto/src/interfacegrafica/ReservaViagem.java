@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * The type Reserva viagem.
+ *Classe Interface grafica, para reservar um autocarro
  */
 public class ReservaViagem extends JPanel implements ActionListener {
 
@@ -27,11 +27,10 @@ public class ReservaViagem extends JPanel implements ActionListener {
     private final JLabel clienteNome;
 
 
-    /**
-     * Instantiates a new Reserva viagem.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public ReservaViagem(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
@@ -177,8 +176,8 @@ public class ReservaViagem extends JPanel implements ActionListener {
         atualizar.addActionListener(this);
     }
 
-    /**
-     * Nome logado.
+    /**Metodo para atualizar o  clienteNome = new JLabel("") da interface, que se refere a um cliente
+     *
      */
     public void nomeLogado() {
 
@@ -358,7 +357,7 @@ public class ReservaViagem extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

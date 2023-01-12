@@ -13,7 +13,8 @@ import java.util.HashMap;
 
 
 /**
- * The type Painel fundo.
+ * Faz a gestao dos paineis atraves do cardLayout e Hashmap
+ * Esta inserido o Jframe
  */
 public class PainelFundo {
 
@@ -22,15 +23,13 @@ public class PainelFundo {
 
     private final CardLayout layout;
 
-    /**
-     * The Mapa paineis.
-     */
+
     public HashMap<String, JPanel> mapaPaineis;
 
-    /**
-     * Instantiates a new Painel fundo.
+    /** Constroi a interface grafica
      *
-     * @param aor_autocarro the aor autocarro
+     * @param aor_autocarro - Guarda a informacao do programa
+     *
      */
     public PainelFundo(Aor_Autocarro aor_autocarro) {
 
@@ -97,26 +96,17 @@ public class PainelFundo {
 
         f.getContentPane().add(painelPrincipal);
 
-
-        //layout.show(painelPrincipal,"Login"); NAO APAGAR, ESTA LINHA ESTÁ CORRECTA
-
-
-        //painelPrincipal.add(new Login(this));
-
-
         f.setVisible(true);
 
 
     }
 
 
-    /**
-     * Muda ecra.
+    /**Metodo muda a interface grafica para a interface pretendida
      *
-     * @param ecra the ecra
+     * @param ecra String - nome da interface grafica
      */
     public void mudaEcra(String ecra) {
-
         layout.show(painelPrincipal, ecra);
 
 

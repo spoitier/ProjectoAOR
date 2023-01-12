@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The type Alterar palavra chave cliente.
+ * Classe Interface grafica para alterar palavra chave cliente
  */
 public class AlterarPalavraChaveCliente extends JPanel implements ActionListener {
 
@@ -23,11 +23,10 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
     private final TextField confirmePalavraChaveField;
 
 
-    /**
-     * Instantiates a new Alterar palavra chave cliente.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public AlterarPalavraChaveCliente(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -146,8 +145,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
     }
 
-    /**
-     * Nome logado utilizador.
+    /**Metodo Identifica utilizador logado no aplicacao e altera o JtextField da interface
      *
      * @return the utilizador
      */
@@ -162,20 +160,6 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
 
     }
 
-    /**
-     * Sets cliente.
-     *
-     * @param utilizador the utilizador
-     */
-    public void setCliente(Utilizador utilizador) {
-        if (!(utilizador == null)) {
-            emailPreenchido.setText(utilizador.getEmail());
-            clienteNome.setText(utilizador.getNome());
-            revalidate();
-            repaint();
-        }
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -184,7 +168,7 @@ public class AlterarPalavraChaveCliente extends JPanel implements ActionListener
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

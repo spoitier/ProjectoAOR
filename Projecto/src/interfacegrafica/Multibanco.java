@@ -7,22 +7,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe Interface grafica, para proceder pagamento da reserva por Multibanco
+ */
 public class Multibanco extends JPanel implements ActionListener {
 
     private Aor_Autocarro aor_autocarro;
 
-    public Reserva reserva;
+    private  Reserva reserva;
     private final PainelFundo painelFundo;
     private final JLabel valorViagem;
     private final JLabel clienteNome;
-    JLabel entidade ;
-    JLabel referencia;
-    JLabel valor ;
-    JLabel entidadeInfo;
-    JLabel referenciaInfo;
+    private JLabel entidade;
+    private JLabel referencia;
+    private JLabel entidadeInfo;
+    private JLabel referenciaInfo;
 
-    public  Multibanco (PainelFundo painelFundo,Aor_Autocarro aor_autocarro) {
-        this.aor_autocarro=aor_autocarro;
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
+     *
+     */
+    public Multibanco(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
+        this.aor_autocarro = aor_autocarro;
         this.painelFundo = painelFundo;
         this.setLayout(null);
 
@@ -137,11 +144,16 @@ public class Multibanco extends JPanel implements ActionListener {
 
     }
 
+    /**Metodo calcula o custo da viagem, formata em duas casas decimais e atualiza a informacao na interface
+     *
+     *
+     * @param reserva the reserva
+     */
     public void custoAutocarro(Reserva reserva) {
         if (!(reserva == null)) {
             this.reserva = reserva;
             clienteNome.setText(reserva.getCliente().getNome());
-            double custoReservaFormatado=Math.round(reserva.getCusto()*100.00)/100.00;
+            double custoReservaFormatado = Math.round(reserva.getCusto() * 100.00) / 100.00;
             valorViagem.setText(String.valueOf(custoReservaFormatado));
 
         }
@@ -149,95 +161,92 @@ public class Multibanco extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Cliente logado=(Cliente) aor_autocarro.getUserLogado();
+        Cliente logado = (Cliente) aor_autocarro.getUserLogado();
         Pagamento pagamento;
         Reserva reserva;
 
-        if(e.getActionCommand().equals("Confirmar")){
-            reserva=aor_autocarro.identificarReservaPagamento(logado);
-            String referenciaMB= MB.gerarRefMultibanco();
-            pagamento=new MB(reserva,12345,referenciaMB, reserva.getCusto());
+        if (e.getActionCommand().equals("Confirmar")) {
+            reserva = aor_autocarro.identificarReservaPagamento(logado);
+            String referenciaMB = MB.gerarRefMultibanco();
+            pagamento = new MB(reserva, 12345, referenciaMB, reserva.getCusto());
             //Adicionado pagamento da reserva à lista de Reservas
             aor_autocarro.addPagamento(pagamento);
-                JOptionPane.showMessageDialog(null, "O pagamento da sua reserva" +
-                        " nº"+reserva.getId()+" deverá ser efetuada por Multibanco:\n");
-                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            JOptionPane.showMessageDialog(null, "A sua reserva " +
+                    " nº" + reserva.getId() + " está confirmada.");
+            FicheiroDeObjectos.escreveObjeto(aor_autocarro);
             painelFundo.mudaEcra("ReservaViagem");
-            }
+        }
 
         int resultado;
-        if(e.getActionCommand().equals("ReservaViagem")) {
+        if (e.getActionCommand().equals("ReservaViagem")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
+                FicheiroDeObjectos.escreveObjeto(aor_autocarro);
                 painelFundo.mudaEcra("ReservaViagem");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
+                valorViagem.setText("");
             }
         }
 
-        if(e.getActionCommand().equals("Histórico Reservas")) {
+        if (e.getActionCommand().equals("Histórico Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
                 painelFundo.mudaEcra("HistoricoReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
+                valorViagem.setText("");
             }
         }
 
-        if(e.getActionCommand().equals("Consultar Reservas")) {
+        if (e.getActionCommand().equals("Consultar Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
                 painelFundo.mudaEcra("ConsultarReservas");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
+                valorViagem.setText("");
             }
         }
 
-        if(e.getActionCommand().equals("Cancelar Reservas")) {
+        if (e.getActionCommand().equals("Cancelar Reservas")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
                 painelFundo.mudaEcra("CancelarReserva");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
+                valorViagem.setText("");
             }
         }
-        if(e.getActionCommand().equals("Dados Pessoais")) {
+        if (e.getActionCommand().equals("Dados Pessoais")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                painelFundo.mudaEcra("DadosPessoaisClientes");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
                 aor_autocarro.getReservas().remove(reserva);
+                painelFundo.mudaEcra("DadosPessoaisCliente");
+                valorViagem.setText("");
             }
         }
-        if(e.getActionCommand().equals("Sair")) {
+        if (e.getActionCommand().equals("Sair")) {
             resultado = JOptionPane.showConfirmDialog(null, "A sua reserva ainda não está paga." +
                     "Tem a certeza que quer cancelar?", "Escolha uma opção", JOptionPane.YES_NO_OPTION);
             if (resultado == JOptionPane.YES_OPTION) {
-                ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+                ((Login) painelFundo.mapaPaineis.get("Login")).sair();
+                reserva = aor_autocarro.identificarReservaPagamento(logado);
+                aor_autocarro.getReservas().remove(reserva);
                 painelFundo.mudaEcra("Login");
-            }else{
-                reserva=aor_autocarro.identificarReservaPagamento(logado);
-                aor_autocarro.getReservas().remove(reserva);
+                valorViagem.setText("");
             }
         }
-        if(e.getActionCommand().equals("Mudar Pagamento")){
+        if (e.getActionCommand().equals("Mudar Pagamento")) {
             painelFundo.mudaEcra("Pagamentos");
 
         }
-
-
-
-
-
     }
 }
+

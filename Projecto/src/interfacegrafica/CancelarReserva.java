@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Cancelar reserva.
+ * Classe Interface grafica para cancelar reserva
  */
 public class CancelarReserva extends JPanel implements ActionListener {
 
@@ -21,11 +21,10 @@ public class CancelarReserva extends JPanel implements ActionListener {
     private final JTextField reservaField;
 
 
-    /**
-     * Instantiates a new Cancelar reserva.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public CancelarReserva(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -105,8 +104,8 @@ public class CancelarReserva extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Nome logado.
+    /**Metodo para atualizar o clienteNome = new JLabel("Nome do Cliente")
+     *
      */
     public void nomeLogado() {
 
@@ -129,6 +128,8 @@ public class CancelarReserva extends JPanel implements ActionListener {
             descrição = aor_autocarro.cancelarReservaCliente(logado, id);
             JOptionPane.showMessageDialog(null, descrição);
             FicheiroDeObjectos.escreveObjeto(aor_autocarro);
+            reservaField.setText("");
+
         }
 
 
@@ -144,7 +145,7 @@ public class CancelarReserva extends JPanel implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Consultar Reservas")) {
-            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes("0");
+            ((ConsultarReservas) (painelFundo.mapaPaineis.get("ConsultarReservas"))).listagemPorMes();
             painelFundo.mudaEcra("ConsultarReservas");
         }
 

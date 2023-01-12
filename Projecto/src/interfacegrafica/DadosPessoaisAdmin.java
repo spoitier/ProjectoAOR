@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Dados pessoais admin.
+ * Classe Interface grafica para consultar os dados pessoais do Administrador
  */
 public class DadosPessoaisAdmin extends JPanel implements ActionListener {
 
@@ -28,11 +28,10 @@ public class DadosPessoaisAdmin extends JPanel implements ActionListener {
     private final JLabel palavraChaveField;
 
 
-    /**
-     * Instantiates a new Dados pessoais admin.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public DadosPessoaisAdmin(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -167,8 +166,8 @@ public class DadosPessoaisAdmin extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Nome logado utilizador.
+    /**Metodo para atualizar o JTextField da interface relativa aos dados do Administrador logado
+     * .
      *
      * @return the utilizador
      */

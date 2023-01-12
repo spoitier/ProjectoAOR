@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Autocarros.
+ * Classe Interface grafica para adicionar e remover Autocarros
  */
 public class Autocarros extends JPanel implements ActionListener {
 
@@ -22,10 +22,6 @@ public class Autocarros extends JPanel implements ActionListener {
 
     private final JLabel adminNome;
 
-
-    /**
-     * The Matricula field.
-     */
     public JTextField matriculaField;
 
     private final JTextField marcaField;
@@ -39,11 +35,10 @@ public class Autocarros extends JPanel implements ActionListener {
     private final JTextField matriculaFieldEditar;
 
 
-    /**
-     * Instantiates a new Autocarros.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public Autocarros(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -61,7 +56,7 @@ public class Autocarros extends JPanel implements ActionListener {
         empresaNome.setBounds(5, 0, 100, 30);
         cabecalho.add(empresaNome);
 
-        // Nome do cliente
+        // Nome do administrador
         adminNome = new JLabel("Nome do Admin");
         adminNome.setBounds(700, 0, 100, 30);
         cabecalho.add(adminNome);
@@ -213,8 +208,8 @@ public class Autocarros extends JPanel implements ActionListener {
     }
 
 
-    /**
-     * Atualizar.
+    /** Metodo para atualizar a tabela de autocarros
+     *
      */
     public void atualizar() {
         FicheiroDeObjectos.escreveObjeto(aor_autocarro);
@@ -239,8 +234,9 @@ public class Autocarros extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Nome logado.
+    /** Medodo atualiza adminNome = new JLabel("Nome do Admin");
+     *
+     *
      */
     public void nomeLogado() {
 

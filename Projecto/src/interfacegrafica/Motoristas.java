@@ -8,16 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Motoristas.
+ * Classe Interface grafica, para proceder adesao, remocao e edicao dos motoristas por um administrador
  */
 public class Motoristas extends JPanel implements ActionListener {
 
-  private final PainelFundo painelFundo;
+    private final PainelFundo painelFundo;
     private final Aor_Autocarro aor_autocarro;
-    private   JScrollPane sp;
+    private JScrollPane sp;
 
 
-    private   JTable tabela;
+    private JTable tabela;
     private final JLabel adminNome;
     private final TextField nomeField;
 
@@ -29,11 +29,10 @@ public class Motoristas extends JPanel implements ActionListener {
     private final JTextField nomeeditarField;
 
 
-    /**
-     * Instantiates a new Motoristas.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public Motoristas(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -143,7 +142,7 @@ public class Motoristas extends JPanel implements ActionListener {
         JLabel nomeeditarLabel = new JLabel("Nome:");
         nomeeditarLabel.setBounds(0, 50, 80, 30);
         nomeeditarField = new JTextField();
-        nomeeditarField.setBounds(100, 50 ,170, 30);
+        nomeeditarField.setBounds(100, 50, 170, 30);
         editarPanel.add(emailEditarLabel);
         editarPanel.add(emailEditarField);
         editarPanel.add(nomeeditarLabel);
@@ -200,8 +199,8 @@ public class Motoristas extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * Atualizar.
+    /** Atualizar a tabela automaticamente quando houver alguma alteracao
+     *
      */
 //========================================
     //Metodo para atualizar tabela
@@ -226,8 +225,8 @@ public class Motoristas extends JPanel implements ActionListener {
 
     //=======================================================
 
-    /**
-     * Nome logado.
+    /**Atualiza JLabel nomeLabel = new JLabel("Nome:") com nome do utilizador logado
+     *
      */
     public void nomeLogado() {
 
@@ -260,15 +259,16 @@ public class Motoristas extends JPanel implements ActionListener {
             painelFundo.mudaEcra("AdicionarClientes");
         }
         if (e.getActionCommand().equals("Estatistica")) {
+            ((Estatistica) (painelFundo.mapaPaineis.get("Estatistica"))).nomeLogado();
             painelFundo.mudaEcra("Estatistica");
         }
         if (e.getActionCommand().equals("Dados Pessoais")) {
-            ((DadosPessoaisAdmin)(painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
+            ((DadosPessoaisAdmin) (painelFundo.mapaPaineis.get("DadosPessoaisAdmin"))).nomeLogado();
             painelFundo.mudaEcra("DadosPessoaisAdmin");
         }
 
         if (e.getActionCommand().equals("Sair")) {
-            ((Login)painelFundo.mapaPaineis.get("Login")).sair();
+            ((Login) painelFundo.mapaPaineis.get("Login")).sair();
             painelFundo.mudaEcra("Login");
         }
 
@@ -295,6 +295,7 @@ public class Motoristas extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Remover")) {
             if (aor_autocarro.removerMotorista(removerField.getText()) == null) {
                 JOptionPane.showMessageDialog(null, "Não existe nenhum motorista");
+                removerField.setText("");
             } else {
                 try {
                     Motorista removido = aor_autocarro.removerMotorista(removerField.getText());
@@ -302,7 +303,7 @@ public class Motoristas extends JPanel implements ActionListener {
                     aor_autocarro.getMotoristas().remove(removido);
                     aor_autocarro.cancelarReservasporMotorista(emailField.getText());
                     atualizar();
-                    emailField.setText("");
+                    removerField.setText("");
                 } catch (NullPointerException n) {
                     JOptionPane.showMessageDialog(null, "Não existe nenhum motorista com esse email");
                 }
@@ -313,14 +314,14 @@ public class Motoristas extends JPanel implements ActionListener {
 
         }
         if (e.getActionCommand().equals("Editar")) {
-            if(aor_autocarro.getMotorista(emailEditarField.getText()).getEmail().equals(emailEditarField.getText())){
+            if (aor_autocarro.getMotorista(emailEditarField.getText()).getEmail().equals(emailEditarField.getText())) {
                 aor_autocarro.getMotorista(emailEditarField.getText()).setNome(nomeeditarField.getText());
-                JOptionPane.showMessageDialog(null,"Editado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Editado com sucesso!");
                 atualizar();
                 emailEditarField.setText("");
                 nomeeditarField.setText("");
             } else {
-                JOptionPane.showMessageDialog(null,"Não existe motorista com esse email");
+                JOptionPane.showMessageDialog(null, "Não existe motorista com esse email");
 
             }
 

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Alterar palavra chave admin.
+ * Classe da Interface grafica para alterar a palavra chave do admnistrador
  */
 public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
@@ -28,11 +28,10 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
     private final TextField confirmePalavraChaveField;
 
 
-    /**
-     * Instantiates a new Alterar palavra chave admin.
+    /** Constroi a interface grafica
+     * @param painelFundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelFundo   the painel fundo
-     * @param aor_autocarro the aor autocarro
      */
     public AlterarPalavraChaveAdmin(PainelFundo painelFundo, Aor_Autocarro aor_autocarro) {
         this.painelFundo = painelFundo;
@@ -156,9 +155,8 @@ public class AlterarPalavraChaveAdmin extends JPanel implements ActionListener {
 
 
     /**
-     * Sets administrador.
-     *
-     * @param utilizador the utilizador
+     * Medodo altera os dados do JTextField com os dados do administrador logado
+     * @param utilizador Utilizador - Informacao do utilizador logado
      */
     public void setAdministrador(Utilizador utilizador) {
         if (!(utilizador == null)) {

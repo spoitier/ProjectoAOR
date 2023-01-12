@@ -9,11 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
- * The type Registar utilizador.
+ *Classe Interface grafica, para proceder ao registo de um novo cliente
  */
 public class RegistarUtilizador extends JPanel implements ActionListener {
 
@@ -28,11 +27,10 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
     private final JTextField palavraChaveField;
 
 
-    /**
-     * Instantiates a new Registar utilizador.
+    /** Constroi a interface grafica
+     * @param painelfundo   - Faz a gestao da interface
+     * @param aor_autocarro - Guarda a informacao do programa
      *
-     * @param painelfundo   the painelfundo
-     * @param aor_autocarro the aor autocarro
      */
     public RegistarUtilizador(PainelFundo painelfundo, Aor_Autocarro aor_autocarro) {
         this.aor_autocarro = aor_autocarro;
@@ -155,7 +153,7 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 validar=false;
             }
             //Verificar se existe já algum Cliente registado com o nif registado
-            if (aor_autocarro.verificarDuplicaçãoNif(nifField.getText())) {
+            if (aor_autocarro.verificarDuplicacaoNif(nifField.getText())) {
                 JOptionPane.showMessageDialog(null, "Já existe um cliente registado com esse nif");
                 validar=false;
             }
@@ -177,6 +175,12 @@ public class RegistarUtilizador extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Os seus dados foram guardados com sucesso.\n Faça Login e vá" +
                         "aos seus Dados Pessoais verificar opções do plano Subscrição");
                 painelFundo.mudaEcra("Login");
+                nomeField.setText("");
+                nifField.setText("");
+                moradaField.setText("");
+                telefoneField.setText("");
+                emailField.setText("");
+                palavraChaveField.setText("");
 
             }
         }
